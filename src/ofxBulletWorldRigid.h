@@ -1,0 +1,87 @@
+/*
+ *  ofxBulletWorldBase.h
+ *  ofxBullet_v1
+ *
+ *  Created by Nick Hardeman on 3/22/11.
+ *  Copyright 2011 Arnold Worldwide. All rights reserved.
+ *
+ */
+
+#pragma once 
+
+// http://bulletphysics.org/mediawiki-1.5.8/index.php/Hello_World
+#include "ofMain.h"
+#include "btBulletDynamicsCommon.h"
+#include "ofxBulletUtils.h"
+#include "ofxBulletConstants.h"
+#include "ofxBulletBaseShape.h"
+#include "ofxBulletCollisionData.h"
+#include "ofxBulletMousePickEvent.h"
+#include "GLDebugDrawer.h"
+
+class ofxBulletWorldRigid {
+public:
+	ofEvent<ofxBulletCollisionData> COLLISION_EVENT;
+	ofEvent<ofxBulletMousePickEvent> MOUSE_PICK_EVENT;
+	
+	ofxBulletWorldRigid();
+	~ofxBulletWorldRigid();
+	
+	void setup();
+	void update();
+	void setCameraPosition( ofVec3f $pos );
+	void setCamera( ofCamera* $cam );
+	
+	void enableCollisionEvents();
+	void disableCollisionEvents();
+	void checkCollisions();
+	
+	void enableMousePickingEvents();
+	void disableMousePickingEvents();
+	void checkMousePicking(float $mousex, float $mousey);
+	
+	void enableGrabbing();
+	void disableGrabbing();
+	
+	void enableDebugDraw();
+	void drawDebug();
+	
+	bool checkWorld();
+	void setGravity( ofVec3f $g );
+	void createGround( float $y );
+	
+	void removeMouseConstraint();
+	void destroy();
+	
+	void mouseMoved( ofMouseEventArgs &a);
+	void mouseDragged( ofMouseEventArgs &a );
+	void mousePressed( ofMouseEventArgs &a);
+	void mouseReleased( ofMouseEventArgs &a);
+	
+	btBroadphaseInterface*					broadphase;
+	btDefaultCollisionConfiguration*		collisionConfig;
+	btCollisionDispatcher*					dispatcher;
+	btSequentialImpulseConstraintSolver*	solver;
+	
+	btDiscreteDynamicsWorld*				world;
+	btRigidBody*							ground;
+	
+protected:
+	bool bDispatchCollisionEvents;
+	bool bDispatchPickingEvents;
+	bool bRegisterGrabbing;
+	bool bHasDebugDrawer;
+private:
+	ofCamera*	_camera;
+	ofVec3f		_cameraPos;
+	bool		_bMouseDown;
+	btRigidBody* _pickedBody;
+	
+	///constraint for mouse picking
+	btTypedConstraint*	_pickConstraint;
+	float gOldPickingDist;
+};
+
+
+
+
