@@ -13,3 +13,6 @@ Supported Versions:
 OpenFrameworks 007 - https://github.com/openframeworks/openFrameworks
 Bullet Physics 2.77 - http://code.google.com/p/bullet/downloads/list
 
+INSTALLATION (currently libs only for osx):
+Move the ofxBullet folder into OpenFrameworks > addons 
+Move the ofxBullet > bullet folder to OpenFrameworks > libs
