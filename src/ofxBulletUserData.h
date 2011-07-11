@@ -13,4 +13,5 @@
 class ofxBulletUserData {
 public:
 	ofxBulletUserData() { }
+	~ofxBulletUserData() { }
 };
