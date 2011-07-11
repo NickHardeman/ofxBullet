@@ -2,17 +2,13 @@
 
 #include "ofMain.h"
 #include "ofxBullet.h"
-//#include "ofxXmlSettings.h"
 
-#define NUM_LIGHTS 3
-
-class testApp : public ofBaseApp {
+class testApp : public ofBaseApp{
 
 public:
 	void setup();
 	void update();
 	void draw();
-	void exit();
 
 	void keyPressed  (int key);
 	void keyReleased(int key);
@@ -34,5 +30,5 @@ public:
 	ofxBulletCylinder*			cylinder;
 	
 	ofCamera					camera;
-	
+		
 };

@@ -1,7 +1,5 @@
 #include "testApp.h"
 
-#define BIT(x) (1<<(x))
-
 //--------------------------------------------------------------
 void testApp::setup() {
 	ofSetFrameRate(60);
@@ -11,7 +9,7 @@ void testApp::setup() {
 	camera.setPosition(ofVec3f(0, -7.f, -10.f));
 	camera.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, -1, 0));
 	
-	camera.cacheMatrices = true;
+	camera.cacheMatrices(true);
 	
 	world.setup();
 	world.enableGrabbing();
@@ -41,14 +39,12 @@ void testApp::setup() {
 	ground.create( world.world, ofVec3f(0., 5.5, 0.), 0., 100.f, 1.f, 100.f );
 	ground.setProperties(.25, .95);
 	ground.add();
-	
 }
 
 //--------------------------------------------------------------
 void testApp::update() {
 	world.update();
 	ofSetWindowTitle(ofToString(ofGetFrameRate(), 0));
-	
 }
 
 //--------------------------------------------------------------
@@ -82,22 +78,17 @@ void testApp::draw() {
 }
 
 //--------------------------------------------------------------
-void testApp::exit() {
-	world.destroy();
-}
-
-//--------------------------------------------------------------
 void testApp::keyPressed(int key) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){
+void testApp::keyReleased(int key) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ) {
+void testApp::mouseMoved(int x, int y) {
 	
 }
 
@@ -112,7 +103,7 @@ void testApp::mousePressed(int x, int y, int button) {
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button) {
+void testApp::mouseReleased(int x, int y, int button){
 	
 }
 
