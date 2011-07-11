@@ -16,11 +16,13 @@ ofxBulletBaseShape::ofxBulletBaseShape() {
 	_shape			= NULL;
 	_bCreated		= false;
 	_bInited		= false;
+	_bAdded			= false;
+	_userPointer	= NULL;
 }
 
 //--------------------------------------------------------------
 ofxBulletBaseShape::~ofxBulletBaseShape() {
-	
+	remove();
 }
 
 // you can call this function directly if you wish to use the same collision object for multiple rigid bodies,
@@ -34,14 +36,67 @@ void ofxBulletBaseShape::create( btDiscreteDynamicsWorld* $world, btCollisionSha
 	_mass			= $mass;
 	_world			= $world;
 	
-	_rigidBody		= ofGetBtRigidBodyFromCollisionShape( $colShape, $bt_tr, $mass);
-	
 	_bCreated		= true;
+	
+	_rigidBody		= ofGetBtRigidBodyFromCollisionShape( $colShape, $bt_tr, $mass);
+	setProperties(.4, .75);
+	setDamping( .25 );
 }
 
 //--------------------------------------------------------------
 void ofxBulletBaseShape::add() {
+	_bAdded = true;
 	_world->addRigidBody( _rigidBody );
+}
+
+// If a collision shape was passed into init(), then it will not delete the collision object, since other shapes may be using it! //
+//--------------------------------------------------------------
+void ofxBulletBaseShape::remove() {
+	if(_userPointer != NULL) {
+		delete _userPointer;
+		_userPointer = NULL;
+	}
+	if(_bInited && _shape != NULL) {
+		removeRigidBody();
+	} else {
+		removeCollisionObject(); // removes both collision object and rigid body //
+	}
+}
+
+//--------------------------------------------------------------
+void ofxBulletBaseShape::removeRigidBody() {
+	if(_world != NULL && _bAdded) {
+		cout << "ofxBulletBaseShape :: removeRigidBody : calling remove rigid body" << endl;
+		if (_rigidBody && _rigidBody->getMotionState()) {
+			delete _rigidBody->getMotionState();
+		}
+		_world->removeRigidBody(_rigidBody);
+		delete _rigidBody;
+		_rigidBody = NULL;
+		
+	}
+	_bCreated = _bInited = _bAdded = false;
+}
+
+//--------------------------------------------------------------
+void ofxBulletBaseShape::removeCollisionObject() {
+	btCollisionObject* obj = NULL;
+	if(_world != NULL && _bAdded) {
+		cout << "ofxBulletBaseShape :: removeCollisionObject : removing rigid body" << endl;
+		///btRigidBody* body = btRigidBody::upcast(obj);
+		obj = (btCollisionObject*)_rigidBody->getCollisionShape();
+		if (_rigidBody && _rigidBody->getMotionState()) {
+			delete _rigidBody->getMotionState();
+		}
+	}
+	if(_world != NULL && obj != NULL ) {
+		cout << "ofxBulletBaseShape :: removeCollisionObject : removing collision object" << endl;
+		_world->removeCollisionObject( obj );
+		delete obj;
+		_shape = NULL;
+		obj = NULL;
+	}
+	_bCreated = _bInited = _bAdded= false;
 }
 
 
@@ -89,7 +144,6 @@ int ofxBulletBaseShape::getActivationState() {
 	// returns OF_BT_ACTIVATION_STATE_ACTIVE || OF_BT_ACTIVATION_ISLAND_SLEEPING
 	return ((btCollisionObject*)_rigidBody->getCollisionShape())->getActivationState();
 }
-
 
 
 //--------------------------------------------------------------
@@ -158,7 +212,7 @@ float ofxBulletBaseShape::getAngularDamping() {
 
 
 /**************************************************************/
-// PROPERTY SETTERS, must be called after init() and before create() //
+// PROPERTY SETTERS, must be called after create() and before add() //
 
 //--------------------------------------------------------------
 void ofxBulletBaseShape::setProperties(float $restitution, float $friction) {
@@ -194,7 +248,8 @@ void ofxBulletBaseShape::setActivationState( int $state ) {
 // SETTERS, may be called after create() //
 //--------------------------------------------------------------
 void ofxBulletBaseShape::setData(ofxBulletUserData* userPointer) {
-	_rigidBody->setUserPointer( userPointer );
+	_userPointer = userPointer;
+	_rigidBody->setUserPointer( _userPointer );
 }
 
 //--------------------------------------------------------------

@@ -22,7 +22,10 @@ public:
 	~ofxBulletBaseShape();
 	
 	virtual void create( btDiscreteDynamicsWorld* $world, btCollisionShape* $colShape, btTransform $bt_tr, float $mass );
-	void			add();
+	void	add();
+	void	remove();
+	void	removeCollisionObject();
+	void	removeRigidBody();
 	
 	// GETTERS //
 	btRigidBody*	getRigidBody();
@@ -81,7 +84,6 @@ public:
 	
 	// TODO: utilize ofVbo //
 	virtual void draw() {};
-	virtual void destroy() {};
 	
 	/*
 	 const btCylinderShape* cylinder = static_cast<const btCylinderShape*>(shapes[Body::UPPER]);
@@ -94,8 +96,11 @@ protected:
 	btRigidBody*				_rigidBody;
 	float						_mass;
 	
+	ofxBulletUserData*			_userPointer;
+	
 	bool						_bInited;
 	bool						_bCreated;
+	bool						_bAdded;
 };
 
 
