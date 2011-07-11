@@ -2,17 +2,13 @@
 
 #include "ofMain.h"
 #include "ofxBullet.h"
-//#include "ofxXmlSettings.h"
 
-#define NUM_LIGHTS 3
-
-class testApp : public ofBaseApp {
+class testApp : public ofBaseApp{
 
 public:
 	void setup();
 	void update();
 	void draw();
-	void exit();
 	
 	void onCollision(ofxBulletCollisionData& cdata);
 	void mousePickEvent( ofxBulletMousePickEvent &e );
@@ -43,5 +39,5 @@ public:
 	bool						bRenderShapes;
 	
 	ofCamera					camera;
-	
+		
 };

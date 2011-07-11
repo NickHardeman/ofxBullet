@@ -1,7 +1,5 @@
 #include "testApp.h"
 
-#define BIT(x) (1<<(x))
-
 //--------------------------------------------------------------
 void testApp::setup() {
 	ofSetFrameRate(60);
@@ -11,7 +9,7 @@ void testApp::setup() {
 	camera.setPosition(ofVec3f(0, -7.f, -10.f));
 	camera.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, -1, 0));
 	
-	camera.cacheMatrices = true;
+	camera.cacheMatrices(true);
 	
 	world.setup();
 	// enables mouse Pick events //
@@ -94,7 +92,6 @@ void testApp::update() {
 	}
 	world.update();
 	ofSetWindowTitle(ofToString(ofGetFrameRate(), 0));
-	
 }
 
 //--------------------------------------------------------------
@@ -133,11 +130,6 @@ void testApp::draw() {
 		ss << "add boxes (b): " << ofToString(!bAddSpheres, 0) << endl;
 		ofDrawBitmapString(ss.str().c_str(), 10, 10);
 	}
-}
-
-//--------------------------------------------------------------
-void testApp::exit() {
-	
 }
 
 //--------------------------------------------------------------
@@ -202,12 +194,12 @@ void testApp::keyPressed(int key) {
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){
+void testApp::keyReleased(int key) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ) {
+void testApp::mouseMoved(int x, int y) {
 	
 }
 
@@ -222,7 +214,7 @@ void testApp::mousePressed(int x, int y, int button) {
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button) {
+void testApp::mouseReleased(int x, int y, int button){
 	
 }
 
