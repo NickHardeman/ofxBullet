@@ -140,7 +140,7 @@ void ofxBulletWorldRigid::checkMousePicking(float $mousex, float $mousey) {
 	ofVec3f mouseRay = _camera->screenToWorld( ofVec3f($mousex, $mousey, 0) );
 	mouseRay = mouseRay - _camera->getPosition();
 	mouseRay.normalize();
-	mouseRay *= _camera->getFarClip();
+	mouseRay *= 300;
 	btVector3 rayTo(mouseRay.x, mouseRay.y, mouseRay.z);
 	btVector3 m_cameraPosition( _camera->getPosition().x, _camera->getPosition().y, _camera->getPosition().z );
 	
@@ -329,7 +329,7 @@ void ofxBulletWorldRigid::mouseDragged( ofMouseEventArgs &a ) {
 			ofVec3f mouseRay = _camera->screenToWorld( ofVec3f((float)a.x, (float)a.y, 0) );
 			mouseRay = mouseRay - _camera->getPosition();
 			mouseRay.normalize();
-			mouseRay *= _camera->getFarClip();
+			mouseRay *= 300.f;
 			btVector3 newRayTo(mouseRay.x, mouseRay.y, mouseRay.z);
 			
 			btVector3 oldPivotInB = pickCon->getFrameOffsetA().getOrigin();
