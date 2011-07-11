@@ -48,14 +48,6 @@ void ofxBulletWorldRigid::setup() {
 	// default gravity //
 	setGravity(ofVec3f(0.f, 9.8f, 0.f));
 	
-	//setDebugDrawer(btIDebugDraw*	debugDrawer)
-	
-	// OgreBulletCollisions::DebugDrawer *debugDrawer = new OgreBulletCollisions::DebugDrawer();
-	//btIDebugDraw::btIDebugDraw *drawer = new btIDebugDraw::btIDebugDraw();
-	//GLDebugDrawer debugDraw;
-	//world->setDebugDrawer( new GLDebugDrawer() );
-	//world->getDebugDrawer()->setDebugMode(btIDebugDraw::DBG_DrawConstraints+btIDebugDraw::DBG_DrawConstraintLimits);
-	//world->getDebugDrawer()->setDebugMode(btIDebugDraw::DBG_DrawConstraints);
 }
 
 //--------------------------------------------------------------
@@ -67,9 +59,6 @@ void ofxBulletWorldRigid::update() {
 	if(bDispatchCollisionEvents) {
 		world->performDiscreteCollisionDetection();
 		checkCollisions();
-	}
-	if(bDispatchPickingEvents) {
-		
 	}
 }
 
@@ -108,6 +97,7 @@ void ofxBulletWorldRigid::checkCollisions() {
 		ofxBulletCollisionData cdata;
 		if(numContacts > 0) {
 			cdata.numContactPoints = numContacts;
+			
 			cdata.userData1 = (ofxBulletUserData*)obA->getUserPointer();
 			cdata.userData2 = (ofxBulletUserData*)obB->getUserPointer();
 		}
@@ -202,9 +192,9 @@ void ofxBulletWorldRigid::checkMousePicking(float $mousex, float $mousey) {
 				
 				gOldPickingDist  = (pickPos-m_cameraPosition).length();
 				
-				cout << "ofxBulletWorldRigid :: checkMousePicking : adding a mouse constraint" << endl;
+				//cout << "ofxBulletWorldRigid :: checkMousePicking : adding a mouse constraint" << endl;
 			}
-			cout << "ofxBulletWorldRigid :: checkMousePicking : selected a body!!!" << endl;
+			//cout << "ofxBulletWorldRigid :: checkMousePicking : selected a body!!!" << endl;
 			ofNotifyEvent( MOUSE_PICK_EVENT, cdata, this );
 		}
 	}
@@ -212,6 +202,7 @@ void ofxBulletWorldRigid::checkMousePicking(float $mousex, float $mousey) {
 
 //--------------------------------------------------------------
 void ofxBulletWorldRigid::enableGrabbing() {
+	bDispatchPickingEvents = true;
 	bRegisterGrabbing = true;
 }
 
@@ -269,7 +260,7 @@ void ofxBulletWorldRigid::createGround( float $y ) {
 //--------------------------------------------------------------
 void ofxBulletWorldRigid::removeMouseConstraint() {
 	if ( _pickConstraint != NULL && world != NULL ) {
-		cout << "ofxBulletWorldRigid :: checkMousePicking : removing a mouse constraint" << endl;
+		//cout << "ofxBulletWorldRigid :: checkMousePicking : removing a mouse constraint" << endl;
 		world->removeConstraint( _pickConstraint );
 		delete _pickConstraint;
 		_pickConstraint = NULL;
@@ -284,7 +275,7 @@ void ofxBulletWorldRigid::removeMouseConstraint() {
 //--------------------------------------------------------------
 void ofxBulletWorldRigid::destroy() {
 	ofUnregisterMouseEvents( this );
-	cout << "destroy function is being called " << endl;
+	cout << "ofxBulletWorldRigid :: destroy : destroy() " << endl;
 	//cleanup in the reverse order of creation/initialization
 	int i;
 	
@@ -292,7 +283,7 @@ void ofxBulletWorldRigid::destroy() {
 	if(world != NULL) {
 		removeMouseConstraint();
 		
-		cout << "num constraints: " << world->getNumConstraints() << endl;
+		cout << "ofxBulletWorldRigid :: destroy : num constraints= " << world->getNumConstraints() << endl;
 		for (i = world->getNumConstraints()-1; i >= 0; i--) {
 			btTypedConstraint* constraint = world->getConstraint(i);
 			world->removeConstraint(constraint);
@@ -302,11 +293,11 @@ void ofxBulletWorldRigid::destroy() {
 	
 	//remove the rigidbodies from the dynamics world and delete them
 	if(world != NULL) {
-		cout << "num collision objects: " << world->getNumCollisionObjects() << endl;
+		cout << "ofxBulletWorldRigid :: destroy : num collision objects= " << world->getNumCollisionObjects() << endl;
 		for (i = world->getNumCollisionObjects()-1; i >= 0; i--) {
 			btCollisionObject* obj = world->getCollisionObjectArray()[i];
 			btRigidBody* body = btRigidBody::upcast(obj);
-			if (body && body->getMotionState()) {
+			if (body != 0 && body != NULL && body->getMotionState()) {
 				delete body->getMotionState();
 			}
 			world->removeCollisionObject( obj );
