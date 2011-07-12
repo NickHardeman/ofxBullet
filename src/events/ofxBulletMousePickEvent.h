@@ -10,17 +10,21 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxBulletRaycastData.h"
 #include "ofxBulletBaseShape.h"
 
-class ofxBulletMousePickEvent {
+class ofxBulletMousePickEvent : public ofxBulletRaycastData {
 public:
-	ofxBulletUserData* userData;
-	// location in the bullet world //
-	ofVec3f	mouseWorldPos;
-	// location of the mouse on the screen, z will always be 0 //
-	ofVec3f mouseScreenPos;
-	// location of the pick position in the world coords //
-	ofVec3f pickPosWorld;
-	// local point in rigid body coords //
-	ofVec3f localPivotPos;
+	ofxBulletMousePickEvent() {}
+	~ofxBulletMousePickEvent() {}
+	
+	void setRaycastData( ofxBulletRaycastData& $raycastdata ) {
+		bHasHit			= $raycastdata.bHasHit;
+		body			= $raycastdata.body;
+		userData		= $raycastdata.userData;
+		rayWorldPos		= $raycastdata.rayWorldPos;
+		rayScreenPos	= $raycastdata.rayScreenPos;
+		pickPosWorld	= $raycastdata.pickPosWorld;
+		localPivotPos	= $raycastdata.localPivotPos;
+	}
 };
