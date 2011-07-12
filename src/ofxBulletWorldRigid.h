@@ -18,6 +18,7 @@
 #include "ofxBulletCollisionData.h"
 #include "ofxBulletMousePickEvent.h"
 #include "GLDebugDrawer.h"
+#include "ofxBulletRaycastData.h"
 
 class ofxBulletWorldRigid {
 public:
@@ -35,6 +36,8 @@ public:
 	void enableCollisionEvents();
 	void disableCollisionEvents();
 	void checkCollisions();
+	
+	ofxBulletRaycastData raycastTest(float $x, float $y);
 	
 	void enableMousePickingEvents();
 	void disableMousePickingEvents();

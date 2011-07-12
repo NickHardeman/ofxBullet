@@ -16,6 +16,7 @@ ofxBulletWorldRigid::ofxBulletWorldRigid() {
 	dispatcher				= NULL;
 	solver					= NULL;
 	world					= NULL;
+	_camera					= NULL;
 	_cameraPos				= ofVec3f(0, 0, 0);
 	_bMouseDown				= false;
 	_pickedBody				= NULL;
@@ -124,6 +125,42 @@ void ofxBulletWorldRigid::checkCollisions() {
 }
 
 //--------------------------------------------------------------
+ofxBulletRaycastData ofxBulletWorldRigid::raycastTest(float $x, float $y) {
+	ofxBulletRaycastData data;
+	data.bHasHit = false;
+	if(_camera == NULL) {
+		ofLog( OF_LOG_ERROR, "ofxBulletWorldRigid :: raycastTest : must set the camera first!!");
+		return data;
+	}
+	
+	ofVec3f castRay = _camera->screenToWorld( ofVec3f($x, $y, 0) );
+	castRay = castRay - _camera->getPosition();
+	castRay.normalize();
+	castRay *= 300;
+	btVector3 rayTo(castRay.x, castRay.y, castRay.z);
+	btVector3 m_cameraPosition( _camera->getPosition().x, _camera->getPosition().y, _camera->getPosition().z );
+	
+	btCollisionWorld::ClosestRayResultCallback rayCallback( m_cameraPosition, rayTo );
+	world->rayTest( m_cameraPosition, rayTo, rayCallback );
+	
+	if (rayCallback.hasHit()) {
+		btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
+		if (body) {
+			data.bHasHit			= true;
+			data.userData			= (ofxBulletUserData*)body->getUserPointer();
+			data.body				= body;
+			data.rayWorldPos		= castRay;
+			data.rayScreenPos		= ofVec3f($x, $x, 0);
+			btVector3 pickPos		= rayCallback.m_hitPointWorld;
+			data.pickPosWorld		= ofVec3f(pickPos.getX(), pickPos.getY(), pickPos.getZ());
+			btVector3 localPos		= body->getCenterOfMassTransform().inverse() * pickPos;
+			data.localPivotPos		= ofVec3f(localPos.getX(), localPos.getY(), localPos.getZ() );
+		}
+	}
+	return data;
+}
+
+//--------------------------------------------------------------
 void ofxBulletWorldRigid::enableMousePickingEvents() {
 	bDispatchPickingEvents	= true;
 }
@@ -136,38 +173,21 @@ void ofxBulletWorldRigid::disableMousePickingEvents() {
 //--------------------------------------------------------------
 // pulled from DemoApplication in the AllBulletDemos project included in the Bullet physics download //
 void ofxBulletWorldRigid::checkMousePicking(float $mousex, float $mousey) {
-	// TODO: account for _camera not being set //
-	ofVec3f mouseRay = _camera->screenToWorld( ofVec3f($mousex, $mousey, 0) );
-	mouseRay = mouseRay - _camera->getPosition();
-	mouseRay.normalize();
-	mouseRay *= 300;
-	btVector3 rayTo(mouseRay.x, mouseRay.y, mouseRay.z);
-	btVector3 m_cameraPosition( _camera->getPosition().x, _camera->getPosition().y, _camera->getPosition().z );
-	
-	btCollisionWorld::ClosestRayResultCallback rayCallback( m_cameraPosition, rayTo );
-	world->rayTest( m_cameraPosition, rayTo, rayCallback );
-	
-	if (rayCallback.hasHit()) {
-		btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
-		if (body) {
-			ofxBulletMousePickEvent cdata;
-			cdata.userData			= (ofxBulletUserData*)body->getUserPointer();
-			cdata.mouseWorldPos		= mouseRay;
-			cdata.mouseScreenPos	= ofVec3f($mousex, $mousey, 0);
-			btVector3 pickPos		= rayCallback.m_hitPointWorld;
-			cdata.pickPosWorld		= ofVec3f(pickPos.getX(), pickPos.getY(), pickPos.getZ());
-			btVector3 localPos		= body->getCenterOfMassTransform().inverse() * pickPos;
-			cdata.localPivotPos		= ofVec3f(localPos.getX(), localPos.getY(), localPos.getZ() );
-			
+	ofxBulletRaycastData data = raycastTest($mousex, $mousey);
+	if(data.bHasHit) {
+		ofxBulletMousePickEvent cdata;
+		cdata.setRaycastData(data);
+		if (cdata.body != NULL) {
+			btVector3 m_cameraPosition( _camera->getPosition().x, _camera->getPosition().y, _camera->getPosition().z );
 			//other exclusions?
-			if (!(body->isStaticObject() || body->isKinematicObject()) && bRegisterGrabbing) {
-				_pickedBody = body; //btRigidBody //
+			if (!(cdata.body->isStaticObject() || cdata.body->isKinematicObject()) && bRegisterGrabbing) {
+				_pickedBody = cdata.body; //btRigidBody //
 				_pickedBody->setActivationState( DISABLE_DEACTIVATION );
 				
 				btTransform tr;
 				tr.setIdentity();
-				tr.setOrigin(localPos);
-				btGeneric6DofConstraint* dof6 = new btGeneric6DofConstraint(*body, tr, false);
+				tr.setOrigin(btVector3(cdata.localPivotPos.x, cdata.localPivotPos.y, cdata.localPivotPos.z));
+				btGeneric6DofConstraint* dof6 = new btGeneric6DofConstraint(*cdata.body, tr, false);
 				dof6->setLinearLowerLimit(btVector3(0,0,0));
 				dof6->setLinearUpperLimit(btVector3(0,0,0));
 				dof6->setAngularLowerLimit(btVector3(0,0,0));
@@ -190,7 +210,7 @@ void ofxBulletWorldRigid::checkMousePicking(float $mousex, float $mousey) {
 				dof6->setParam(BT_CONSTRAINT_STOP_ERP,0.1,4);
 				dof6->setParam(BT_CONSTRAINT_STOP_ERP,0.1,5);
 				
-				gOldPickingDist  = (pickPos-m_cameraPosition).length();
+				gOldPickingDist  = ( btVector3(cdata.pickPosWorld.x, cdata.pickPosWorld.y, cdata.pickPosWorld.z) - m_cameraPosition).length();
 				
 				//cout << "ofxBulletWorldRigid :: checkMousePicking : adding a mouse constraint" << endl;
 			}
