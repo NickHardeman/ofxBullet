@@ -32,18 +32,19 @@ public:
 	virtual ofxBulletUserData*	getData() const;
 	int				getActivationState();
 	
-	float			getMass();
+	float			getMass() const;
 	void			getOpenGLMatrix( btScalar* $m );
-	ofVec3f			getPosition();
-	ofVec3f			getRotation();
-	ofVec3f			getRotationAxis();
-	float			getRotationAngle();
-	ofQuaternion	getRotationQuat();
+	ofMatrix4x4		getTransformationMatrix() const;
+	ofVec3f			getPosition() const;
+	ofVec3f			getRotation() const;
+	ofVec3f			getRotationAxis() const;
+	float			getRotationAngle() const;
+	ofQuaternion	getRotationQuat() const;
 	
-	float			getRestitution();
-	float			getFriction();
-	float			getDamping();
-	float			getAngularDamping();
+	float			getRestitution() const;
+	float			getFriction() const;
+	float			getDamping() const;
+	float			getAngularDamping() const;
 	
 	// used for checking collisions. Data is set using getData and operator is used to see if the same //
 	bool	operator==( const ofxBulletUserData* userData) const;

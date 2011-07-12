@@ -147,7 +147,7 @@ int ofxBulletBaseShape::getActivationState() {
 
 
 //--------------------------------------------------------------
-float ofxBulletBaseShape::getMass() {
+float ofxBulletBaseShape::getMass() const {
 	return _mass;
 }
 
@@ -157,31 +157,43 @@ void ofxBulletBaseShape::getOpenGLMatrix( btScalar* $m ) {
 }
 
 //--------------------------------------------------------------
-ofVec3f ofxBulletBaseShape::getPosition() {
+ofMatrix4x4 ofxBulletBaseShape::getTransformationMatrix() const {
+	float	m[16];
+	ofGetOpenGLMatrixFromRigidBody( _rigidBody, m );
+	ofMatrix4x4 mat;
+	mat.set(m[0], m[1], m[2], m[3],
+			m[4], m[5], m[6], m[7],
+			m[8], m[9], m[10], m[11],
+			m[12], m[13], m[14], m[15]);
+	return mat;
+}
+
+//--------------------------------------------------------------
+ofVec3f ofxBulletBaseShape::getPosition() const {
 	return ofGetVec3fPosFromRigidBody( _rigidBody );
 }
 
 // returns yaw, pitch, roll //
 //--------------------------------------------------------------
-ofVec3f ofxBulletBaseShape::getRotation( ) {
+ofVec3f ofxBulletBaseShape::getRotation( ) const {
 	return ofGetRotationFromRigidBody( _rigidBody );
 }
 
 //--------------------------------------------------------------
-ofVec3f ofxBulletBaseShape::getRotationAxis() {
+ofVec3f ofxBulletBaseShape::getRotationAxis() const {
 	btQuaternion rotQuat		= _rigidBody->getWorldTransform().getRotation();
 	btVector3 btaxis			= rotQuat.getAxis();
 	return ofVec3f( btaxis.getX(), btaxis.getY(), btaxis.getZ() );
 }
 
 //--------------------------------------------------------------
-float ofxBulletBaseShape::getRotationAngle() {
+float ofxBulletBaseShape::getRotationAngle() const {
 	btQuaternion rotQuat		= _rigidBody->getWorldTransform().getRotation();
 	return rotQuat.getAngle();
 }
 
 //--------------------------------------------------------------
-ofQuaternion ofxBulletBaseShape::getRotationQuat() {
+ofQuaternion ofxBulletBaseShape::getRotationQuat() const {
 	ofVec3f axis	= getRotationAxis();
 	return ofQuaternion( axis.x, axis.y, axis.z, getRotationAngle());
 }
@@ -190,22 +202,22 @@ ofQuaternion ofxBulletBaseShape::getRotationQuat() {
 
 
 //--------------------------------------------------------------
-float ofxBulletBaseShape::getRestitution() {
+float ofxBulletBaseShape::getRestitution() const {
 	return (float)_rigidBody->getRestitution();
 }
 
 //--------------------------------------------------------------
-float ofxBulletBaseShape::getFriction() {
+float ofxBulletBaseShape::getFriction() const {
 	return _rigidBody->getFriction();
 }
 
 //--------------------------------------------------------------
-float ofxBulletBaseShape::getDamping() {
+float ofxBulletBaseShape::getDamping() const {
 	return (float)_rigidBody->getLinearDamping();
 }
 
 //--------------------------------------------------------------
-float ofxBulletBaseShape::getAngularDamping() {
+float ofxBulletBaseShape::getAngularDamping() const {
 	return (float)_rigidBody->getAngularDamping();
 }
 
