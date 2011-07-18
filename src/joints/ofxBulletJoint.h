@@ -40,7 +40,13 @@ public:
 	ofVec3f getPivotAWorldPos();
 	ofVec3f getPivotBWorldPos();
 	
+	btRigidBody* getRigidBodyA() const;
+	btRigidBody* getRigidBodyB() const;
+	ofVec3f getPositionA() const;
+	ofVec3f getPositionB() const;
+	
 	void	draw();
+	void	drawJointConstraints();
 	
 private:
 	btDiscreteDynamicsWorld*	_world;

@@ -110,7 +110,40 @@ ofVec3f ofxBulletJoint::getPivotBWorldPos() {
 }
 
 //--------------------------------------------------------------
+btRigidBody* ofxBulletJoint::getRigidBodyA() const {
+	return (btRigidBody*)&_joint->getRigidBodyA();
+}
+
+//--------------------------------------------------------------
+btRigidBody* ofxBulletJoint::getRigidBodyB() const {
+	return (btRigidBody*)&_joint->getRigidBodyB();
+}
+
+//--------------------------------------------------------------
+ofVec3f ofxBulletJoint::getPositionA() const {
+	return ofGetVec3fPosFromRigidBody( getRigidBodyA() );
+}
+
+//--------------------------------------------------------------
+ofVec3f ofxBulletJoint::getPositionB() const {
+	return ofGetVec3fPosFromRigidBody( getRigidBodyB() );
+}
+
+//--------------------------------------------------------------
 void ofxBulletJoint::draw() {
+	ofVec3f pa = getPositionA();
+	ofVec3f pb = getPositionB();
+	
+	glBegin(GL_LINES);
+		glVertex3f(pa.x, pa.y, pa.z);
+		glVertex3f(pb.x, pb.y, pb.z);
+	glEnd();
+}
+
+//--------------------------------------------------------------
+// draws the length of the joint and locations of pivots, but if bodies are sprung more than the length,
+// will not connect all the way //
+void ofxBulletJoint::drawJointConstraints() {
 	ofVec3f pa = getPivotAWorldPos();
 	ofVec3f pb = getPivotBWorldPos();
 	
