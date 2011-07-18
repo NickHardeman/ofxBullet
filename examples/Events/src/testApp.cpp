@@ -116,6 +116,10 @@ void testApp::draw() {
 			shapes[i]->draw();
 		}
 	}
+	if(mousePickIndex > -1) {
+		ofSetColor(255, 20, 255);
+		ofSphere(mousePickPos.x, mousePickPos.y, mousePickPos.z, .1);
+	}
 	
 	camera.end();
 	glDisable(GL_DEPTH_TEST);
@@ -149,6 +153,8 @@ void testApp::mousePickEvent( ofxBulletMousePickEvent &e ) {
 	for(int i = 0; i < shapes.size(); i++) {
 		if(*shapes[i] == e) {
 			mousePickIndex = i;
+			mousePickPos = e.pickPosWorld;
+			break;
 		}
 	}
 }

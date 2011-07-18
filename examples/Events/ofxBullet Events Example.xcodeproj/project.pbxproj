@@ -67,6 +67,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2E87B19613CCA1EC00B0D2EE /* ofxBulletRaycastData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletRaycastData.h; sourceTree = "<group>"; };
 		2EA8E49013CB9AEB00D93448 /* ofxBulletCollisionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCollisionData.h; sourceTree = "<group>"; };
 		2EA8E49113CB9AEB00D93448 /* ofxBulletMousePickEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletMousePickEvent.h; sourceTree = "<group>"; };
 		2EA8E49313CB9AEB00D93448 /* ofxBulletJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletJoint.cpp; sourceTree = "<group>"; };
@@ -172,6 +173,7 @@
 			children = (
 				2EA8E49013CB9AEB00D93448 /* ofxBulletCollisionData.h */,
 				2EA8E49113CB9AEB00D93448 /* ofxBulletMousePickEvent.h */,
+				2E87B19613CCA1EC00B0D2EE /* ofxBulletRaycastData.h */,
 			);
 			path = events;
 			sourceTree = "<group>";

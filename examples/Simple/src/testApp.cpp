@@ -39,6 +39,9 @@ void testApp::setup() {
 	ground.create( world.world, ofVec3f(0., 5.5, 0.), 0., 100.f, 1.f, 100.f );
 	ground.setProperties(.25, .95);
 	ground.add();
+	
+	//ofNode
+	// ofMesh
 }
 
 //--------------------------------------------------------------

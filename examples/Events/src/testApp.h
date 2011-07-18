@@ -30,7 +30,8 @@ public:
 	btSphereShape*				sphereShape;
 	vector<ofxBulletBaseShape*>	shapes;
 	vector<bool>				bColliding;
-	int mousePickIndex;
+	int							mousePickIndex;
+	ofVec3f						mousePickPos;
 	
 	bool						bDrawDebug;
 	bool						bDrawWorldDebug;
