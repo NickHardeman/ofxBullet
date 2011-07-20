@@ -13,6 +13,8 @@
 ofxBulletJoint::ofxBulletJoint() {
 	_bCreated		= false;
 	_bAdded			= false;
+	_bTwoBodies		= false;
+	_targetPos.set(0, 0, 0);
 }
 
 //--------------------------------------------------------------
@@ -36,7 +38,10 @@ void ofxBulletJoint::create( btDiscreteDynamicsWorld* $world, ofxBulletBaseShape
 	
 	_joint = new btGeneric6DofConstraint(*$shape2->getRigidBody(), *$shape1->getRigidBody(), frameInA, frameInB, true);
 	
-	_bCreated = true;
+	_setDefaults();
+	
+	_bTwoBodies	= true;
+	_bCreated	= true;
 }
 
 //--------------------------------------------------------------
@@ -45,20 +50,38 @@ void ofxBulletJoint::create( btDiscreteDynamicsWorld* $world, ofxBulletBaseShape
 	// we should have these always influenced by the joint, so don't let them go to sleep //
 	$shape->setActivationState( DISABLE_DEACTIVATION );
 	
-	//ofVec3f diff = $shape2->getPosition() - $shape1->getPosition();
+	btVector3 localPivot	= $shape->getRigidBody()->getCenterOfMassTransform().inverse() * btVector3($pos.x, $pos.y, $pos.z);
+	btTransform tr;
+	tr.setIdentity();
+	tr.setOrigin( localPivot );
+	_joint = new btGeneric6DofConstraint(*$shape->getRigidBody(), tr, false);
 	
-	//btTransform frameInA = btTransform::getIdentity();
-	//frameInA.setOrigin( btVector3(btScalar(-diff.x), btScalar(-diff.y), btScalar(-diff.z)) );
-	//btTransform frameInB = btTransform::getIdentity();
-	//frameInB.setOrigin( btVector3(btScalar(0.), btScalar(0.), btScalar(0.)) );
+	_setDefaults();
 	
-	//_joint = new btGeneric6DofConstraint(*$shape2->getRigidBody(), *$shape1->getRigidBody(), frameInA, frameInB, true);
+	_targetPos.set($pos.x, $pos.y, $pos.z);
+	_bTwoBodies = false;
+	_bCreated	= true;
+}
+
+//--------------------------------------------------------------
+void ofxBulletJoint::_setDefaults() {
+	_joint->setParam(BT_CONSTRAINT_STOP_CFM,0.8,0);
+	_joint->setParam(BT_CONSTRAINT_STOP_CFM,0.8,1);
+	_joint->setParam(BT_CONSTRAINT_STOP_CFM,0.8,2);
+	_joint->setParam(BT_CONSTRAINT_STOP_CFM,0.8,3);
+	_joint->setParam(BT_CONSTRAINT_STOP_CFM,0.8,4);
+	_joint->setParam(BT_CONSTRAINT_STOP_CFM,0.8,5);
 	
-	//_bCreated = true;
+	_joint->setParam(BT_CONSTRAINT_STOP_ERP,0.1,0);
+	_joint->setParam(BT_CONSTRAINT_STOP_ERP,0.1,1);
+	_joint->setParam(BT_CONSTRAINT_STOP_ERP,0.1,2);
+	_joint->setParam(BT_CONSTRAINT_STOP_ERP,0.1,3);
+	_joint->setParam(BT_CONSTRAINT_STOP_ERP,0.1,4);
+	_joint->setParam(BT_CONSTRAINT_STOP_ERP,0.1,5);
 }
 
 /******************************************************/
-// call these before add() //
+// call these before add() and after create //
 void ofxBulletJoint::setLinearLowerLimit( ofVec3f $limit ) {
 	setLinearLowerLimit( $limit.x, $limit.y, $limit.z );
 }
@@ -130,9 +153,27 @@ ofVec3f ofxBulletJoint::getPositionB() const {
 }
 
 //--------------------------------------------------------------
+void ofxBulletJoint::updatePivotPos( const ofVec3f $pos, float $length ) {
+	if(!_bCreated) {ofLog(OF_LOG_ERROR, "ofxBulletJoint :: updatePivotPos : must call create() first"); return;}
+	
+	_joint->getFrameOffsetA().setOrigin( btVector3($pos.x, $pos.y, $pos.z) );
+	
+	_targetPos.set( $pos.x, $pos.y, $pos.z );
+}
+
+//--------------------------------------------------------------
 void ofxBulletJoint::draw() {
-	ofVec3f pa = getPositionA();
-	ofVec3f pb = getPositionB();
+	if(!_bCreated) {ofLog(OF_LOG_ERROR, "ofxBulletJoint :: draw : must call create() first"); return;}
+	
+	ofVec3f pa;
+	ofVec3f pb;
+	
+	pb = getPositionB();
+	if(_bTwoBodies) {
+		pa = getPositionA();
+	} else {
+		pa = _targetPos;
+	}
 	
 	glBegin(GL_LINES);
 		glVertex3f(pa.x, pa.y, pa.z);
@@ -151,6 +192,11 @@ void ofxBulletJoint::drawJointConstraints() {
 		glVertex3f(pa.x, pa.y, pa.z);
 		glVertex3f(pb.x, pb.y, pb.z);
 	glEnd();
+	
+	ofSetColor(255, 0, 0);
+	ofSphere(pa, .5);
+	ofSetColor(0, 0, 255);
+	ofSphere(pb, .5);
 }
 
 

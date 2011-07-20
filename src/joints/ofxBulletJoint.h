@@ -45,13 +45,20 @@ public:
 	ofVec3f getPositionA() const;
 	ofVec3f getPositionB() const;
 	
+	void	updatePivotPos( const ofVec3f $pos, float $length );
+	
 	void	draw();
 	void	drawJointConstraints();
+	
+protected:
+	void _setDefaults();
 	
 private:
 	btDiscreteDynamicsWorld*	_world;
 	btGeneric6DofConstraint*	_joint;
-	
+	ofVec3f						_targetPos;
+	// is there two bodies the joint is connecting? if not, what is the target pos //
+	bool						_bTwoBodies;
 	bool						_bCreated;
 	bool						_bAdded;
 };
