@@ -37,13 +37,13 @@ public:
 	void disableCollisionEvents();
 	void checkCollisions();
 	
-	ofxBulletRaycastData raycastTest(float $x, float $y);
+	ofxBulletRaycastData raycastTest(float $x, float $y, short int $filterMask=btBroadphaseProxy::AllFilter);
 	
-	void enableMousePickingEvents();
+	void enableMousePickingEvents( short int $filterMask=btBroadphaseProxy::AllFilter );
 	void disableMousePickingEvents();
 	void checkMousePicking(float $mousex, float $mousey);
 	
-	void enableGrabbing();
+	void enableGrabbing( short int $filterMask=btBroadphaseProxy::AllFilter );
 	void disableGrabbing();
 	
 	void enableDebugDraw();
@@ -51,7 +51,7 @@ public:
 	
 	bool checkWorld();
 	void setGravity( ofVec3f $g );
-	void createGround( float $y );
+	ofVec3f getGravity();
 	
 	void removeMouseConstraint();
 	void destroy();
@@ -78,6 +78,7 @@ private:
 	ofCamera*	_camera;
 	ofVec3f		_cameraPos;
 	bool		_bMouseDown;
+	short int	_mouseFilterMask; // if you don't want to pick certain objects //
 	btRigidBody* _pickedBody;
 	
 	///constraint for mouse picking
