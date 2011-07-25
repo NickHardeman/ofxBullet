@@ -15,4 +15,3 @@ Bullet Physics 2.77 - http://code.google.com/p/bullet/downloads/list
 
 INSTALLATION (currently libs only for osx):
 Move the ofxBullet folder into OpenFrameworks > addons 
-Move the ofxBullet > bullet folder to OpenFrameworks > libs
