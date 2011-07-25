@@ -19,7 +19,7 @@ ofxBulletJoint::ofxBulletJoint() {
 
 //--------------------------------------------------------------
 ofxBulletJoint::~ofxBulletJoint() {
-	
+	remove();
 }
 
 //--------------------------------------------------------------
@@ -112,6 +112,14 @@ void ofxBulletJoint::setAngularUpperLimit( float $x, float $y, float $z ) {
 void ofxBulletJoint::add() {
 	_world->addConstraint(_joint, true);
 	_bAdded = true;
+}
+
+//--------------------------------------------------------------
+void ofxBulletJoint::remove() {
+	cout << "ofxBulletJoint :: remove : " << endl;
+	_world->removeConstraint(_joint);
+	delete _joint;
+	_joint = NULL;
 }
 
 //--------------------------------------------------------------

@@ -50,6 +50,8 @@ public:
 	void	draw();
 	void	drawJointConstraints();
 	
+	void	remove();
+	
 protected:
 	void _setDefaults();
 	
