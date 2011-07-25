@@ -11,12 +11,12 @@
 
 //--------------------------------------------------------------
 ofxBulletBox::ofxBulletBox() {
-	ofxBulletBaseShape();
+	
 }
 
 //--------------------------------------------------------------
 ofxBulletBox::~ofxBulletBox() {
-
+	
 }
 
 //--------------------------------------------------------------
@@ -75,9 +75,6 @@ void ofxBulletBox::draw() {
 //----------------------------------------
 void ofxBulletBox::drawBox(float sizeX, float sizeY, float sizeZ) {
 	ofPushMatrix();
-	//if(ofGetCoordHandedness() == OF_LEFT_HANDED) {
-		//ofScale(1, 1, -1);
-	//}
 	
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_VERTEX_ARRAY);

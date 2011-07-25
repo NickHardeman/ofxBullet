@@ -56,11 +56,7 @@ void ofxBulletBaseShape::remove() {
 		delete _userPointer;
 		_userPointer = NULL;
 	}
-	if(_bInited && _shape != NULL) {
-		removeRigidBody();
-	} else {
-		removeCollisionObject(); // removes both collision object and rigid body //
-	}
+	removeRigidBody();
 }
 
 //--------------------------------------------------------------
@@ -77,28 +73,6 @@ void ofxBulletBaseShape::removeRigidBody() {
 	}
 	_bCreated = _bInited = _bAdded = false;
 }
-
-//--------------------------------------------------------------
-void ofxBulletBaseShape::removeCollisionObject() {
-	btCollisionObject* obj = NULL;
-	if(_world != NULL && _bAdded) {
-		cout << "ofxBulletBaseShape :: removeCollisionObject : removing rigid body" << endl;
-		///btRigidBody* body = btRigidBody::upcast(obj);
-		obj = (btCollisionObject*)_rigidBody->getCollisionShape();
-		if (_rigidBody && _rigidBody->getMotionState()) {
-			delete _rigidBody->getMotionState();
-		}
-	}
-	if(_world != NULL && obj != NULL ) {
-		cout << "ofxBulletBaseShape :: removeCollisionObject : removing collision object" << endl;
-		_world->removeCollisionObject( obj );
-		delete obj;
-		_shape = NULL;
-		obj = NULL;
-	}
-	_bCreated = _bInited = _bAdded= false;
-}
-
 
 //--------------------------------------------------------------
 bool ofxBulletBaseShape::operator==( const ofxBulletUserData* $userData) const {
@@ -124,6 +98,15 @@ bool ofxBulletBaseShape::operator!=( const ofxBulletMousePickEvent& $e ) const {
 	return !(getData() == $e.userData);
 }
 
+//--------------------------------------------------------------
+bool ofxBulletBaseShape::operator==( const ofxBulletRaycastData& $e ) const {
+	return getData() == $e.userData;
+}
+//--------------------------------------------------------------
+bool ofxBulletBaseShape::operator!=( const ofxBulletRaycastData& $e ) const {
+	return !(getData() == $e.userData);
+}
+
 
 
 
@@ -137,6 +120,11 @@ btRigidBody* ofxBulletBaseShape::getRigidBody() {
 //--------------------------------------------------------------
 ofxBulletUserData* ofxBulletBaseShape::getData() const {
 	return (ofxBulletUserData*)_rigidBody->getUserPointer();
+}
+
+//--------------------------------------------------------------
+btCollisionShape* ofxBulletBaseShape::getCollisionShape() const {
+	return _shape;
 }
 
 //--------------------------------------------------------------

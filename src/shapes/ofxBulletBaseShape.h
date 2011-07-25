@@ -22,14 +22,14 @@ public:
 	~ofxBulletBaseShape();
 	
 	virtual void create( btDiscreteDynamicsWorld* $world, btCollisionShape* $colShape, btTransform $bt_tr, float $mass );
-	void	add();
+	virtual void add();
 	void	remove();
-	void	removeCollisionObject();
 	void	removeRigidBody();
 	
 	// GETTERS //
 	btRigidBody*	getRigidBody();
 	virtual ofxBulletUserData*	getData() const;
+	btCollisionShape* getCollisionShape() const;
 	int				getActivationState();
 	
 	float			getMass() const;
@@ -53,6 +53,8 @@ public:
 	
 	bool	operator==( const ofxBulletMousePickEvent& $e ) const;
 	bool	operator!=( const ofxBulletMousePickEvent& $e ) const;
+	bool	operator==( const ofxBulletRaycastData& $e ) const;
+	bool	operator!=( const ofxBulletRaycastData& $e ) const;
 	
 	// PROPERTY SETTERS, must be called after init() and before create() //
 	void setProperties(float $restitution, float $friction);
