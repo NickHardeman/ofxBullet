@@ -166,6 +166,7 @@ void testApp::draw() {
 	ofSetColor(255, 255, 255);
 	stringstream ss;
 	ss << "framerate: " << ofToString(ofGetFrameRate(),0) << endl;
+	ss << "num shapes: " << (shapes.size()+bounds.size()) << endl;
 	ss << "draw debug (d): " << ofToString(bDrawDebug, 0) << endl;
 	ss << "render shapes (r): " << ofToString(bRenderShapes, 0) << endl;
 	ss << "mouse force with spacebar: " << bSpacebar << endl;
