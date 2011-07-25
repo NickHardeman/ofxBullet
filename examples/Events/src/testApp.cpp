@@ -160,7 +160,7 @@ void testApp::draw() {
 	
 	ofEnableAlphaBlending();
 	ofSetColor(0, 0, 0, 150);
-	ofRect(0, 0, 250, 120);
+	ofRect(0, 0, 250, 100);
 	ofDisableAlphaBlending();
 	
 	ofSetColor(255, 255, 255);
@@ -170,7 +170,6 @@ void testApp::draw() {
 	ss << "render shapes (r): " << ofToString(bRenderShapes, 0) << endl;
 	ss << "mouse force with spacebar: " << bSpacebar << endl;
 	ss << "force direction(f): " << bAddCenterAttract << endl;
-	ss << "add shapes with spacebar" << endl;
 	ss << "add spherers (s)" << endl;
 	ss << "add boxes (b)" << endl;
 	ofDrawBitmapString(ss.str().c_str(), 10, 10);
