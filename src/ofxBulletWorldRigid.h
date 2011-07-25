@@ -43,7 +43,7 @@ public:
 	void disableMousePickingEvents();
 	void checkMousePicking(float $mousex, float $mousey);
 	
-	void enableGrabbing( short int $filterMask=btBroadphaseProxy::AllFilter );
+	void enableGrabbing( short int $filterMask=btBroadphaseProxy::DefaultFilter | btBroadphaseProxy::KinematicFilter | btBroadphaseProxy::DebrisFilter | btBroadphaseProxy::SensorTrigger );
 	void disableGrabbing();
 	
 	void enableDebugDraw();

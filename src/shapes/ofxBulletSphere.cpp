@@ -11,14 +11,10 @@
 
 //--------------------------------------------------------------
 ofxBulletSphere::ofxBulletSphere() {
-	ofxBulletBaseShape();
 	setRenderMode( OFX_BT_RENDER_TRIS );
 	setSphereResolution( 16 );
 	
-	// set vbo vars //
-	//bUseTexture		= false;
-	//bUseNormals		= true;
-	//bUseVerts		= true;
+	_type = OFX_BULLET_SPHERE_SHAPE;
 }
 
 //--------------------------------------------------------------

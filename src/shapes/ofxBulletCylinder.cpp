@@ -11,7 +11,7 @@
 
 //--------------------------------------------------------------
 ofxBulletCylinder::ofxBulletCylinder() {
-	ofxBulletBaseShape();
+	_type = OFX_BULLET_CYLINDER_SHAPE;
 }
 
 //--------------------------------------------------------------

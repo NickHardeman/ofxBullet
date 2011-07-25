@@ -133,6 +133,11 @@ int ofxBulletBaseShape::getActivationState() {
 	return ((btCollisionObject*)_rigidBody->getCollisionShape())->getActivationState();
 }
 
+//--------------------------------------------------------------
+int ofxBulletBaseShape::getType() {
+	return _type;
+}
+
 
 //--------------------------------------------------------------
 float ofxBulletBaseShape::getMass() const {

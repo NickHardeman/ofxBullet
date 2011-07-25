@@ -11,7 +11,7 @@
 
 //--------------------------------------------------------------
 ofxBulletCapsule::ofxBulletCapsule() {
-	ofxBulletBaseShape();
+	_type	= OFX_BULLET_CAPSULE_SHAPE;
 	hull	= NULL;
 }
 

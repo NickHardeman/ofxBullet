@@ -21,6 +21,15 @@ public:
 	ofxBulletBaseShape();
 	~ofxBulletBaseShape();
 	
+	enum CollisionFilterGroups {
+		OFX_BULLET_BOX_SHAPE = 1,
+		OFX_BULLET_SPHERE_SHAPE = 2,
+		OFX_BULLET_CAPSULE_SHAPE = 3,
+		OFX_BULLET_CONE_SHAPE = 4,
+		OFX_BULLET_CYLINDER_SHAPE = 5,
+		OFX_BULLET_CUSTOM_SHAPE = 6
+	};
+	
 	virtual void create( btDiscreteDynamicsWorld* $world, btCollisionShape* $colShape, btTransform $bt_tr, float $mass );
 	virtual void add();
 	void	remove();
@@ -31,6 +40,8 @@ public:
 	virtual ofxBulletUserData*	getData() const;
 	btCollisionShape* getCollisionShape() const;
 	int				getActivationState();
+	
+	int				getType();
 	
 	float			getMass() const;
 	void			getOpenGLMatrix( btScalar* $m );
@@ -104,6 +115,8 @@ protected:
 	bool						_bInited;
 	bool						_bCreated;
 	bool						_bAdded;
+	
+	int							_type;
 };
 
 

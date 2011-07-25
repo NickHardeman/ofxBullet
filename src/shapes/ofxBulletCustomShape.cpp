@@ -11,7 +11,7 @@
 
 //--------------------------------------------------------------
 ofxBulletCustomShape::ofxBulletCustomShape() {
-	
+	_type = OFX_BULLET_CUSTOM_SHAPE;
 }
 
 //--------------------------------------------------------------
@@ -42,7 +42,6 @@ void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* $world, ofVec3f $loc
 
 //--------------------------------------------------------------
 void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* $world, btTransform $bt_tr, float $mass ) {
-	cout << "customshape create" << endl;
 	_world = $world;
 	_mass = $mass;
 	if(!_bInited) {
