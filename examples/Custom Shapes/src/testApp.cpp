@@ -6,13 +6,13 @@ void testApp::setup() {
 	ofSetVerticalSync(true);
 	ofBackground( 10, 10, 10);
 	
-	camera.setPosition(ofVec3f(0, -3.f, -38.f));
+	camera.setPosition(ofVec3f(0, -3.f, -40.f));
 	camera.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, -1, 0));
 	
 	camera.cacheMatrices(true);
 	
 	world.setup();
-	world.enableGrabbing(btBroadphaseProxy::DefaultFilter | btBroadphaseProxy::KinematicFilter | btBroadphaseProxy::DebrisFilter | btBroadphaseProxy::SensorTrigger);
+	world.enableGrabbing();
 	world.setCamera(&camera);
 	world.setGravity( ofVec3f(0, 25., 0) );
 	
@@ -60,6 +60,7 @@ void testApp::setup() {
 	// this model is huge! scale it down 
 	ofVec3f scale(.0009, .0009, .0009);
 	
+	// 3D logo by Lauren Licherdell | http://www.laurenlicherdell.com/ // 
 	assimpModel.loadModel("OFlogo.dae", true);
 	assimpModel.setScale(scale.x, scale.y, scale.z);
 	assimpModel.setPosition(0, 0, 0);
@@ -207,6 +208,8 @@ void testApp::draw() {
 	ss << "Draw Debug (d): " << bDrawDebug << endl;
 	ss << "Total Shapes: " << totalShapes << endl;
 	ss << "Add logos(o)" << endl;
+	ss << "add spherers (s)" << endl;
+	ss << "add boxes (b)" << endl;
 	ss << "Gravity(up/down/left/right): x=" << gravity.x << " y= " << gravity.y << " z= " << gravity.z << endl;
 	ofSetColor(255, 255, 255);
 	ofDrawBitmapString(ss.str().c_str(), 20, 20);
@@ -238,7 +241,7 @@ void testApp::keyPressed(int key) {
 			break;
 		case 'b':
 			shapes.push_back( new ofxBulletBox() );
-			((ofxBulletBox*)shapes[shapes.size()-1])->create( world.world, mouseLoc, rsize*.2, rsize, rsize, rsize );
+			((ofxBulletBox*)shapes[shapes.size()-1])->create( world.world, mouseLoc, rsize*.2, rsize*2, rsize*2, rsize*2 );
 			((ofxBulletBox*)shapes[shapes.size()-1])->setActivationState( DISABLE_DEACTIVATION );
 			shapes[shapes.size()-1]->add();
 			break;
