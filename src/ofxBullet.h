@@ -21,6 +21,7 @@
 #include "ofxBulletBaseShape.h"
 #include "ofxBulletCone.h"
 #include "ofxBulletCapsule.h"
+#include "ofxBulletCustomShape.h"
 
 // dynamics //
 #include "ofxBulletJoint.h"
