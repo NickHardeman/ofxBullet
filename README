@@ -1,7 +1,5 @@
 ofxBullet
 
-WARNING: INCOMPLETE, NOT READY FOR DEPLOYMENT! USE AT YOUR OWN RISK!
-
 Currently bullet libs are only compiled for osx. To compile for PC, view here: http://code.google.com/p/bullet/downloads/list
 -------------
 An OpenFrameworks add-on for Bullet Physics
