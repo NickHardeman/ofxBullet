@@ -45,6 +45,8 @@ void testApp::setup() {
 	bDrawDebug	= false;
 	bSpacebar	= false;
 	bShapesNeedErase = false;
+	
+	ofHideCursor();
 }
 
 //--------------------------------------------------------------
@@ -80,6 +82,9 @@ void testApp::draw() {
 	
 	ofSetLineWidth(1.f);
 	if(bDrawDebug) world.drawDebug();
+	
+	ofSetColor(255, 255, 255);
+	ofSphere(mousePos, .15f);
 	
 	ofEnableLighting();
 	light.enable();
