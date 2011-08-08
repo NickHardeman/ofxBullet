@@ -38,6 +38,8 @@ public:
 	void checkCollisions();
 	
 	ofxBulletRaycastData raycastTest(float $x, float $y, short int $filterMask=btBroadphaseProxy::AllFilter);
+	//ofxBulletRaycastData raycastTest( ofVec3f $castRay, short int $filterMask=btBroadphaseProxy::AllFilter);
+	ofxBulletRaycastData raycastTest( ofVec3f $rayStart, ofVec3f $rayEnd, short int $filterMask=btBroadphaseProxy::AllFilter);
 	
 	void enableMousePickingEvents( short int $filterMask=btBroadphaseProxy::AllFilter );
 	void disableMousePickingEvents();

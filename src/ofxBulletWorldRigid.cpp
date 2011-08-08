@@ -126,6 +126,17 @@ void ofxBulletWorldRigid::checkCollisions() {
 
 //--------------------------------------------------------------
 ofxBulletRaycastData ofxBulletWorldRigid::raycastTest(float $x, float $y, short int $filterMask) {
+	
+	ofVec3f castRay = _camera->screenToWorld( ofVec3f($x, $y, 0) );
+	castRay = castRay - _camera->getPosition();
+	castRay.normalize();
+	castRay *= 300;
+	
+	return raycastTest( _camera->getPosition(), castRay, $filterMask);
+}
+
+//--------------------------------------------------------------
+ofxBulletRaycastData ofxBulletWorldRigid::raycastTest( ofVec3f $rayStart, ofVec3f $rayEnd, short int $filterMask) {
 	ofxBulletRaycastData data;
 	data.bHasHit = false;
 	if(_camera == NULL) {
@@ -133,16 +144,12 @@ ofxBulletRaycastData ofxBulletWorldRigid::raycastTest(float $x, float $y, short 
 		return data;
 	}
 	
-	ofVec3f castRay = _camera->screenToWorld( ofVec3f($x, $y, 0) );
-	castRay = castRay - _camera->getPosition();
-	castRay.normalize();
-	castRay *= 300;
-	btVector3 rayTo(castRay.x, castRay.y, castRay.z);
-	btVector3 m_cameraPosition( _camera->getPosition().x, _camera->getPosition().y, _camera->getPosition().z );
+	btVector3 rayStart( $rayStart.x, $rayStart.y, $rayStart.z );
+	btVector3 rayEnd( $rayEnd.x, $rayEnd.y, $rayEnd.z );
 	
-	btCollisionWorld::ClosestRayResultCallback rayCallback( m_cameraPosition, rayTo );
+	btCollisionWorld::ClosestRayResultCallback rayCallback( rayStart, rayEnd );
 	rayCallback.m_collisionFilterMask = $filterMask;
-	world->rayTest( m_cameraPosition, rayTo, rayCallback );
+	world->rayTest( rayStart, rayEnd, rayCallback );
 	
 	if (rayCallback.hasHit()) {
 		btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
@@ -150,8 +157,7 @@ ofxBulletRaycastData ofxBulletWorldRigid::raycastTest(float $x, float $y, short 
 			data.bHasHit			= true;
 			data.userData			= (ofxBulletUserData*)body->getUserPointer();
 			data.body				= body;
-			data.rayWorldPos		= castRay;
-			data.rayScreenPos		= ofVec3f($x, $x, 0);
+			data.rayWorldPos		= $rayEnd;
 			btVector3 pickPos		= rayCallback.m_hitPointWorld;
 			data.pickPosWorld		= ofVec3f(pickPos.getX(), pickPos.getY(), pickPos.getZ());
 			btVector3 localPos		= body->getCenterOfMassTransform().inverse() * pickPos;
