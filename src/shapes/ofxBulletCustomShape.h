@@ -17,14 +17,14 @@ public:
 	ofxBulletCustomShape();
 	~ofxBulletCustomShape();
 	
-	void init( btCompoundShape* $colShape, ofVec3f $centroid );
+	void init( btCompoundShape* a_colShape, ofVec3f a_centroid );
 	
-	void create( btDiscreteDynamicsWorld* $world, ofVec3f $loc=ofVec3f(0,0,0), float $mass=1.f );
-	void create( btDiscreteDynamicsWorld* $world, ofVec3f $loc, ofQuaternion $rot, float $mass=1.f );
-	void create( btDiscreteDynamicsWorld* $world, btTransform $bt_tr, float $mass=1.f );
+	void create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc=ofVec3f(0,0,0), float a_mass=1.f );
+	void create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass=1.f );
+	void create( btDiscreteDynamicsWorld* a_world, btTransform a_bt_tr, float a_mass=1.f );
 	
-	bool addShape( btCollisionShape* $colShape, ofVec3f $localCentroidPos );
-	bool addMesh(ofMesh $mesh, ofVec3f $localScaling, bool $bUseConvexHull);
+	bool addShape( btCollisionShape* a_colShape, ofVec3f a_localCentroidPos );
+	bool addMesh(ofMesh a_mesh, ofVec3f a_localScaling, bool a_bUseConvexHull);
 	void add();
 	
 	ofVec3f getCentroid();

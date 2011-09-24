@@ -21,51 +21,51 @@ ofxBulletCustomShape::~ofxBulletCustomShape() {
 
 // pass in an already created compound shape //
 //--------------------------------------------------------------
-void ofxBulletCustomShape::init( btCompoundShape* $colShape, ofVec3f $centroid ) {
-	_shape		= (btCollisionShape*)$colShape;
-	_centroid	= $centroid;
+void ofxBulletCustomShape::init( btCompoundShape* a_colShape, ofVec3f a_centroid ) {
+	_shape		= (btCollisionShape*)a_colShape;
+	_centroid	= a_centroid;
 	_bInited	= true;
 }
 
 //--------------------------------------------------------------
-void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* $world, ofVec3f $loc, float $mass ) {
-	btTransform tr = ofGetBtTransformFromVec3f( $loc );
-	create( $world, tr, $mass );
+void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, float a_mass ) {
+	btTransform tr = ofGetBtTransformFromVec3f( a_loc );
+	create( a_world, tr, a_mass );
 }
 
 //--------------------------------------------------------------
-void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* $world, ofVec3f $loc, ofQuaternion $rot, float $mass ) {
-	btTransform tr	= ofGetBtTransformFromVec3f( $loc );
-	tr.setRotation( btQuaternion(btVector3($rot.x(), $rot.y(), $rot.z()), $rot.w()) );
-	create( $world, tr, $mass );
+void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass ) {
+	btTransform tr	= ofGetBtTransformFromVec3f( a_loc );
+	tr.setRotation( btQuaternion(btVector3(a_rot.x(), a_rot.y(), a_rot.z()), a_rot.w()) );
+	create( a_world, tr, a_mass );
 }
 
 //--------------------------------------------------------------
-void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* $world, btTransform $bt_tr, float $mass ) {
-	_world = $world;
-	_mass = $mass;
+void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, btTransform a_bt_tr, float a_mass ) {
+	_world = a_world;
+	_mass = a_mass;
 	if(!_bInited) {
 		_shape = new btCompoundShape(false);
 		_centroid.set(0, 0, 0);
 	}
-	_startTrans		= $bt_tr;
+	_startTrans		= a_bt_tr;
 	_bCreated		= true;
 }
 
 //--------------------------------------------------------------
-bool ofxBulletCustomShape::addShape( btCollisionShape* $colShape, ofVec3f $localCentroidPos ) {
+bool ofxBulletCustomShape::addShape( btCollisionShape* a_colShape, ofVec3f a_localCentroidPos ) {
 	if(_bAdded == true) {
 		ofLog( OF_LOG_ERROR, "ofxBulletCustomShape :: addShape : can not call after calling add()" );
 		return false;
 	}
-	shapes.push_back( $colShape );
-	centroids.push_back( $localCentroidPos );
+	shapes.push_back( a_colShape );
+	centroids.push_back( a_localCentroidPos );
 	return true;
 }
 
 //--------------------------------------------------------------
-bool ofxBulletCustomShape::addMesh( ofMesh $mesh, ofVec3f $localScaling, bool $bUseConvexHull ) {
-	if($mesh.getMode() != OF_PRIMITIVE_TRIANGLES) {
+bool ofxBulletCustomShape::addMesh( ofMesh a_mesh, ofVec3f a_localScaling, bool a_bUseConvexHull ) {
+	if(a_mesh.getMode() != OF_PRIMITIVE_TRIANGLES) {
 		ofLog( OF_LOG_ERROR, "ofxBulletCustomShape :: addMesh : mesh must be set to OF_PRIMITIVE_TRIANGLES!! aborting");
 		return false;
 	}
@@ -74,13 +74,13 @@ bool ofxBulletCustomShape::addMesh( ofMesh $mesh, ofVec3f $localScaling, bool $b
 		return false;
 	}
 	
-	btVector3 localScaling( $localScaling.x, $localScaling.y, $localScaling.z );
-	vector <ofIndexType>	indicies = $mesh.getIndices();
-	vector <ofVec3f>		verticies = $mesh.getVertices();
+	btVector3 localScaling( a_localScaling.x, a_localScaling.y, a_localScaling.z );
+	vector <ofIndexType>	indicies = a_mesh.getIndices();
+	vector <ofVec3f>		verticies = a_mesh.getVertices();
 	
 	btVector3 centroid = btVector3(0, 0, 0);
 	
-	if(!$bUseConvexHull) {
+	if(!a_bUseConvexHull) {
 		for(int i = 0; i < verticies.size(); i++) {
 			btVector3 tempVec = btVector3(verticies[i].x, verticies[i].y, verticies[i].z);
 			tempVec *= localScaling;
@@ -120,9 +120,9 @@ bool ofxBulletCustomShape::addMesh( ofMesh $mesh, ofVec3f $localScaling, bool $b
 			trimesh->addTriangle(vertex0, vertex1, vertex2);
 		}
 		
-		cout << "ofxBulletCustomShape :: addMesh : input triangles = " << trimesh->getNumTriangles() << endl;
-		cout << "ofxBulletCustomShape :: addMesh : input indicies = " << indicies.size() << endl;
-		cout << "ofxBulletCustomShape :: addMesh : input verticies = " << verticies.size() << endl;
+		//cout << "ofxBulletCustomShape :: addMesh : input triangles = " << trimesh->getNumTriangles() << endl;
+		//cout << "ofxBulletCustomShape :: addMesh : input indicies = " << indicies.size() << endl;
+		//cout << "ofxBulletCustomShape :: addMesh : input verticies = " << verticies.size() << endl;
 		
 		btConvexShape* tmpConvexShape = new btConvexTriangleMeshShape(trimesh);
 		
@@ -138,9 +138,9 @@ bool ofxBulletCustomShape::addMesh( ofMesh $mesh, ofVec3f $localScaling, bool $b
 		}
 		centroid /= (float)hull->numVertices();
 		
-		printf("ofxBulletCustomShape :: addMesh : new hull numTriangles = %d\n", hull->numTriangles());
-		printf("ofxBulletCustomShape :: addMesh : new hull numIndices = %d\n", hull->numIndices());
-		printf("ofxBulletCustomShape :: addMesh : new hull numVertices = %d\n", hull->numVertices());
+		//printf("ofxBulletCustomShape :: addMesh : new hull numTriangles = %d\n", hull->numTriangles());
+		//printf("ofxBulletCustomShape :: addMesh : new hull numIndices = %d\n", hull->numIndices());
+		//printf("ofxBulletCustomShape :: addMesh : new hull numVertices = %d\n", hull->numVertices());
 		
 		btConvexHullShape* convexShape = new btConvexHullShape();
 		for (int i=0;i<hull->numVertices();i++) {

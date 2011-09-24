@@ -23,20 +23,20 @@ ofxBulletJoint::~ofxBulletJoint() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletJoint::create( btDiscreteDynamicsWorld* $world, ofxBulletBaseShape* $shape1, ofxBulletBaseShape* $shape2 ) {
-	_world = $world;
+void ofxBulletJoint::create( btDiscreteDynamicsWorld* a_world, ofxBulletBaseShape* a_shape1, ofxBulletBaseShape* a_shape2 ) {
+	_world = a_world;
 	// we should have these always influenced by the joint, so don't let them go to sleep //
-	$shape1->setActivationState( DISABLE_DEACTIVATION );
-	$shape2->setActivationState( DISABLE_DEACTIVATION );
+	a_shape1->setActivationState( DISABLE_DEACTIVATION );
+	a_shape2->setActivationState( DISABLE_DEACTIVATION );
 	
-	ofVec3f diff = $shape2->getPosition() - $shape1->getPosition();
+	ofVec3f diff = a_shape2->getPosition() - a_shape1->getPosition();
 	
 	btTransform frameInA = btTransform::getIdentity();
 	frameInA.setOrigin( btVector3(btScalar(-diff.x), btScalar(-diff.y), btScalar(-diff.z)) );
 	btTransform frameInB = btTransform::getIdentity();
 	frameInB.setOrigin( btVector3(btScalar(0.), btScalar(0.), btScalar(0.)) );
 	
-	_joint = new btGeneric6DofConstraint(*$shape2->getRigidBody(), *$shape1->getRigidBody(), frameInA, frameInB, true);
+	_joint = new btGeneric6DofConstraint(*a_shape2->getRigidBody(), *a_shape1->getRigidBody(), frameInA, frameInB, true);
 	
 	_setDefaults();
 	
@@ -45,20 +45,20 @@ void ofxBulletJoint::create( btDiscreteDynamicsWorld* $world, ofxBulletBaseShape
 }
 
 //--------------------------------------------------------------
-void ofxBulletJoint::create( btDiscreteDynamicsWorld* $world, ofxBulletBaseShape* $shape, ofVec3f $pos ) {
-	_world = $world;
+void ofxBulletJoint::create( btDiscreteDynamicsWorld* a_world, ofxBulletBaseShape* a_shape, ofVec3f a_pos ) {
+	_world = a_world;
 	// we should have these always influenced by the joint, so don't let them go to sleep //
-	$shape->setActivationState( DISABLE_DEACTIVATION );
+	a_shape->setActivationState( DISABLE_DEACTIVATION );
 	
-	btVector3 localPivot	= $shape->getRigidBody()->getCenterOfMassTransform().inverse() * btVector3($pos.x, $pos.y, $pos.z);
+	btVector3 localPivot	= a_shape->getRigidBody()->getCenterOfMassTransform().inverse() * btVector3(a_pos.x, a_pos.y, a_pos.z);
 	btTransform tr;
 	tr.setIdentity();
 	tr.setOrigin( localPivot );
-	_joint = new btGeneric6DofConstraint(*$shape->getRigidBody(), tr, false);
+	_joint = new btGeneric6DofConstraint(*a_shape->getRigidBody(), tr, false);
 	
 	_setDefaults();
 	
-	_targetPos.set($pos.x, $pos.y, $pos.z);
+	_targetPos.set(a_pos.x, a_pos.y, a_pos.z);
 	_bTwoBodies = false;
 	_bCreated	= true;
 }
@@ -82,29 +82,29 @@ void ofxBulletJoint::_setDefaults() {
 
 /******************************************************/
 // call these before add() and after create //
-void ofxBulletJoint::setLinearLowerLimit( ofVec3f $limit ) {
-	setLinearLowerLimit( $limit.x, $limit.y, $limit.z );
+void ofxBulletJoint::setLinearLowerLimit( ofVec3f a_limit ) {
+	setLinearLowerLimit( a_limit.x, a_limit.y, a_limit.z );
 }
-void ofxBulletJoint::setLinearLowerLimit( float $x, float $y, float $z ) {
-	_joint->setLinearLowerLimit( btVector3($x, $y, $z) );
+void ofxBulletJoint::setLinearLowerLimit( float a_x, float a_y, float a_z ) {
+	_joint->setLinearLowerLimit( btVector3(a_x, a_y, a_z) );
 }
-void ofxBulletJoint::setLinearUpperLimit( ofVec3f $limit ) {
-	setLinearUpperLimit( $limit.x, $limit.y, $limit.z );
+void ofxBulletJoint::setLinearUpperLimit( ofVec3f a_limit ) {
+	setLinearUpperLimit( a_limit.x, a_limit.y, a_limit.z );
 }
-void ofxBulletJoint::setLinearUpperLimit( float $x, float $y, float $z ) {
-	_joint->setLinearUpperLimit( btVector3($x, $y, $z) );
+void ofxBulletJoint::setLinearUpperLimit( float a_x, float a_y, float a_z ) {
+	_joint->setLinearUpperLimit( btVector3(a_x, a_y, a_z) );
 }
-void ofxBulletJoint::setAngularLowerLimit( ofVec3f $limit ) {
-	setAngularLowerLimit( $limit.x, $limit.y, $limit.z );
+void ofxBulletJoint::setAngularLowerLimit( ofVec3f a_limit ) {
+	setAngularLowerLimit( a_limit.x, a_limit.y, a_limit.z );
 }
-void ofxBulletJoint::setAngularLowerLimit( float $x, float $y, float $z ) {
-	_joint->setAngularLowerLimit( btVector3($x, $y, $z) );
+void ofxBulletJoint::setAngularLowerLimit( float a_x, float a_y, float a_z ) {
+	_joint->setAngularLowerLimit( btVector3(a_x, a_y, a_z) );
 }
-void ofxBulletJoint::setAngularUpperLimit( ofVec3f $limit ) {
-	setAngularUpperLimit( $limit.x, $limit.y, $limit.z );
+void ofxBulletJoint::setAngularUpperLimit( ofVec3f a_limit ) {
+	setAngularUpperLimit( a_limit.x, a_limit.y, a_limit.z );
 }
-void ofxBulletJoint::setAngularUpperLimit( float $x, float $y, float $z ) {
-	_joint->setAngularUpperLimit( btVector3($x, $y, $z) );
+void ofxBulletJoint::setAngularUpperLimit( float a_x, float a_y, float a_z ) {
+	_joint->setAngularUpperLimit( btVector3(a_x, a_y, a_z) );
 }
 /******************************************************/
 
@@ -161,12 +161,12 @@ ofVec3f ofxBulletJoint::getPositionB() const {
 }
 
 //--------------------------------------------------------------
-void ofxBulletJoint::updatePivotPos( const ofVec3f $pos, float $length ) {
+void ofxBulletJoint::updatePivotPos( const ofVec3f a_pos, float a_length ) {
 	if(!_bCreated) {ofLog(OF_LOG_ERROR, "ofxBulletJoint :: updatePivotPos : must call create() first"); return;}
 	
-	_joint->getFrameOffsetA().setOrigin( btVector3($pos.x, $pos.y, $pos.z) );
+	_joint->getFrameOffsetA().setOrigin( btVector3(a_pos.x, a_pos.y, a_pos.z) );
 	
-	_targetPos.set( $pos.x, $pos.y, $pos.z );
+	_targetPos.set( a_pos.x, a_pos.y, a_pos.z );
 }
 
 //--------------------------------------------------------------

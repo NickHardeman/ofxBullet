@@ -17,18 +17,18 @@ public:
 	ofxBulletSphere();
 	~ofxBulletSphere();
 	
-	void	init( float $radius );
-	void	init( btSphereShape* $colShape );
+	void	init( float a_radius );
+	void	init( btSphereShape* a_colShape );
 	
-	void	create( btDiscreteDynamicsWorld* $world, ofVec3f $loc=ofVec3f(0,0,0), float $mass=1.f, float $radius=1.f );
-	void	create( btDiscreteDynamicsWorld* $world, ofVec3f $loc, ofQuaternion $rot, float $mass=1.f, float $radius=1.f );
-	void	create( btDiscreteDynamicsWorld* $world, btTransform $bt_tr, float $mass=1.f, float $radius=1.f );
+	void	create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc=ofVec3f(0,0,0), float a_mass=1.f, float a_radius=1.f );
+	void	create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass=1.f, float a_radius=1.f );
+	void	create( btDiscreteDynamicsWorld* a_world, btTransform a_bt_tr, float a_mass=1.f, float a_radius=1.f );
 	
 	void	draw();
 	
 	// SETTERS //
-	void	setRenderMode(int $mode);
-	void	setSphereResolution( int $res );
+	void	setRenderMode(int a_mode);
+	void	setSphereResolution( int a_res );
 	
 	// GETTERS //
 	float	getRadius();

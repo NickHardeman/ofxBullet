@@ -20,36 +20,36 @@ ofxBulletBox::~ofxBulletBox() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletBox::init(float $sizeX, float $sizeY, float $sizeZ) {
-	_shape		= (btCollisionShape*)ofBtGetBoxCollisionShape( $sizeX, $sizeY, $sizeZ );
+void ofxBulletBox::init(float a_sizeX, float a_sizeY, float a_sizeZ) {
+	_shape		= (btCollisionShape*)ofBtGetBoxCollisionShape( a_sizeX, a_sizeY, a_sizeZ );
 	_bInited	= true;
 }
 
 //--------------------------------------------------------------
-void ofxBulletBox::init( btBoxShape* $colShape ) {
-	_shape		= (btCollisionShape*)$colShape;
+void ofxBulletBox::init( btBoxShape* a_colShape ) {
+	_shape		= (btCollisionShape*)a_colShape;
 	_bInited	= true;
 }
 
 //--------------------------------------------------------------
-void ofxBulletBox::create( btDiscreteDynamicsWorld* $world, ofVec3f $loc, float $mass, float $sizeX, float $sizeY, float $sizeZ ) {
-	create( $world, ofGetBtTransformFromVec3f( $loc ), $mass, $sizeX, $sizeY, $sizeZ );
+void ofxBulletBox::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, float a_mass, float a_sizeX, float a_sizeY, float a_sizeZ ) {
+	create( a_world, ofGetBtTransformFromVec3f( a_loc ), a_mass, a_sizeX, a_sizeY, a_sizeZ );
 }
 
 //--------------------------------------------------------------
-void ofxBulletBox::create( btDiscreteDynamicsWorld* $world, ofVec3f $loc, ofQuaternion $rot, float $mass, float $sizeX, float $sizeY, float $sizeZ ) {
-	btTransform tr	= ofGetBtTransformFromVec3f( $loc );
-	tr.setRotation( btQuaternion(btVector3($rot.x(), $rot.y(), $rot.z()), $rot.w()) );
+void ofxBulletBox::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass, float a_sizeX, float a_sizeY, float a_sizeZ ) {
+	btTransform tr	= ofGetBtTransformFromVec3f( a_loc );
+	tr.setRotation( btQuaternion(btVector3(a_rot.x(), a_rot.y(), a_rot.z()), a_rot.w()) );
 	
-	create( $world, tr, $mass, $sizeX, $sizeY, $sizeZ );
+	create( a_world, tr, a_mass, a_sizeX, a_sizeY, a_sizeZ );
 }
 
 //--------------------------------------------------------------
-void ofxBulletBox::create( btDiscreteDynamicsWorld* $world, btTransform $bt_tr, float $mass, float $sizeX, float $sizeY, float $sizeZ ) {
+void ofxBulletBox::create( btDiscreteDynamicsWorld* a_world, btTransform a_bt_tr, float a_mass, float a_sizeX, float a_sizeY, float a_sizeZ ) {
 	if(!_bInited || _shape == NULL) {
-		ofxBulletBaseShape::create( $world, (btCollisionShape*)ofBtGetBoxCollisionShape( $sizeX, $sizeY, $sizeZ ), $bt_tr, $mass );
+		ofxBulletBaseShape::create( a_world, (btCollisionShape*)ofBtGetBoxCollisionShape( a_sizeX, a_sizeY, a_sizeZ ), a_bt_tr, a_mass );
 	} else {
-		ofxBulletBaseShape::create( $world, _shape, $bt_tr, $mass );
+		ofxBulletBaseShape::create( a_world, _shape, a_bt_tr, a_mass );
 	}
 	setData( new ofxBulletUserData() );
 }
@@ -178,8 +178,8 @@ ofVec3f ofxBulletBox::getSize() const {
 }
 
 //--------------------------------------------------------------
-bool ofxBulletBox::isInside(const ofVec3f& $pt, float tolerance) {
-	return ((btBoxShape*)_rigidBody->getCollisionShape())->isInside( btVector3($pt.x, $pt.y, $pt.z), tolerance );
+bool ofxBulletBox::isInside(const ofVec3f& a_pt, float tolerance) {
+	return ((btBoxShape*)_rigidBody->getCollisionShape())->isInside( btVector3(a_pt.x, a_pt.y, a_pt.z), tolerance );
 }
 
 

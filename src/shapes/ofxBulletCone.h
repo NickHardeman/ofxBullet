@@ -18,12 +18,12 @@ public:
 	ofxBulletCone();
 	~ofxBulletCone();
 	
-	void	init(float $radius, float $height);
-	void	init( btConeShape* $colShape );
+	void	init(float a_radius, float a_height);
+	void	init( btConeShape* a_colShape );
 	
-	void	create( btDiscreteDynamicsWorld* $world, ofVec3f $loc=ofVec3f(0,0,0), float $mass=1.f, float $radius=1.f, float $height=2.f );
-	void	create( btDiscreteDynamicsWorld* $world, ofVec3f $loc, ofQuaternion $rot, float $mass=1.f, float $radius=1.f, float $height=2.f );
-	void	create( btDiscreteDynamicsWorld* $world, btTransform $bt_tr, float $mass=1.f, float $radius=1.f, float $height=2.f );
+	void	create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc=ofVec3f(0,0,0), float a_mass=1.f, float a_radius=1.f, float a_height=2.f );
+	void	create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass=1.f, float a_radius=1.f, float a_height=2.f );
+	void	create( btDiscreteDynamicsWorld* a_world, btTransform a_bt_tr, float a_mass=1.f, float a_radius=1.f, float a_height=2.f );
 	
 	// GETTERS //
 	float getHeight();

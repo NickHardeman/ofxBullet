@@ -28,17 +28,17 @@ ofxBulletBaseShape::~ofxBulletBaseShape() {
 // you can call this function directly if you wish to use the same collision object for multiple rigid bodies,
 // which will increase performance //
 //--------------------------------------------------------------
-void ofxBulletBaseShape::create( btDiscreteDynamicsWorld* $world, btCollisionShape* $colShape, btTransform $bt_tr, float $mass ) {
-	if($world == NULL) {
-		ofLog(OF_LOG_ERROR, "ofxBulletSphere :: create : $world param is NULL");
+void ofxBulletBaseShape::create( btDiscreteDynamicsWorld* a_world, btCollisionShape* a_colShape, btTransform a_bt_tr, float a_mass ) {
+	if(a_world == NULL) {
+		ofLog(OF_LOG_ERROR, "ofxBulletSphere :: create : a_world param is NULL");
 		return;
 	}
-	_mass			= $mass;
-	_world			= $world;
+	_mass			= a_mass;
+	_world			= a_world;
 	
 	_bCreated		= true;
 	
-	_rigidBody		= ofGetBtRigidBodyFromCollisionShape( $colShape, $bt_tr, $mass);
+	_rigidBody		= ofGetBtRigidBodyFromCollisionShape( a_colShape, a_bt_tr, a_mass);
 	setProperties(.4, .75);
 	setDamping( .25 );
 }
@@ -49,7 +49,6 @@ void ofxBulletBaseShape::add() {
 	_world->addRigidBody( _rigidBody );
 }
 
-// If a collision shape was passed into init(), then it will not delete the collision object, since other shapes may be using it! //
 //--------------------------------------------------------------
 void ofxBulletBaseShape::remove() {
 	if(_userPointer != NULL) {
@@ -62,7 +61,7 @@ void ofxBulletBaseShape::remove() {
 //--------------------------------------------------------------
 void ofxBulletBaseShape::removeRigidBody() {
 	if(_world != NULL && _bAdded) {
-		cout << "ofxBulletBaseShape :: removeRigidBody : calling remove rigid body" << endl;
+		//cout << "ofxBulletBaseShape :: removeRigidBody : calling remove rigid body" << endl;
 		if (_rigidBody && _rigidBody->getMotionState()) {
 			delete _rigidBody->getMotionState();
 		}
@@ -75,36 +74,36 @@ void ofxBulletBaseShape::removeRigidBody() {
 }
 
 //--------------------------------------------------------------
-bool ofxBulletBaseShape::operator==( const ofxBulletUserData* $userData) const {
-	return getData() == $userData;
+bool ofxBulletBaseShape::operator==( const ofxBulletUserData* a_userData) const {
+	return getData() == a_userData;
 }
 
 //--------------------------------------------------------------
-bool ofxBulletBaseShape::operator==( const ofxBulletCollisionData& $collisionData) const {
-	return (getData() == $collisionData.userData1) || (getData() == $collisionData.userData2);
+bool ofxBulletBaseShape::operator==( const ofxBulletCollisionData& a_collisionData) const {
+	return (getData() == a_collisionData.userData1) || (getData() == a_collisionData.userData2);
 }
 
 //--------------------------------------------------------------
-bool ofxBulletBaseShape::operator!=( const ofxBulletCollisionData& $collisionData) const {
-	return (getData() != $collisionData.userData1) && (getData() != $collisionData.userData2);
+bool ofxBulletBaseShape::operator!=( const ofxBulletCollisionData& a_collisionData) const {
+	return (getData() != a_collisionData.userData1) && (getData() != a_collisionData.userData2);
 }
 
 //--------------------------------------------------------------
-bool ofxBulletBaseShape::operator==( const ofxBulletMousePickEvent& $e ) const {
-	return getData() == $e.userData;
+bool ofxBulletBaseShape::operator==( const ofxBulletMousePickEvent& a_e ) const {
+	return getData() == a_e.userData;
 }
 //--------------------------------------------------------------
-bool ofxBulletBaseShape::operator!=( const ofxBulletMousePickEvent& $e ) const {
-	return !(getData() == $e.userData);
+bool ofxBulletBaseShape::operator!=( const ofxBulletMousePickEvent& a_e ) const {
+	return !(getData() == a_e.userData);
 }
 
 //--------------------------------------------------------------
-bool ofxBulletBaseShape::operator==( const ofxBulletRaycastData& $e ) const {
-	return getData() == $e.userData;
+bool ofxBulletBaseShape::operator==( const ofxBulletRaycastData& a_e ) const {
+	return getData() == a_e.userData;
 }
 //--------------------------------------------------------------
-bool ofxBulletBaseShape::operator!=( const ofxBulletRaycastData& $e ) const {
-	return !(getData() == $e.userData);
+bool ofxBulletBaseShape::operator!=( const ofxBulletRaycastData& a_e ) const {
+	return !(getData() == a_e.userData);
 }
 
 
@@ -145,8 +144,8 @@ float ofxBulletBaseShape::getMass() const {
 }
 
 //--------------------------------------------------------------
-void ofxBulletBaseShape::getOpenGLMatrix( btScalar* $m ) {
-	ofGetOpenGLMatrixFromRigidBody( _rigidBody, $m );
+void ofxBulletBaseShape::getOpenGLMatrix( btScalar* a_m ) {
+	ofGetOpenGLMatrixFromRigidBody( _rigidBody, a_m );
 }
 
 //--------------------------------------------------------------
@@ -220,29 +219,29 @@ float ofxBulletBaseShape::getAngularDamping() const {
 // PROPERTY SETTERS, must be called after create() and before add() //
 
 //--------------------------------------------------------------
-void ofxBulletBaseShape::setProperties(float $restitution, float $friction) {
-	setRestitution($restitution);
-	setFriction($friction);
+void ofxBulletBaseShape::setProperties(float a_restitution, float a_friction) {
+	setRestitution(a_restitution);
+	setFriction(a_friction);
 }
 
 //--------------------------------------------------------------
-void ofxBulletBaseShape::setRestitution( float $res ) {
+void ofxBulletBaseShape::setRestitution( float a_res ) {
 	if(checkCreate()) {
-		_rigidBody->setRestitution( btScalar($res) );
+		_rigidBody->setRestitution( btScalar(a_res) );
 	}
 }
 
 //--------------------------------------------------------------
-void ofxBulletBaseShape::setFriction( float $friction ) {
+void ofxBulletBaseShape::setFriction( float a_friction ) {
 	if(checkCreate()) {
-		_rigidBody->setFriction( btScalar($friction) );
+		_rigidBody->setFriction( btScalar(a_friction) );
 	}
 }
 
 //--------------------------------------------------------------
-void ofxBulletBaseShape::setActivationState( int $state ) {
+void ofxBulletBaseShape::setActivationState( int a_state ) {
 	if(checkCreate()) {
-		_rigidBody->setActivationState( $state );
+		_rigidBody->setActivationState( a_state );
 	}
 }
 /**************************************************************/
@@ -258,18 +257,18 @@ void ofxBulletBaseShape::setData(ofxBulletUserData* userPointer) {
 }
 
 //--------------------------------------------------------------
-void ofxBulletBaseShape::setDamping( float $linear_damp ) {
-	setDamping( $linear_damp, getAngularDamping() );
+void ofxBulletBaseShape::setDamping( float a_linear_damp ) {
+	setDamping( a_linear_damp, getAngularDamping() );
 }
 
 //--------------------------------------------------------------
-void ofxBulletBaseShape::setAngularDamping( float $angular_damp ) {
-	setDamping( getDamping(), $angular_damp );
+void ofxBulletBaseShape::setAngularDamping( float a_angular_damp ) {
+	setDamping( getDamping(), a_angular_damp );
 }
 
 //--------------------------------------------------------------
-void ofxBulletBaseShape::setDamping( float $linear_damp, float $angular_damp ) {
-	_rigidBody->setDamping($linear_damp, $angular_damp);
+void ofxBulletBaseShape::setDamping( float a_linear_damp, float a_angular_damp ) {
+	_rigidBody->setDamping(a_linear_damp, a_angular_damp);
 }
 
 
@@ -314,35 +313,35 @@ void ofxBulletBaseShape::activate() {
 
 
 //--------------------------------------------------------------
-void ofxBulletBaseShape::applyForce( const ofVec3f& $frc, const ofVec3f& $rel_pos ) {
-	_rigidBody->applyForce( btVector3($frc.x, $frc.y, $frc.z), btVector3($rel_pos.x, $rel_pos.y, $rel_pos.z) );
+void ofxBulletBaseShape::applyForce( const ofVec3f& a_frc, const ofVec3f& a_rel_pos ) {
+	_rigidBody->applyForce( btVector3(a_frc.x, a_frc.y, a_frc.z), btVector3(a_rel_pos.x, a_rel_pos.y, a_rel_pos.z) );
 }
 
 //--------------------------------------------------------------
-void ofxBulletBaseShape::applyForce( const btVector3& $frc, const btVector3& $rel_pos ) {
-	_rigidBody->applyForce( $frc, $rel_pos );
+void ofxBulletBaseShape::applyForce( const btVector3& a_frc, const btVector3& a_rel_pos ) {
+	_rigidBody->applyForce( a_frc, a_rel_pos );
 }
 
 //--------------------------------------------------------------
-void ofxBulletBaseShape::applyCentralForce( const ofVec3f& $frc ) {
-	applyCentralForce( btVector3($frc.x, $frc.y, $frc.z) );
+void ofxBulletBaseShape::applyCentralForce( const ofVec3f& a_frc ) {
+	applyCentralForce( btVector3(a_frc.x, a_frc.y, a_frc.z) );
 }
-void ofxBulletBaseShape::applyCentralForce( float $x, float $y, float $z ) {
-	applyCentralForce( btVector3($x, $y, $z) );
+void ofxBulletBaseShape::applyCentralForce( float a_x, float a_y, float a_z ) {
+	applyCentralForce( btVector3(a_x, a_y, a_z) );
 }
-void ofxBulletBaseShape::applyCentralForce( const btVector3& $frc ) {
-	_rigidBody->applyCentralForce( $frc );
+void ofxBulletBaseShape::applyCentralForce( const btVector3& a_frc ) {
+	_rigidBody->applyCentralForce( a_frc );
 }
 
 //--------------------------------------------------------------
-void ofxBulletBaseShape::applyTorque( const ofVec3f& $torque ) {
-	applyTorque( btVector3($torque.x, $torque.y, $torque.z) );
+void ofxBulletBaseShape::applyTorque( const ofVec3f& a_torque ) {
+	applyTorque( btVector3(a_torque.x, a_torque.y, a_torque.z) );
 }
-void ofxBulletBaseShape::applyTorque( float $x, float $y, float $z ) {
-	applyTorque( btVector3( $x, $y, $z ) );
+void ofxBulletBaseShape::applyTorque( float a_x, float a_y, float a_z ) {
+	applyTorque( btVector3( a_x, a_y, a_z ) );
 }
-void ofxBulletBaseShape::applyTorque( const btVector3& $torque ) {
-	_rigidBody->applyTorque( $torque );
+void ofxBulletBaseShape::applyTorque( const btVector3& a_torque ) {
+	_rigidBody->applyTorque( a_torque );
 }
 
 

@@ -30,7 +30,7 @@ public:
 		OFX_BULLET_CUSTOM_SHAPE = 6
 	};
 	
-	virtual void create( btDiscreteDynamicsWorld* $world, btCollisionShape* $colShape, btTransform $bt_tr, float $mass );
+	virtual void create( btDiscreteDynamicsWorld* a_world, btCollisionShape* a_colShape, btTransform a_bt_tr, float a_mass );
 	virtual void add();
 	void	remove();
 	void	removeRigidBody();
@@ -44,7 +44,7 @@ public:
 	int				getType();
 	
 	float			getMass() const;
-	void			getOpenGLMatrix( btScalar* $m );
+	void			getOpenGLMatrix( btScalar* a_m );
 	ofMatrix4x4		getTransformationMatrix() const;
 	ofVec3f			getPosition() const;
 	ofVec3f			getRotation() const;
@@ -59,24 +59,24 @@ public:
 	
 	// used for checking collisions. Data is set using getData and operator is used to see if the same //
 	bool	operator==( const ofxBulletUserData* userData) const;
-	bool	operator==( const ofxBulletCollisionData& $collisionData) const;
-	bool	operator!=( const ofxBulletCollisionData& $collisionData) const;
+	bool	operator==( const ofxBulletCollisionData& a_collisionData) const;
+	bool	operator!=( const ofxBulletCollisionData& a_collisionData) const;
 	
-	bool	operator==( const ofxBulletMousePickEvent& $e ) const;
-	bool	operator!=( const ofxBulletMousePickEvent& $e ) const;
-	bool	operator==( const ofxBulletRaycastData& $e ) const;
-	bool	operator!=( const ofxBulletRaycastData& $e ) const;
+	bool	operator==( const ofxBulletMousePickEvent& a_e ) const;
+	bool	operator!=( const ofxBulletMousePickEvent& a_e ) const;
+	bool	operator==( const ofxBulletRaycastData& a_e ) const;
+	bool	operator!=( const ofxBulletRaycastData& a_e ) const;
 	
 	// PROPERTY SETTERS, must be called after init() and before create() //
-	void setProperties(float $restitution, float $friction);
-	void setRestitution( float $res );
-	void setFriction( float $friction );
-	void setActivationState( int $state );
+	void setProperties(float a_restitution, float a_friction);
+	void setRestitution( float a_res );
+	void setFriction( float a_friction );
+	void setActivationState( int a_state );
 	
 	// SETTERS, must be called after create() //
-	void setDamping( float $linear_damp );
-	void setAngularDamping( float $angular_damp );
-	void setDamping( float $linear_damp, float $angular_damp );
+	void setDamping( float a_linear_damp );
+	void setAngularDamping( float a_angular_damp );
+	void setDamping( float a_linear_damp, float a_angular_damp );
 	void activate();
 	
 	// CHECKERS //
@@ -85,16 +85,16 @@ public:
 	bool checkCreate();
 	
 	// FORCES //
-	void applyForce( const ofVec3f& $frc, const ofVec3f& $rel_pos );
-	void applyForce( const btVector3& $frc, const btVector3& $rel_pos );
+	void applyForce( const ofVec3f& a_frc, const ofVec3f& a_rel_pos );
+	void applyForce( const btVector3& a_frc, const btVector3& a_rel_pos );
 	
-	void applyCentralForce( const ofVec3f& $frc );
-	void applyCentralForce( float $x, float $y, float $z );
-	void applyCentralForce( const btVector3& $frc );
+	void applyCentralForce( const ofVec3f& a_frc );
+	void applyCentralForce( float a_x, float a_y, float a_z );
+	void applyCentralForce( const btVector3& a_frc );
 	
-	void applyTorque( const ofVec3f& $torque );
-	void applyTorque( float $x, float $y, float $z );
-	void applyTorque( const btVector3& $torque );
+	void applyTorque( const ofVec3f& a_torque );
+	void applyTorque( float a_x, float a_y, float a_z );
+	void applyTorque( const btVector3& a_torque );
 	
 	// TODO: utilize ofVbo //
 	virtual void draw() {};

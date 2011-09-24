@@ -30,29 +30,29 @@ public:
 	
 	void setup();
 	void update();
-	void setCameraPosition( ofVec3f $pos );
-	void setCamera( ofCamera* $cam );
+	void setCameraPosition( ofVec3f a_pos );
+	void setCamera( ofCamera* a_cam );
 	
 	void enableCollisionEvents();
 	void disableCollisionEvents();
 	void checkCollisions();
 	
-	ofxBulletRaycastData raycastTest(float $x, float $y, short int $filterMask=btBroadphaseProxy::AllFilter);
-	//ofxBulletRaycastData raycastTest( ofVec3f $castRay, short int $filterMask=btBroadphaseProxy::AllFilter);
-	ofxBulletRaycastData raycastTest( ofVec3f $rayStart, ofVec3f $rayEnd, short int $filterMask=btBroadphaseProxy::AllFilter);
+	ofxBulletRaycastData raycastTest(float a_x, float a_y, short int a_filterMask=btBroadphaseProxy::AllFilter);
+	//ofxBulletRaycastData raycastTest( ofVec3f a_castRay, short int a_filterMask=btBroadphaseProxy::AllFilter);
+	ofxBulletRaycastData raycastTest( ofVec3f a_rayStart, ofVec3f a_rayEnd, short int a_filterMask=btBroadphaseProxy::AllFilter);
 	
-	void enableMousePickingEvents( short int $filterMask=btBroadphaseProxy::AllFilter );
+	void enableMousePickingEvents( short int a_filterMask=btBroadphaseProxy::AllFilter );
 	void disableMousePickingEvents();
-	void checkMousePicking(float $mousex, float $mousey);
+	void checkMousePicking(float a_mousex, float a_mousey);
 	
-	void enableGrabbing( short int $filterMask=btBroadphaseProxy::DefaultFilter | btBroadphaseProxy::KinematicFilter | btBroadphaseProxy::DebrisFilter | btBroadphaseProxy::SensorTrigger );
+	void enableGrabbing( short int a_filterMask=btBroadphaseProxy::DefaultFilter | btBroadphaseProxy::KinematicFilter | btBroadphaseProxy::DebrisFilter | btBroadphaseProxy::SensorTrigger );
 	void disableGrabbing();
 	
 	void enableDebugDraw();
 	void drawDebug();
 	
 	bool checkWorld();
-	void setGravity( ofVec3f $g );
+	void setGravity( ofVec3f a_g );
 	ofVec3f getGravity();
 	
 	void removeMouseConstraint();

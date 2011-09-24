@@ -64,13 +64,13 @@ void ofxBulletWorldRigid::update() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletWorldRigid::setCameraPosition( ofVec3f $pos ) {
-	_cameraPos = $pos;
+void ofxBulletWorldRigid::setCameraPosition( ofVec3f a_pos ) {
+	_cameraPos = a_pos;
 }
 
 //--------------------------------------------------------------
-void ofxBulletWorldRigid::setCamera( ofCamera* $cam ) {
-	_camera = $cam;
+void ofxBulletWorldRigid::setCamera( ofCamera* a_cam ) {
+	_camera = a_cam;
 }
 
 //--------------------------------------------------------------
@@ -125,18 +125,18 @@ void ofxBulletWorldRigid::checkCollisions() {
 }
 
 //--------------------------------------------------------------
-ofxBulletRaycastData ofxBulletWorldRigid::raycastTest(float $x, float $y, short int $filterMask) {
+ofxBulletRaycastData ofxBulletWorldRigid::raycastTest(float a_x, float a_y, short int a_filterMask) {
 	
-	ofVec3f castRay = _camera->screenToWorld( ofVec3f($x, $y, 0) );
+	ofVec3f castRay = _camera->screenToWorld( ofVec3f(a_x, a_y, 0) );
 	castRay = castRay - _camera->getPosition();
 	castRay.normalize();
 	castRay *= 300;
 	
-	return raycastTest( _camera->getPosition(), castRay, $filterMask);
+	return raycastTest( _camera->getPosition(), castRay, a_filterMask);
 }
 
 //--------------------------------------------------------------
-ofxBulletRaycastData ofxBulletWorldRigid::raycastTest( ofVec3f $rayStart, ofVec3f $rayEnd, short int $filterMask) {
+ofxBulletRaycastData ofxBulletWorldRigid::raycastTest( ofVec3f a_rayStart, ofVec3f a_rayEnd, short int a_filterMask) {
 	ofxBulletRaycastData data;
 	data.bHasHit = false;
 	if(_camera == NULL) {
@@ -144,11 +144,11 @@ ofxBulletRaycastData ofxBulletWorldRigid::raycastTest( ofVec3f $rayStart, ofVec3
 		return data;
 	}
 	
-	btVector3 rayStart( $rayStart.x, $rayStart.y, $rayStart.z );
-	btVector3 rayEnd( $rayEnd.x, $rayEnd.y, $rayEnd.z );
+	btVector3 rayStart( a_rayStart.x, a_rayStart.y, a_rayStart.z );
+	btVector3 rayEnd( a_rayEnd.x, a_rayEnd.y, a_rayEnd.z );
 	
 	btCollisionWorld::ClosestRayResultCallback rayCallback( rayStart, rayEnd );
-	rayCallback.m_collisionFilterMask = $filterMask;
+	rayCallback.m_collisionFilterMask = a_filterMask;
 	world->rayTest( rayStart, rayEnd, rayCallback );
 	
 	if (rayCallback.hasHit()) {
@@ -157,7 +157,7 @@ ofxBulletRaycastData ofxBulletWorldRigid::raycastTest( ofVec3f $rayStart, ofVec3
 			data.bHasHit			= true;
 			data.userData			= (ofxBulletUserData*)body->getUserPointer();
 			data.body				= body;
-			data.rayWorldPos		= $rayEnd;
+			data.rayWorldPos		= a_rayEnd;
 			btVector3 pickPos		= rayCallback.m_hitPointWorld;
 			data.pickPosWorld		= ofVec3f(pickPos.getX(), pickPos.getY(), pickPos.getZ());
 			btVector3 localPos		= body->getCenterOfMassTransform().inverse() * pickPos;
@@ -168,8 +168,8 @@ ofxBulletRaycastData ofxBulletWorldRigid::raycastTest( ofVec3f $rayStart, ofVec3
 }
 
 //--------------------------------------------------------------
-void ofxBulletWorldRigid::enableMousePickingEvents( short int $filterMask ) {
-	_mouseFilterMask = $filterMask;
+void ofxBulletWorldRigid::enableMousePickingEvents( short int a_filterMask ) {
+	_mouseFilterMask = a_filterMask;
 	bDispatchPickingEvents	= true;
 }
 
@@ -180,8 +180,8 @@ void ofxBulletWorldRigid::disableMousePickingEvents() {
 
 //--------------------------------------------------------------
 // pulled from DemoApplication in the AllBulletDemos project included in the Bullet physics download //
-void ofxBulletWorldRigid::checkMousePicking(float $mousex, float $mousey) {
-	ofxBulletRaycastData data = raycastTest($mousex, $mousey, _mouseFilterMask);
+void ofxBulletWorldRigid::checkMousePicking(float a_mousex, float a_mousey) {
+	ofxBulletRaycastData data = raycastTest(a_mousex, a_mousey, _mouseFilterMask);
 	if(data.bHasHit) {
 		ofxBulletMousePickEvent cdata;
 		cdata.setRaycastData(data);
@@ -229,8 +229,8 @@ void ofxBulletWorldRigid::checkMousePicking(float $mousex, float $mousey) {
 }
 
 //--------------------------------------------------------------
-void ofxBulletWorldRigid::enableGrabbing(short int $filterMask) {
-	_mouseFilterMask = $filterMask;
+void ofxBulletWorldRigid::enableGrabbing(short int a_filterMask) {
+	_mouseFilterMask = a_filterMask;
 	bDispatchPickingEvents = true;
 	bRegisterGrabbing = true;
 }
@@ -270,9 +270,9 @@ bool ofxBulletWorldRigid::checkWorld() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletWorldRigid::setGravity( ofVec3f $g ) {
+void ofxBulletWorldRigid::setGravity( ofVec3f a_g ) {
 	if(!checkWorld()) return;
-	world->setGravity( btVector3($g.x, $g.y, $g.z) );
+	world->setGravity( btVector3(a_g.x, a_g.y, a_g.z) );
 }
 
 //--------------------------------------------------------------

@@ -18,13 +18,13 @@ public:
 	ofxBulletMousePickEvent() {}
 	~ofxBulletMousePickEvent() {}
 	
-	void setRaycastData( ofxBulletRaycastData& $raycastdata ) {
-		bHasHit			= $raycastdata.bHasHit;
-		body			= $raycastdata.body;
-		userData		= $raycastdata.userData;
-		rayWorldPos		= $raycastdata.rayWorldPos;
-		rayScreenPos	= $raycastdata.rayScreenPos;
-		pickPosWorld	= $raycastdata.pickPosWorld;
-		localPivotPos	= $raycastdata.localPivotPos;
+	void setRaycastData( ofxBulletRaycastData& a_raycastdata ) {
+		bHasHit			= a_raycastdata.bHasHit;
+		body			= a_raycastdata.body;
+		userData		= a_raycastdata.userData;
+		rayWorldPos		= a_raycastdata.rayWorldPos;
+		rayScreenPos	= a_raycastdata.rayScreenPos;
+		pickPosWorld	= a_raycastdata.pickPosWorld;
+		localPivotPos	= a_raycastdata.localPivotPos;
 	}
 };

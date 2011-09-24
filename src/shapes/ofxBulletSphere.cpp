@@ -23,36 +23,36 @@ ofxBulletSphere::~ofxBulletSphere() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletSphere::init(float $radius) {
-	_shape		= (btCollisionShape*)new btSphereShape( $radius );
+void ofxBulletSphere::init(float a_radius) {
+	_shape		= (btCollisionShape*)new btSphereShape( a_radius );
 	_bInited	= true;
 }
 
 //--------------------------------------------------------------
-void ofxBulletSphere::init( btSphereShape* $colShape ) {
-	_shape		= (btCollisionShape*)$colShape;
+void ofxBulletSphere::init( btSphereShape* a_colShape ) {
+	_shape		= (btCollisionShape*)a_colShape;
 	_bInited	= true;
 }
 
 //--------------------------------------------------------------
-void ofxBulletSphere::create( btDiscreteDynamicsWorld* $world, ofVec3f $loc, float $mass, float $radius ) {
-	create($world, ofGetBtTransformFromVec3f( $loc ), $mass, $radius);
+void ofxBulletSphere::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, float a_mass, float a_radius ) {
+	create(a_world, ofGetBtTransformFromVec3f( a_loc ), a_mass, a_radius);
 }
 
 //--------------------------------------------------------------
-void ofxBulletSphere::create( btDiscreteDynamicsWorld* $world, ofVec3f $loc, ofQuaternion $rot, float $mass, float $radius ) {
-	btTransform tr	= ofGetBtTransformFromVec3f( $loc );
-	tr.setRotation( btQuaternion(btVector3($rot.x(), $rot.y(), $rot.z()), $rot.w()) );
+void ofxBulletSphere::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass, float a_radius ) {
+	btTransform tr	= ofGetBtTransformFromVec3f( a_loc );
+	tr.setRotation( btQuaternion(btVector3(a_rot.x(), a_rot.y(), a_rot.z()), a_rot.w()) );
 	
-	create( $world, tr, $mass, $radius );
+	create( a_world, tr, a_mass, a_radius );
 }
 
 //--------------------------------------------------------------
-void ofxBulletSphere::create( btDiscreteDynamicsWorld* $world, btTransform $bt_tr, float $mass, float $radius ) {
+void ofxBulletSphere::create( btDiscreteDynamicsWorld* a_world, btTransform a_bt_tr, float a_mass, float a_radius ) {
 	if(!_bInited || _shape == NULL) {
-		ofxBulletBaseShape::create( $world, (btCollisionShape*)new btSphereShape( $radius ), $bt_tr, $mass );
+		ofxBulletBaseShape::create( a_world, (btCollisionShape*)new btSphereShape( a_radius ), a_bt_tr, a_mass );
 	} else {
-		ofxBulletBaseShape::create( $world, _shape, $bt_tr, $mass );
+		ofxBulletBaseShape::create( a_world, _shape, a_bt_tr, a_mass );
 	}
 	setData( new ofxBulletUserData() );
 }
@@ -75,14 +75,14 @@ void ofxBulletSphere::draw() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletSphere::setRenderMode(int $mode) {
+void ofxBulletSphere::setRenderMode(int a_mode) {
 	// either OFX_BULLET_RENDER_QUADS || OFX_BULLET_RENDER_TRIS //
-	_renderMode			= $mode;
+	_renderMode			= a_mode;
 }
 
 //--------------------------------------------------------------
-void ofxBulletSphere::setSphereResolution( int $res ) {
-	_sphereResolution	= $res;
+void ofxBulletSphere::setSphereResolution( int a_res ) {
+	_sphereResolution	= a_res;
 }
 
 //--------------------------------------------------------------

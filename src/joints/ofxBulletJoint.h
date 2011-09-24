@@ -20,19 +20,19 @@ public:
 	ofxBulletJoint();
 	~ofxBulletJoint();
 	
-	void	create( btDiscreteDynamicsWorld* $world, ofxBulletBaseShape* $shape1, ofxBulletBaseShape* $shape2 );
-	void	create( btDiscreteDynamicsWorld* $world, ofxBulletBaseShape* $shape, ofVec3f $pos );
+	void	create( btDiscreteDynamicsWorld* a_world, ofxBulletBaseShape* a_shape1, ofxBulletBaseShape* a_shape2 );
+	void	create( btDiscreteDynamicsWorld* a_world, ofxBulletBaseShape* a_shape, ofVec3f a_pos );
 	
 	/******************************/
 	// call before calling add() //
-	void	setLinearLowerLimit( ofVec3f $limit );
-	void	setLinearLowerLimit( float $x, float $y, float $z );
-	void	setLinearUpperLimit( ofVec3f $limit );
-	void	setLinearUpperLimit( float $x, float $y, float $z );
-	void	setAngularLowerLimit( ofVec3f $limit );
-	void	setAngularLowerLimit( float $x, float $y, float $z );
-	void	setAngularUpperLimit( ofVec3f $limit );
-	void	setAngularUpperLimit( float $x, float $y, float $z );
+	void	setLinearLowerLimit( ofVec3f a_limit );
+	void	setLinearLowerLimit( float a_x, float a_y, float a_z );
+	void	setLinearUpperLimit( ofVec3f a_limit );
+	void	setLinearUpperLimit( float a_x, float a_y, float a_z );
+	void	setAngularLowerLimit( ofVec3f a_limit );
+	void	setAngularLowerLimit( float a_x, float a_y, float a_z );
+	void	setAngularUpperLimit( ofVec3f a_limit );
+	void	setAngularUpperLimit( float a_x, float a_y, float a_z );
 	/******************************/
 	
 	void	add();
@@ -45,7 +45,7 @@ public:
 	ofVec3f getPositionA() const;
 	ofVec3f getPositionB() const;
 	
-	void	updatePivotPos( const ofVec3f $pos, float $length );
+	void	updatePivotPos( const ofVec3f a_pos, float a_length );
 	
 	void	draw();
 	void	drawJointConstraints();

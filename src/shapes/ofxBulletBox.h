@@ -17,19 +17,19 @@ public:
 	ofxBulletBox();
 	~ofxBulletBox();
 	
-	void	init( float $sizeX, float $sizeY, float $sizeZ );
-	void	init( btBoxShape* $colShape );
+	void	init( float a_sizeX, float a_sizeY, float a_sizeZ );
+	void	init( btBoxShape* a_colShape );
 	
-	void	create( btDiscreteDynamicsWorld* $world, ofVec3f $loc=ofVec3f(0,0,0), float $mass=1.f, float $sizeX=5.f, float $sizeY=5.f, float $sizeZ=5.f );
-	void	create( btDiscreteDynamicsWorld* $world, ofVec3f $loc, ofQuaternion $rot, float $mass=1.f, float $sizeX=5.f, float $sizeY=5.f, float $sizeZ=5.f );
-	void	create( btDiscreteDynamicsWorld* $world, btTransform $bt_tr, float $mass=1.f, float $sizeX=5.f, float $sizeY=5.f, float $sizeZ=5.f );
+	void	create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc=ofVec3f(0,0,0), float a_mass=1.f, float a_sizeX=5.f, float a_sizeY=5.f, float a_sizeZ=5.f );
+	void	create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass=1.f, float a_sizeX=5.f, float a_sizeY=5.f, float a_sizeZ=5.f );
+	void	create( btDiscreteDynamicsWorld* a_world, btTransform a_bt_tr, float a_mass=1.f, float a_sizeX=5.f, float a_sizeY=5.f, float a_sizeZ=5.f );
 	
 	void	draw();
 	void	drawBox(float sizeX, float sizeY, float sizeZ);
 	
 	// GETTERS //
 	ofVec3f	getSize() const;
-	bool	isInside(const ofVec3f& $pt, float tolerance=0.1f);
+	bool	isInside(const ofVec3f& a_pt, float tolerance=0.1f);
 	
 protected:
 	
