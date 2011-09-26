@@ -100,7 +100,10 @@ void ofxBulletWorldRigid::checkCollisions() {
 			cdata.numContactPoints = numContacts;
 			
 			cdata.userData1 = (ofxBulletUserData*)obA->getUserPointer();
+			cdata.body1		= btRigidBody::upcast(obA);
+			
 			cdata.userData2 = (ofxBulletUserData*)obB->getUserPointer();
+			cdata.body2		= btRigidBody::upcast(obB);
 		}
 		
 		for (int j = 0; j < numContacts; j++) {
