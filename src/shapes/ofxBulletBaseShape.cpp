@@ -74,7 +74,7 @@ void ofxBulletBaseShape::removeRigidBody() {
 }
 
 //--------------------------------------------------------------
-bool ofxBulletBaseShape::operator==( const ofxBulletUserData* a_userData) const {
+bool ofxBulletBaseShape::operator==( const void* a_userData) const {
 	return getData() == a_userData;
 }
 
@@ -117,8 +117,8 @@ btRigidBody* ofxBulletBaseShape::getRigidBody() {
 }
 
 //--------------------------------------------------------------
-ofxBulletUserData* ofxBulletBaseShape::getData() const {
-	return (ofxBulletUserData*)_rigidBody->getUserPointer();
+void* ofxBulletBaseShape::getData() const {
+	return _rigidBody->getUserPointer();
 }
 
 //--------------------------------------------------------------
@@ -251,7 +251,7 @@ void ofxBulletBaseShape::setActivationState( int a_state ) {
 
 // SETTERS, may be called after create() //
 //--------------------------------------------------------------
-void ofxBulletBaseShape::setData(ofxBulletUserData* userPointer) {
+void ofxBulletBaseShape::setData(void* userPointer) {
 	_userPointer = userPointer;
 	_rigidBody->setUserPointer( _userPointer );
 }

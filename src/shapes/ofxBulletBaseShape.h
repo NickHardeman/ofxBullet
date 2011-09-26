@@ -37,7 +37,7 @@ public:
 	
 	// GETTERS //
 	btRigidBody*	getRigidBody();
-	virtual ofxBulletUserData*	getData() const;
+	virtual void*	getData() const;
 	btCollisionShape* getCollisionShape() const;
 	int				getActivationState();
 	
@@ -58,7 +58,7 @@ public:
 	float			getAngularDamping() const;
 	
 	// used for checking collisions. Data is set using getData and operator is used to see if the same //
-	bool	operator==( const ofxBulletUserData* userData) const;
+	bool	operator==( const void* userData) const;
 	bool	operator==( const ofxBulletCollisionData& a_collisionData) const;
 	bool	operator!=( const ofxBulletCollisionData& a_collisionData) const;
 	
@@ -68,6 +68,8 @@ public:
 	bool	operator!=( const ofxBulletRaycastData& a_e ) const;
 	
 	// PROPERTY SETTERS, must be called after init() and before create() //
+	// if you extend this class, must overwrite in your class //
+	virtual void setData(void* userPointer);
 	void setProperties(float a_restitution, float a_friction);
 	void setRestitution( float a_res );
 	void setFriction( float a_friction );
@@ -103,14 +105,13 @@ public:
 	 const btCylinderShape* cylinder = static_cast<const btCylinderShape*>(shapes[Body::UPPER]);
 	*/
 protected:
-	// if you extend this class, must overwrite in your class //
-	virtual void setData(ofxBulletUserData* userPointer);
+	
 	btDiscreteDynamicsWorld*	_world;
 	btCollisionShape*			_shape;
 	btRigidBody*				_rigidBody;
 	float						_mass;
 	
-	ofxBulletUserData*			_userPointer;
+	void*						_userPointer;
 	
 	bool						_bInited;
 	bool						_bCreated;
