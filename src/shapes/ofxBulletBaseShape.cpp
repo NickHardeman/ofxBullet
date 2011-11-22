@@ -308,9 +308,14 @@ bool ofxBulletBaseShape::checkCreate() {
 
 //--------------------------------------------------------------
 void ofxBulletBaseShape::activate() {
-	((btCollisionObject*)_rigidBody->getCollisionShape())->activate( true );
+	//((btCollisionObject*)_rigidBody->getCollisionShape())->activate( true );
+	getRigidBody()->activate( true );
 }
 
+//--------------------------------------------------------------
+void ofxBulletBaseShape::enableKinematic() {
+	getRigidBody()->setCollisionFlags( getRigidBody()->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT );
+}
 
 //--------------------------------------------------------------
 void ofxBulletBaseShape::applyForce( const ofVec3f& a_frc, const ofVec3f& a_rel_pos ) {

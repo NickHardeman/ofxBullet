@@ -80,6 +80,10 @@ public:
 	void setAngularDamping( float a_angular_damp );
 	void setDamping( float a_linear_damp, float a_angular_damp );
 	void activate();
+	// can be called at any time //
+	// if you want to control the object. Make sure to have a mass of 0.f
+	// and manipulate the rigid body and then call activate() //
+	void enableKinematic();
 	
 	// CHECKERS //
 	bool checkInit();
