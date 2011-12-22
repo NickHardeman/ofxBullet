@@ -3,7 +3,7 @@
 # OF_ROOT allows to move projects outside apps/* just set this variable to the
 # absoulte path to the OF root folder
 
-OF_ROOT = ../../..
+OF_ROOT = ../../../..
 
 
 # USER_CFLAGS allows to pass custom flags to the compiler
@@ -17,12 +17,12 @@ USER_CFLAGS = -DUSE_MINICL
 # for example libraries like:
 # USER_LD_FLAGS = libs/libawesomelib.a
 
-USER_LDFLAGS = 
+USER_LDFLAGS =
 
 
 # use this to add system libraries for example:
 # USER_LIBS = -lpango
- 
+
 USER_LIBS =
 
 

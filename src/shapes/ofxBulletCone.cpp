@@ -9,8 +9,8 @@
 
 #include "ofxBulletCone.h"
 #ifdef TARGET_LINUX
-#include <glu.h>
-#include <glut.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
 #else
 #include <OpenGL/glu.h>
 #include <GLUT/glut.h>
