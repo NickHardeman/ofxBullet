@@ -4,8 +4,8 @@ Copyright (c) 2003-2006 Erwin Coumans  http://continuousphysics.com/Bullet/
 
 This software is provided 'as-is', without any express or implied warranty.
 In no event will the authors be held liable for any damages arising from the use of this software.
-Permission is granted to anyone to use this software for any purpose, 
-including commercial applications, and to alter it and redistribute it freely, 
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it freely,
 subject to the following restrictions:
 
 1. The origin of this software must not be misrepresented; you must not claim that you wrote the original software. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required.
@@ -13,53 +13,75 @@ subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 */
 
+#ifdef _WIN32
+
+#include <cstdio>
+
+
+#define WAVEFRONT_SIZE 32
+#define WAVEFRONT_BLOCK_MULTIPLIER 2
+#define LINKS_PER_SIMD_LANE 16
+
+#define STRINGIFY( S ) STRINGIFY2( S )
+#define STRINGIFY2( S ) #S
+
 #include "BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h"
 #include "vectormath/vmInclude.h"
 
-#include "btSoftBodySolver_DX11.h"
+#include "btSoftBodySolverLinkData_DX11SIMDAware.h"
+#include "btSoftBodySolver_DX11SIMDAware.h"
 #include "btSoftBodySolverVertexBuffer_DX11.h"
 #include "BulletSoftBody/btSoftBody.h"
 
 #define MSTRINGIFY(A) #A
-static char* PrepareLinksHLSLString = 
+static char* PrepareLinksHLSLString =
 #include "HLSL/PrepareLinks.hlsl"
-static char* UpdatePositionsFromVelocitiesHLSLString = 
+static char* UpdatePositionsFromVelocitiesHLSLString =
 #include "HLSL/UpdatePositionsFromVelocities.hlsl"
-static char* SolvePositionsHLSLString = 
-#include "HLSL/SolvePositions.hlsl"
-static char* UpdateNodesHLSLString = 
+static char* SolvePositionsSIMDBatchedHLSLString =
+#include "HLSL/SolvePositionsSIMDBatched.hlsl"
+static char* UpdateNodesHLSLString =
 #include "HLSL/UpdateNodes.hlsl"
-static char* UpdatePositionsHLSLString = 
+static char* UpdatePositionsHLSLString =
 #include "HLSL/UpdatePositions.hlsl"
-static char* UpdateConstantsHLSLString = 
+static char* UpdateConstantsHLSLString =
 #include "HLSL/UpdateConstants.hlsl"
-static char* IntegrateHLSLString = 
+static char* IntegrateHLSLString =
 #include "HLSL/Integrate.hlsl"
-static char* ApplyForcesHLSLString = 
+static char* ApplyForcesHLSLString =
 #include "HLSL/ApplyForces.hlsl"
-static char* UpdateNormalsHLSLString = 
+static char* UpdateNormalsHLSLString =
 #include "HLSL/UpdateNormals.hlsl"
-static char* OutputToVertexArrayHLSLString = 
+static char* OutputToVertexArrayHLSLString =
 #include "HLSL/OutputToVertexArray.hlsl"
-static char* VSolveLinksHLSLString = 
+static char* VSolveLinksHLSLString =
 #include "HLSL/VSolveLinks.hlsl"
 
 
-btSoftBodyLinkDataDX11::btSoftBodyLinkDataDX11( ID3D11Device *d3dDevice, ID3D11DeviceContext *d3dDeviceContext ) : 
-		m_dx11Links( d3dDevice, d3dDeviceContext, &m_links, false ),
-		m_dx11LinkStrength( d3dDevice, d3dDeviceContext, &m_linkStrength, false ),
-		m_dx11LinksMassLSC( d3dDevice, d3dDeviceContext, &m_linksMassLSC, false ),
-		m_dx11LinksRestLengthSquared( d3dDevice, d3dDeviceContext, &m_linksRestLengthSquared, false ),
-		m_dx11LinksCLength( d3dDevice, d3dDeviceContext, &m_linksCLength, false ),
-		m_dx11LinksLengthRatio( d3dDevice, d3dDeviceContext, &m_linksLengthRatio, false ),
-		m_dx11LinksRestLength( d3dDevice, d3dDeviceContext, &m_linksRestLength, false ),
-		m_dx11LinksMaterialLinearStiffnessCoefficient( d3dDevice, d3dDeviceContext, &m_linksMaterialLinearStiffnessCoefficient, false )
+
+btSoftBodyLinkDataDX11SIMDAware::btSoftBodyLinkDataDX11SIMDAware( ID3D11Device *d3dDevice, ID3D11DeviceContext *d3dDeviceContext ) :
+		m_d3dDevice( d3dDevice ),
+		m_d3dDeviceContext( d3dDeviceContext ),
+		m_wavefrontSize( WAVEFRONT_SIZE ),
+		m_linksPerWorkItem( LINKS_PER_SIMD_LANE ),
+		m_maxBatchesWithinWave( 0 ),
+		m_maxLinksPerWavefront( m_wavefrontSize * m_linksPerWorkItem ),
+		m_numWavefronts( 0 ),
+		m_maxVertex( 0 ),
+		m_dx11NumBatchesAndVerticesWithinWaves( d3dDevice, d3dDeviceContext, &m_numBatchesAndVerticesWithinWaves, true ),
+		m_dx11WavefrontVerticesGlobalAddresses( d3dDevice, d3dDeviceContext, &m_wavefrontVerticesGlobalAddresses, true ),
+		m_dx11LinkVerticesLocalAddresses( d3dDevice, d3dDeviceContext, &m_linkVerticesLocalAddresses, true ),
+		m_dx11LinkStrength( d3dDevice, d3dDeviceContext, &m_linkStrength, true ),
+		m_dx11LinksMassLSC( d3dDevice, d3dDeviceContext, &m_linksMassLSC, true ),
+		m_dx11LinksRestLengthSquared( d3dDevice, d3dDeviceContext, &m_linksRestLengthSquared, true ),
+		m_dx11LinksRestLength( d3dDevice, d3dDeviceContext, &m_linksRestLength, true ),
+		m_dx11LinksMaterialLinearStiffnessCoefficient( d3dDevice, d3dDeviceContext, &m_linksMaterialLinearStiffnessCoefficient, true )
 {
 	m_d3dDevice = d3dDevice;
 	m_d3dDeviceContext = d3dDeviceContext;
 }
 
-btSoftBodyLinkDataDX11::~btSoftBodyLinkDataDX11()
+btSoftBodyLinkDataDX11SIMDAware::~btSoftBodyLinkDataDX11SIMDAware()
 {
 }
 
@@ -69,7 +91,7 @@ static Vectormath::Aos::Vector3 toVector3( const btVector3 &vec )
 	return outVec;
 }
 
-void btSoftBodyLinkDataDX11::createLinks( int numLinks )
+void btSoftBodyLinkDataDX11SIMDAware::createLinks( int numLinks )
 {
 	int previousSize = m_links.size();
 	int newSize = previousSize + numLinks;
@@ -80,28 +102,34 @@ void btSoftBodyLinkDataDX11::createLinks( int numLinks )
 	m_linkAddresses.resize( newSize );
 }
 
-void btSoftBodyLinkDataDX11::setLinkAt( const btSoftBodyLinkData::LinkDescription &link, int linkIndex )
+void btSoftBodyLinkDataDX11SIMDAware::setLinkAt( const btSoftBodyLinkData::LinkDescription &link, int linkIndex )
 {
 	btSoftBodyLinkData::setLinkAt( link, linkIndex );
+
+	if( link.getVertex0() > m_maxVertex )
+		m_maxVertex = link.getVertex0();
+	if( link.getVertex1() > m_maxVertex )
+		m_maxVertex = link.getVertex1();
 
 	// Set the link index correctly for initialisation
 	m_linkAddresses[linkIndex] = linkIndex;
 }
 
-bool btSoftBodyLinkDataDX11::onAccelerator()
+bool btSoftBodyLinkDataDX11SIMDAware::onAccelerator()
 {
 	return m_onGPU;
 }
 
-bool btSoftBodyLinkDataDX11::moveToAccelerator()
+bool btSoftBodyLinkDataDX11SIMDAware::moveToAccelerator()
 {
 	bool success = true;
-	success = success && m_dx11Links.moveToGPU();
+
+	success = success && m_dx11NumBatchesAndVerticesWithinWaves.moveToGPU();
+	success = success && m_dx11WavefrontVerticesGlobalAddresses.moveToGPU();
+	success = success && m_dx11LinkVerticesLocalAddresses.moveToGPU();
 	success = success && m_dx11LinkStrength.moveToGPU();
 	success = success && m_dx11LinksMassLSC.moveToGPU();
 	success = success && m_dx11LinksRestLengthSquared.moveToGPU();
-	success = success && m_dx11LinksCLength.moveToGPU();
-	success = success && m_dx11LinksLengthRatio.moveToGPU();
 	success = success && m_dx11LinksRestLength.moveToGPU();
 	success = success && m_dx11LinksMaterialLinearStiffnessCoefficient.moveToGPU();
 
@@ -111,15 +139,15 @@ bool btSoftBodyLinkDataDX11::moveToAccelerator()
 	return success;
 }
 
-bool btSoftBodyLinkDataDX11::moveFromAccelerator()
+bool btSoftBodyLinkDataDX11SIMDAware::moveFromAccelerator()
 {
 	bool success = true;
-	success = success && m_dx11Links.moveFromGPU();
+	success = success && m_dx11NumBatchesAndVerticesWithinWaves.moveFromGPU();
+	success = success && m_dx11WavefrontVerticesGlobalAddresses.moveFromGPU();
+	success = success && m_dx11LinkVerticesLocalAddresses.moveFromGPU();
 	success = success && m_dx11LinkStrength.moveFromGPU();
 	success = success && m_dx11LinksMassLSC.moveFromGPU();
 	success = success && m_dx11LinksRestLengthSquared.moveFromGPU();
-	success = success && m_dx11LinksCLength.moveFromGPU();
-	success = success && m_dx11LinksLengthRatio.moveFromGPU();
 	success = success && m_dx11LinksRestLength.moveFromGPU();
 	success = success && m_dx11LinksMaterialLinearStiffnessCoefficient.moveFromGPU();
 
@@ -129,420 +157,21 @@ bool btSoftBodyLinkDataDX11::moveFromAccelerator()
 	return success;
 }
 
-void btSoftBodyLinkDataDX11::generateBatches()
-{
-	int numLinks = getNumLinks();
 
-	// Do the graph colouring here temporarily
-	btAlignedObjectArray< int > batchValues;
-	batchValues.resize( numLinks, 0 );
 
-	// Find the maximum vertex value internally for now
-	int maxVertex = 0;
-	for( int linkIndex = 0; linkIndex < numLinks; ++linkIndex )
-	{
-		int vertex0 = getVertexPair(linkIndex).vertex0;
-		int vertex1 = getVertexPair(linkIndex).vertex1;
-		if( vertex0 > maxVertex )
-			maxVertex = vertex0;
-		if( vertex1 > maxVertex )
-			maxVertex = vertex1;
-	}
-	int numVertices = maxVertex + 1;
 
-	// Set of lists, one for each node, specifying which colours are connected
-	// to that node.
-	// No two edges into a node can share a colour.
-	btAlignedObjectArray< btAlignedObjectArray< int > > vertexConnectedColourLists;
-	vertexConnectedColourLists.resize(numVertices);
 
 
 
-	// Simple algorithm that chooses the lowest batch number
-	// that none of the links attached to either of the connected 
-	// nodes is in
-	for( int linkIndex = 0; linkIndex < numLinks; ++linkIndex )
-	{				
-		int linkLocation = m_linkAddresses[linkIndex];
 
-		int vertex0 = getVertexPair(linkLocation).vertex0;
-		int vertex1 = getVertexPair(linkLocation).vertex1;
 
-		// Get the two node colour lists
-		btAlignedObjectArray< int > &colourListVertex0( vertexConnectedColourLists[vertex0] );
-		btAlignedObjectArray< int > &colourListVertex1( vertexConnectedColourLists[vertex1] );
 
-		// Choose the minimum colour that is in neither list
-		int colour = 0;
-		while( colourListVertex0.findLinearSearch(colour) != colourListVertex0.size() || colourListVertex1.findLinearSearch(colour) != colourListVertex1.size()  )
-			++colour;
-		// i should now be the minimum colour in neither list
-		// Add to the two lists so that future edges don't share
-		// And store the colour against this edge
 
-		colourListVertex0.push_back(colour);
-		colourListVertex1.push_back(colour);
-		batchValues[linkIndex] = colour;
-	}
 
-	// Check the colour counts
-	btAlignedObjectArray< int > batchCounts;
-	for( int i = 0; i < numLinks; ++i )
-	{
-		int batch = batchValues[i];
-		if( batch >= batchCounts.size() )
-			batchCounts.push_back(1);
-		else
-			++(batchCounts[batch]);
-	}
 
-	m_batchStartLengths.resize(batchCounts.size());
-	if( m_batchStartLengths.size() > 0 )
-	{
-		m_batchStartLengths[0] = BatchPair( 0, 0 );
 
-		int sum = 0;
-		for( int batchIndex = 0; batchIndex < batchCounts.size(); ++batchIndex )
-		{
-			m_batchStartLengths[batchIndex].start = sum;
-			m_batchStartLengths[batchIndex].length = batchCounts[batchIndex];
-			sum += batchCounts[batchIndex];
-		}
-	}
 
-	/////////////////////////////
-	// Sort data based on batches
-
-	// Create source arrays by copying originals
-	btAlignedObjectArray<btSoftBodyLinkData::LinkNodePair>				m_links_Backup(m_links);
-	btAlignedObjectArray<float>											m_linkStrength_Backup(m_linkStrength);
-	btAlignedObjectArray<float>											m_linksMassLSC_Backup(m_linksMassLSC);
-	btAlignedObjectArray<float>											m_linksRestLengthSquared_Backup(m_linksRestLengthSquared);
-	btAlignedObjectArray<Vectormath::Aos::Vector3>						m_linksCLength_Backup(m_linksCLength);
-	btAlignedObjectArray<float>											m_linksLengthRatio_Backup(m_linksLengthRatio);
-	btAlignedObjectArray<float>											m_linksRestLength_Backup(m_linksRestLength);
-	btAlignedObjectArray<float>											m_linksMaterialLinearStiffnessCoefficient_Backup(m_linksMaterialLinearStiffnessCoefficient);
-
-
-	for( int batch = 0; batch < batchCounts.size(); ++batch )
-		batchCounts[batch] = 0;
-
-	// Do sort as single pass into destination arrays	
-	for( int linkIndex = 0; linkIndex < numLinks; ++linkIndex )
-	{
-		// To maintain locations run off the original link locations rather than the current position.
-		// It's not cache efficient, but as we run this rarely that should not matter.
-		// It's faster than searching the link location array for the current location and then updating it.
-		// The other alternative would be to unsort before resorting, but this is equivalent to doing that.
-		int linkLocation = m_linkAddresses[linkIndex];
-
-		// Obtain batch and calculate target location for the
-		// next element in that batch, incrementing the batch counter
-		// afterwards
-		int batch = batchValues[linkIndex];
-		int newLocation = m_batchStartLengths[batch].start + batchCounts[batch];
-
-		batchCounts[batch] = batchCounts[batch] + 1;
-		m_links[newLocation] = m_links_Backup[linkLocation];
-#if 1
-		m_linkStrength[newLocation] = m_linkStrength_Backup[linkLocation];
-		m_linksMassLSC[newLocation] = m_linksMassLSC_Backup[linkLocation];
-		m_linksRestLengthSquared[newLocation] = m_linksRestLengthSquared_Backup[linkLocation];
-		m_linksLengthRatio[newLocation] = m_linksLengthRatio_Backup[linkLocation];
-		m_linksRestLength[newLocation] = m_linksRestLength_Backup[linkLocation];
-		m_linksMaterialLinearStiffnessCoefficient[newLocation] = m_linksMaterialLinearStiffnessCoefficient_Backup[linkLocation];
-#endif
-		// Update the locations array to account for the moved entry
-		m_linkAddresses[linkIndex] = newLocation;
-	}
-} // void btSoftBodyLinkDataDX11::generateBatches()
-
-
-
-btSoftBodyVertexDataDX11::btSoftBodyVertexDataDX11( ID3D11Device *d3dDevice, ID3D11DeviceContext *d3dDeviceContext ) : 
-	m_dx11ClothIdentifier( d3dDevice, d3dDeviceContext, &m_clothIdentifier, false ),
-	m_dx11VertexPosition( d3dDevice, d3dDeviceContext, &m_vertexPosition, false ),
-	m_dx11VertexPreviousPosition( d3dDevice, d3dDeviceContext, &m_vertexPreviousPosition, false ),
-	m_dx11VertexVelocity( d3dDevice, d3dDeviceContext, &m_vertexVelocity, false ),
-	m_dx11VertexForceAccumulator( d3dDevice, d3dDeviceContext, &m_vertexForceAccumulator, false ),
-	m_dx11VertexNormal( d3dDevice, d3dDeviceContext, &m_vertexNormal, false ),
-	m_dx11VertexInverseMass( d3dDevice, d3dDeviceContext, &m_vertexInverseMass, false ),
-	m_dx11VertexArea( d3dDevice, d3dDeviceContext, &m_vertexArea, false ),
-	m_dx11VertexTriangleCount( d3dDevice, d3dDeviceContext, &m_vertexTriangleCount, false )
-{
-	m_d3dDevice = d3dDevice;
-	m_d3dDeviceContext = d3dDeviceContext;
-}
-
-btSoftBodyVertexDataDX11::~btSoftBodyVertexDataDX11()
-{
-
-}
-
-bool btSoftBodyVertexDataDX11::onAccelerator()
-{
-	return m_onGPU;
-}
-
-bool btSoftBodyVertexDataDX11::moveToAccelerator()
-{
-	bool success = true;
-	success = success && m_dx11ClothIdentifier.moveToGPU();
-	success = success && m_dx11VertexPosition.moveToGPU();
-	success = success && m_dx11VertexPreviousPosition.moveToGPU();
-	success = success && m_dx11VertexVelocity.moveToGPU();
-	success = success && m_dx11VertexForceAccumulator.moveToGPU();
-	success = success && m_dx11VertexNormal.moveToGPU();
-	success = success && m_dx11VertexInverseMass.moveToGPU();
-	success = success && m_dx11VertexArea.moveToGPU();
-	success = success && m_dx11VertexTriangleCount.moveToGPU();
-
-	if( success )
-		m_onGPU = true;
-
-	return success;
-}
-
-bool btSoftBodyVertexDataDX11::moveFromAccelerator()
-{
-	bool success = true;
-	success = success && m_dx11ClothIdentifier.moveFromGPU();
-	success = success && m_dx11VertexPosition.moveFromGPU();
-	success = success && m_dx11VertexPreviousPosition.moveFromGPU();
-	success = success && m_dx11VertexVelocity.moveFromGPU();
-	success = success && m_dx11VertexForceAccumulator.moveFromGPU();
-	success = success && m_dx11VertexNormal.moveFromGPU();
-	success = success && m_dx11VertexInverseMass.moveFromGPU();
-	success = success && m_dx11VertexArea.moveFromGPU();
-	success = success && m_dx11VertexTriangleCount.moveFromGPU();
-
-	if( success )
-		m_onGPU = true;
-
-	return success;
-}
-
-
-btSoftBodyTriangleDataDX11::btSoftBodyTriangleDataDX11( ID3D11Device *d3dDevice, ID3D11DeviceContext *d3dDeviceContext ) : 
-	m_dx11VertexIndices( d3dDevice, d3dDeviceContext, &m_vertexIndices, false ),
-	m_dx11Area( d3dDevice, d3dDeviceContext, &m_area, false ),
-	m_dx11Normal( d3dDevice, d3dDeviceContext, &m_normal, false )
-{
-	m_d3dDevice = d3dDevice;
-	m_d3dDeviceContext = d3dDeviceContext;
-}
-
-btSoftBodyTriangleDataDX11::~btSoftBodyTriangleDataDX11()
-{
-
-}
-
-
-/** Allocate enough space in all link-related arrays to fit numLinks links */
-void btSoftBodyTriangleDataDX11::createTriangles( int numTriangles )
-{
-	int previousSize = getNumTriangles();
-	int newSize = previousSize + numTriangles;
-
-	btSoftBodyTriangleData::createTriangles( numTriangles );
-
-	// Resize the link addresses array as well
-	m_triangleAddresses.resize( newSize );
-}
-
-/** Insert the link described into the correct data structures assuming space has already been allocated by a call to createLinks */
-void btSoftBodyTriangleDataDX11::setTriangleAt( const btSoftBodyTriangleData::TriangleDescription &triangle, int triangleIndex )
-{
-	btSoftBodyTriangleData::setTriangleAt( triangle, triangleIndex );
-
-	m_triangleAddresses[triangleIndex] = triangleIndex;
-}
-
-bool btSoftBodyTriangleDataDX11::onAccelerator()
-{
-	return m_onGPU;
-}
-
-bool btSoftBodyTriangleDataDX11::moveToAccelerator()
-{
-	bool success = true;
-	success = success && m_dx11VertexIndices.moveToGPU();
-	success = success && m_dx11Area.moveToGPU();
-	success = success && m_dx11Normal.moveToGPU();
-
-	if( success )
-		m_onGPU = true;
-
-	return success;
-}
-
-bool btSoftBodyTriangleDataDX11::moveFromAccelerator()
-{
-	bool success = true;
-	success = success && m_dx11VertexIndices.moveFromGPU();
-	success = success && m_dx11Area.moveFromGPU();
-	success = success && m_dx11Normal.moveFromGPU();
-
-	if( success )
-		m_onGPU = true;
-
-	return success;
-}
-
-/**
- * Generate (and later update) the batching for the entire triangle set.
- * This redoes a lot of work because it batches the entire set when each cloth is inserted.
- * In theory we could delay it until just before we need the cloth.
- * It's a one-off overhead, though, so that is a later optimisation.
- */
-void btSoftBodyTriangleDataDX11::generateBatches()
-{
-	int numTriangles = getNumTriangles();
-	if( numTriangles == 0 )
-		return;
-
-	// Do the graph colouring here temporarily
-	btAlignedObjectArray< int > batchValues;
-	batchValues.resize( numTriangles );
-
-	// Find the maximum vertex value internally for now
-	int maxVertex = 0;
-	for( int triangleIndex = 0; triangleIndex < numTriangles; ++triangleIndex )
-	{
-		int vertex0 = getVertexSet(triangleIndex).vertex0;
-		int vertex1 = getVertexSet(triangleIndex).vertex1;
-		int vertex2 = getVertexSet(triangleIndex).vertex2;
-		
-		if( vertex0 > maxVertex )
-			maxVertex = vertex0;
-		if( vertex1 > maxVertex )
-			maxVertex = vertex1;
-		if( vertex2 > maxVertex )
-			maxVertex = vertex2;
-	}
-	int numVertices = maxVertex + 1;
-
-	// Set of lists, one for each node, specifying which colours are connected
-	// to that node.
-	// No two edges into a node can share a colour.
-	btAlignedObjectArray< btAlignedObjectArray< int > > vertexConnectedColourLists;
-	vertexConnectedColourLists.resize(numVertices);
-
-
-	//std::cout << "\n";
-	// Simple algorithm that chooses the lowest batch number
-	// that none of the faces attached to either of the connected 
-	// nodes is in
-	for( int triangleIndex = 0; triangleIndex < numTriangles; ++triangleIndex )
-	{
-		// To maintain locations run off the original link locations rather than the current position.
-		// It's not cache efficient, but as we run this rarely that should not matter.
-		// It's faster than searching the link location array for the current location and then updating it.
-		// The other alternative would be to unsort before resorting, but this is equivalent to doing that.
-		int triangleLocation = m_triangleAddresses[triangleIndex];
-
-		int vertex0 = getVertexSet(triangleLocation).vertex0;
-		int vertex1 = getVertexSet(triangleLocation).vertex1;
-		int vertex2 = getVertexSet(triangleLocation).vertex2;
-
-		// Get the three node colour lists
-		btAlignedObjectArray< int > &colourListVertex0( vertexConnectedColourLists[vertex0] );
-		btAlignedObjectArray< int > &colourListVertex1( vertexConnectedColourLists[vertex1] );
-		btAlignedObjectArray< int > &colourListVertex2( vertexConnectedColourLists[vertex2] );
-
-		// Choose the minimum colour that is in none of the lists
-		int colour = 0;
-		while( 
-			colourListVertex0.findLinearSearch(colour) != colourListVertex0.size() || 
-			colourListVertex1.findLinearSearch(colour) != colourListVertex1.size() ||
-			colourListVertex2.findLinearSearch(colour) != colourListVertex2.size() )
-		{
-			++colour;
-		}
-		// i should now be the minimum colour in neither list
-		// Add to the three lists so that future edges don't share
-		// And store the colour against this face
-		colourListVertex0.push_back(colour);
-		colourListVertex1.push_back(colour);
-		colourListVertex2.push_back(colour);
-
-		batchValues[triangleIndex] = colour;
-	}
-
-
-	// Check the colour counts
-	btAlignedObjectArray< int > batchCounts;
-	for( int i = 0; i < numTriangles; ++i )
-	{
-		int batch = batchValues[i];
-		if( batch >= batchCounts.size() )
-			batchCounts.push_back(1);
-		else
-			++(batchCounts[batch]);
-	}
-
-
-	m_batchStartLengths.resize(batchCounts.size());
-	m_batchStartLengths[0] = BatchPair( 0, 0 );
-
-
-	int sum = 0;
-	for( int batchIndex = 0; batchIndex < batchCounts.size(); ++batchIndex )
-	{
-		m_batchStartLengths[batchIndex].start = sum;
-		m_batchStartLengths[batchIndex].length = batchCounts[batchIndex];
-		sum += batchCounts[batchIndex];
-	}
-	
-	/////////////////////////////
-	// Sort data based on batches
-	
-	// Create source arrays by copying originals
-	btAlignedObjectArray<btSoftBodyTriangleData::TriangleNodeSet>							m_vertexIndices_Backup(m_vertexIndices);
-	btAlignedObjectArray<float>										m_area_Backup(m_area);
-	btAlignedObjectArray<Vectormath::Aos::Vector3>					m_normal_Backup(m_normal);
-
-
-	for( int batch = 0; batch < batchCounts.size(); ++batch )
-		batchCounts[batch] = 0;
-
-	// Do sort as single pass into destination arrays	
-	for( int triangleIndex = 0; triangleIndex < numTriangles; ++triangleIndex )
-	{
-		// To maintain locations run off the original link locations rather than the current position.
-		// It's not cache efficient, but as we run this rarely that should not matter.
-		// It's faster than searching the link location array for the current location and then updating it.
-		// The other alternative would be to unsort before resorting, but this is equivalent to doing that.
-		int triangleLocation = m_triangleAddresses[triangleIndex];
-
-		// Obtain batch and calculate target location for the
-		// next element in that batch, incrementing the batch counter
-		// afterwards
-		int batch = batchValues[triangleIndex];
-		int newLocation = m_batchStartLengths[batch].start + batchCounts[batch];
-
-		batchCounts[batch] = batchCounts[batch] + 1;
-		m_vertexIndices[newLocation] = m_vertexIndices_Backup[triangleLocation];
-		m_area[newLocation] = m_area_Backup[triangleLocation];
-		m_normal[newLocation] = m_normal_Backup[triangleLocation];
-
-		// Update the locations array to account for the moved entry
-		m_triangleAddresses[triangleIndex] = newLocation;
-	}
-} // btSoftBodyTriangleDataDX11::generateBatches
-
-
-
-
-
-
-
-
-
-
-
-
-btDX11SoftBodySolver::btDX11SoftBodySolver(ID3D11Device * dx11Device, ID3D11DeviceContext* dx11Context) :
+btDX11SIMDAwareSoftBodySolver::btDX11SIMDAwareSoftBodySolver(ID3D11Device * dx11Device, ID3D11DeviceContext* dx11Context) :
 	m_dx11Device( dx11Device ),
 	m_dx11Context( dx11Context ),
 	m_linkData(m_dx11Device, m_dx11Context),
@@ -557,23 +186,19 @@ btDX11SoftBodySolver::btDX11SoftBodySolver(ID3D11Device * dx11Device, ID3D11Devi
 	m_dx11PerClothMediumDensity( m_dx11Device, m_dx11Context, &m_perClothMediumDensity, true )
 {
 	// Initial we will clearly need to update solver constants
-	// For now this is global for the cloths linked with this solver - we should probably make this body specific 
+	// For now this is global for the cloths linked with this solver - we should probably make this body specific
 	// for performance in future once we understand more clearly when constants need to be updated
 	m_updateSolverConstants = true;
 
 	m_shadersInitialized = false;
 }
 
-btDX11SoftBodySolver::~btDX11SoftBodySolver()
+void btDX11SIMDAwareSoftBodySolver::releaseKernels()
 {
 	SAFE_RELEASE( integrateKernel.constBuffer );
 	SAFE_RELEASE( integrateKernel.kernel );
-	SAFE_RELEASE( prepareLinksKernel.constBuffer );
-	SAFE_RELEASE( prepareLinksKernel.kernel );
 	SAFE_RELEASE( solvePositionsFromLinksKernel.constBuffer );
 	SAFE_RELEASE( solvePositionsFromLinksKernel.kernel );
-	SAFE_RELEASE( vSolveLinksKernel.constBuffer );
-	SAFE_RELEASE( vSolveLinksKernel.kernel );
 	SAFE_RELEASE( updatePositionsFromVelocitiesKernel.constBuffer );
 	SAFE_RELEASE( updatePositionsFromVelocitiesKernel.kernel );
 	SAFE_RELEASE( updateVelocitiesFromPositionsWithoutVelocitiesKernel.constBuffer );
@@ -599,12 +224,18 @@ btDX11SoftBodySolver::~btDX11SoftBodySolver()
 	SAFE_RELEASE( outputToVertexArrayKernel.constBuffer );
 	SAFE_RELEASE( outputToVertexArrayKernel.kernel );
 	SAFE_RELEASE( collideCylinderKernel.constBuffer );
-	SAFE_RELEASE( collideCylinderKernel.kernel );	
+	SAFE_RELEASE( collideCylinderKernel.kernel );
+
+	m_shadersInitialized = false;
+}
+
+btDX11SIMDAwareSoftBodySolver::~btDX11SIMDAwareSoftBodySolver()
+{
+	releaseKernels();
 }
 
 
-
-void btDX11SoftBodySolver::optimize( btAlignedObjectArray< btSoftBody * > &softBodies )
+void btDX11SIMDAwareSoftBodySolver::optimize( btAlignedObjectArray< btSoftBody * > &softBodies )
 {
 	if( m_softBodySet.size() != softBodies.size() )
 	{
@@ -622,7 +253,7 @@ void btDX11SoftBodySolver::optimize( btAlignedObjectArray< btSoftBody * > &softB
 			using Vectormath::Aos::Point3;
 
 			// Create SoftBody that will store the information within the solver
-			btDX11AcceleratedSoftBodyInterface *newSoftBody = new btDX11AcceleratedSoftBodyInterface( softBody );
+			btAcceleratedSoftBodyInterface *newSoftBody = new btAcceleratedSoftBodyInterface( softBody );
 			m_softBodySet.push_back( newSoftBody );
 
 			m_perClothAcceleration.push_back( toVector3(softBody->getWorldInfo()->m_gravity) );
@@ -672,8 +303,8 @@ void btDX11SoftBodySolver::optimize( btAlignedObjectArray< btSoftBody * > &softB
 				int vertexIndex2 = (softBody->m_faces[triangle].m_n[2] - &(softBody->m_nodes[0]));
 				btSoftBodyTriangleData::TriangleDescription newTriangle(vertexIndex0 + firstVertex, vertexIndex1 + firstVertex, vertexIndex2 + firstVertex);
 				getTriangleData().setTriangleAt( newTriangle, firstTriangle + triangle );
-				
-				// Increase vertex triangle counts for this triangle		
+
+				// Increase vertex triangle counts for this triangle
 				getVertexData().getTriangleCount(newTriangle.getVertexSet().vertex0)++;
 				getVertexData().getTriangleCount(newTriangle.getVertexSet().vertex1)++;
 				getVertexData().getTriangleCount(newTriangle.getVertexSet().vertex2)++;
@@ -682,7 +313,7 @@ void btDX11SoftBodySolver::optimize( btAlignedObjectArray< btSoftBody * > &softB
 			int firstLink = getLinkData().getNumLinks();
 			int numLinks = softBody->m_links.size();
 			int maxLinks = numLinks;
-			
+
 			// Allocate space for the links
 			getLinkData().createLinks( numLinks );
 
@@ -696,7 +327,7 @@ void btDX11SoftBodySolver::optimize( btAlignedObjectArray< btSoftBody * > &softB
 				newLink.setLinkStrength(1.f);
 				getLinkData().setLinkAt(newLink, firstLink + link);
 			}
-			
+
 			newSoftBody->setFirstVertex( firstVertex );
 			newSoftBody->setFirstTriangle( firstTriangle );
 			newSoftBody->setNumVertices( numVertices );
@@ -712,48 +343,58 @@ void btDX11SoftBodySolver::optimize( btAlignedObjectArray< btSoftBody * > &softB
 		updateConstants(0.f);
 
 
-		m_linkData.generateBatches();		
+		m_linkData.generateBatches();
 		m_triangleData.generateBatches();
+
+
+		// Build the shaders to match the batching parameters
+		buildShaders();
 	}
+
 }
 
 
-btSoftBodyLinkData &btDX11SoftBodySolver::getLinkData()
+btSoftBodyLinkData &btDX11SIMDAwareSoftBodySolver::getLinkData()
 {
 	// TODO: Consider setting link data to "changed" here
 	return m_linkData;
 }
 
-btSoftBodyVertexData &btDX11SoftBodySolver::getVertexData()
+btSoftBodyVertexData &btDX11SIMDAwareSoftBodySolver::getVertexData()
 {
 	// TODO: Consider setting vertex data to "changed" here
 	return m_vertexData;
 }
 
-btSoftBodyTriangleData &btDX11SoftBodySolver::getTriangleData()
+btSoftBodyTriangleData &btDX11SIMDAwareSoftBodySolver::getTriangleData()
 {
 	// TODO: Consider setting triangle data to "changed" here
 	return m_triangleData;
 }
 
-bool btDX11SoftBodySolver::checkInitialized()
+
+bool btDX11SIMDAwareSoftBodySolver::checkInitialized()
 {
-	return buildShaders();
+	if( !m_shadersInitialized )
+		if( buildShaders() )
+			m_shadersInitialized = true;
+
+	return m_shadersInitialized;
 }
 
-void btDX11SoftBodySolver::resetNormalsAndAreas( int numVertices )
+void btDX11SIMDAwareSoftBodySolver::resetNormalsAndAreas( int numVertices )
 {
 	// No need to batch link solver, it is entirely parallel
 	// Copy kernel parameters to GPU
 	UpdateSoftBodiesCB constBuffer;
-	
+
 	constBuffer.numNodes = numVertices;
 	constBuffer.epsilon = FLT_EPSILON;
-	
+
 	// Todo: factor this out. Number of nodes is static and sdt might be, too, we can update this just once on setup
 	D3D11_MAPPED_SUBRESOURCE MappedResource = {0};
 	m_dx11Context->Map( integrateKernel.constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource );
-	memcpy( MappedResource.pData, &constBuffer, sizeof(UpdateSoftBodiesCB) );	
+	memcpy( MappedResource.pData, &constBuffer, sizeof(UpdateSoftBodiesCB) );
 	m_dx11Context->Unmap( integrateKernel.constBuffer, 0 );
 	m_dx11Context->CSSetConstantBuffers( 0, 1, &integrateKernel.constBuffer );
 
@@ -768,33 +409,33 @@ void btDX11SoftBodySolver::resetNormalsAndAreas( int numVertices )
 	m_dx11Context->Dispatch(numBlocks, 1, 1 );
 
 	{
-		// Tidy up 
+		// Tidy up
 		ID3D11UnorderedAccessView* pUAViewNULL = NULL;
 		m_dx11Context->CSSetUnorderedAccessViews( 0, 1, &pUAViewNULL, NULL );
 		m_dx11Context->CSSetUnorderedAccessViews( 1, 1, &pUAViewNULL, NULL );
 
 		ID3D11Buffer *pBufferNull = NULL;
 		m_dx11Context->CSSetConstantBuffers( 0, 1, &pBufferNull );
-	}	
-} // btDX11SoftBodySolver::resetNormalsAndAreas
+	}
+} // btDX11SIMDAwareSoftBodySolver::resetNormalsAndAreas
 
-void btDX11SoftBodySolver::normalizeNormalsAndAreas( int numVertices )
+void btDX11SIMDAwareSoftBodySolver::normalizeNormalsAndAreas( int numVertices )
 {
 	// No need to batch link solver, it is entirely parallel
 	// Copy kernel parameters to GPU
 	UpdateSoftBodiesCB constBuffer;
-	
+
 	constBuffer.numNodes = numVertices;
 	constBuffer.epsilon = FLT_EPSILON;
-	
+
 	// Todo: factor this out. Number of nodes is static and sdt might be, too, we can update this just once on setup
 	D3D11_MAPPED_SUBRESOURCE MappedResource = {0};
 	m_dx11Context->Map( integrateKernel.constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource );
-	memcpy( MappedResource.pData, &constBuffer, sizeof(UpdateSoftBodiesCB) );	
+	memcpy( MappedResource.pData, &constBuffer, sizeof(UpdateSoftBodiesCB) );
 	m_dx11Context->Unmap( integrateKernel.constBuffer, 0 );
 	m_dx11Context->CSSetConstantBuffers( 0, 1, &integrateKernel.constBuffer );
 
-	// Set resources and dispatch	
+	// Set resources and dispatch
 	m_dx11Context->CSSetShaderResources( 2, 1, &(m_vertexData.m_dx11VertexTriangleCount.getSRV()) );
 
 	m_dx11Context->CSSetUnorderedAccessViews( 0, 1, &(m_vertexData.m_dx11VertexNormal.getUAV()), NULL );
@@ -807,7 +448,7 @@ void btDX11SoftBodySolver::normalizeNormalsAndAreas( int numVertices )
 	m_dx11Context->Dispatch(numBlocks, 1, 1 );
 
 	{
-		// Tidy up 
+		// Tidy up
 		ID3D11ShaderResourceView* pViewNULL = NULL;
 		m_dx11Context->CSSetShaderResources( 2, 1, &pViewNULL );
 
@@ -817,26 +458,26 @@ void btDX11SoftBodySolver::normalizeNormalsAndAreas( int numVertices )
 
 		ID3D11Buffer *pBufferNull = NULL;
 		m_dx11Context->CSSetConstantBuffers( 0, 1, &pBufferNull );
-	}	
-} // btDX11SoftBodySolver::normalizeNormalsAndAreas
+	}
+} // btDX11SIMDAwareSoftBodySolver::normalizeNormalsAndAreas
 
-void btDX11SoftBodySolver::executeUpdateSoftBodies( int firstTriangle, int numTriangles )
+void btDX11SIMDAwareSoftBodySolver::executeUpdateSoftBodies( int firstTriangle, int numTriangles )
 {
 	// No need to batch link solver, it is entirely parallel
 	// Copy kernel parameters to GPU
 	UpdateSoftBodiesCB constBuffer;
-	
+
 	constBuffer.startFace = firstTriangle;
 	constBuffer.numFaces = numTriangles;
-	
+
 	// Todo: factor this out. Number of nodes is static and sdt might be, too, we can update this just once on setup
 	D3D11_MAPPED_SUBRESOURCE MappedResource = {0};
 	m_dx11Context->Map( updateSoftBodiesKernel.constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource );
-	memcpy( MappedResource.pData, &constBuffer, sizeof(UpdateSoftBodiesCB) );	
+	memcpy( MappedResource.pData, &constBuffer, sizeof(UpdateSoftBodiesCB) );
 	m_dx11Context->Unmap( updateSoftBodiesKernel.constBuffer, 0 );
 	m_dx11Context->CSSetConstantBuffers( 0, 1, &updateSoftBodiesKernel.constBuffer );
 
-	// Set resources and dispatch	
+	// Set resources and dispatch
 	m_dx11Context->CSSetShaderResources( 0, 1, &(m_triangleData.m_dx11VertexIndices.getSRV()) );
 	m_dx11Context->CSSetShaderResources( 1, 1, &(m_vertexData.m_dx11VertexPosition.getSRV()) );
 
@@ -852,7 +493,7 @@ void btDX11SoftBodySolver::executeUpdateSoftBodies( int firstTriangle, int numTr
 	m_dx11Context->Dispatch(numBlocks, 1, 1 );
 
 	{
-		// Tidy up 
+		// Tidy up
 		ID3D11ShaderResourceView* pViewNULL = NULL;
 		m_dx11Context->CSSetShaderResources( 4, 1, &pViewNULL );
 
@@ -862,10 +503,10 @@ void btDX11SoftBodySolver::executeUpdateSoftBodies( int firstTriangle, int numTr
 
 		ID3D11Buffer *pBufferNull = NULL;
 		m_dx11Context->CSSetConstantBuffers( 0, 1, &pBufferNull );
-	}	
-} // btDX11SoftBodySolver::executeUpdateSoftBodies
+	}
+} // btDX11SIMDAwareSoftBodySolver::executeUpdateSoftBodies
 
-void btDX11SoftBodySolver::updateSoftBodies()
+void btDX11SIMDAwareSoftBodySolver::updateSoftBodies()
 {
 	using namespace Vectormath::Aos;
 
@@ -893,15 +534,15 @@ void btDX11SoftBodySolver::updateSoftBodies()
 
 	normalizeNormalsAndAreas( numVertices );
 
-} // btDX11SoftBodySolver::updateSoftBodies
+} // btDX11SIMDAwareSoftBodySolver::updateSoftBodies
 
 
-Vectormath::Aos::Vector3 btDX11SoftBodySolver::ProjectOnAxis( const Vectormath::Aos::Vector3 &v, const Vectormath::Aos::Vector3 &a )
+Vectormath::Aos::Vector3 btDX11SIMDAwareSoftBodySolver::ProjectOnAxis( const Vectormath::Aos::Vector3 &v, const Vectormath::Aos::Vector3 &a )
 {
 	return a*Vectormath::Aos::dot(v, a);
 }
 
-void btDX11SoftBodySolver::ApplyClampedForce( float solverdt, const Vectormath::Aos::Vector3 &force, const Vectormath::Aos::Vector3 &vertexVelocity, float inverseMass, Vectormath::Aos::Vector3 &vertexForce )
+void btDX11SIMDAwareSoftBodySolver::ApplyClampedForce( float solverdt, const Vectormath::Aos::Vector3 &force, const Vectormath::Aos::Vector3 &vertexVelocity, float inverseMass, Vectormath::Aos::Vector3 &vertexForce )
 {
 	float dtInverseMass = solverdt*inverseMass;
 	if( Vectormath::Aos::lengthSqr(force * dtInverseMass) > Vectormath::Aos::lengthSqr(vertexVelocity) )
@@ -912,10 +553,9 @@ void btDX11SoftBodySolver::ApplyClampedForce( float solverdt, const Vectormath::
 	}
 }
 
-void btDX11SoftBodySolver::applyForces( float solverdt )
-{		
+void btDX11SIMDAwareSoftBodySolver::applyForces( float solverdt )
+{
 	using namespace Vectormath::Aos;
-
 
 	// Ensure data is on accelerator
 	m_vertexData.moveToAccelerator();
@@ -928,19 +568,19 @@ void btDX11SoftBodySolver::applyForces( float solverdt )
 	// No need to batch link solver, it is entirely parallel
 	// Copy kernel parameters to GPU
 	ApplyForcesCB constBuffer;
-	
+
 	constBuffer.numNodes = m_vertexData.getNumVertices();
 	constBuffer.solverdt = solverdt;
 	constBuffer.epsilon = FLT_EPSILON;
-	
+
 	// Todo: factor this out. Number of nodes is static and sdt might be, too, we can update this just once on setup
 	D3D11_MAPPED_SUBRESOURCE MappedResource = {0};
 	m_dx11Context->Map( integrateKernel.constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource );
-	memcpy( MappedResource.pData, &constBuffer, sizeof(ApplyForcesCB) );	
+	memcpy( MappedResource.pData, &constBuffer, sizeof(ApplyForcesCB) );
 	m_dx11Context->Unmap( integrateKernel.constBuffer, 0 );
 	m_dx11Context->CSSetConstantBuffers( 0, 1, &integrateKernel.constBuffer );
 
-	// Set resources and dispatch	
+	// Set resources and dispatch
 	m_dx11Context->CSSetShaderResources( 0, 1, &(m_vertexData.m_dx11ClothIdentifier.getSRV()) );
 	m_dx11Context->CSSetShaderResources( 1, 1, &(m_vertexData.m_dx11VertexNormal.getSRV()) );
 	m_dx11Context->CSSetShaderResources( 2, 1, &(m_vertexData.m_dx11VertexArea.getSRV()) );
@@ -961,7 +601,7 @@ void btDX11SoftBodySolver::applyForces( float solverdt )
 	m_dx11Context->Dispatch(numBlocks, 1, 1 );
 
 	{
-		// Tidy up 
+		// Tidy up
 		ID3D11ShaderResourceView* pViewNULL = NULL;
 		m_dx11Context->CSSetShaderResources( 0, 1, &pViewNULL );
 		m_dx11Context->CSSetShaderResources( 1, 1, &pViewNULL );
@@ -979,13 +619,15 @@ void btDX11SoftBodySolver::applyForces( float solverdt )
 
 		ID3D11Buffer *pBufferNull = NULL;
 		m_dx11Context->CSSetConstantBuffers( 0, 1, &pBufferNull );
-	}	
-} // btDX11SoftBodySolver::applyForces
+	}
+
+
+} // btDX11SIMDAwareSoftBodySolver::applyForces
 
 /**
  * Integrate motion on the solver.
  */
-void btDX11SoftBodySolver::integrate( float solverdt )
+void btDX11SIMDAwareSoftBodySolver::integrate( float solverdt )
 {
 	// TEMPORARY COPIES
 	m_vertexData.moveToAccelerator();
@@ -993,14 +635,14 @@ void btDX11SoftBodySolver::integrate( float solverdt )
 	// No need to batch link solver, it is entirely parallel
 	// Copy kernel parameters to GPU
 	IntegrateCB constBuffer;
-	
+
 	constBuffer.numNodes = m_vertexData.getNumVertices();
 	constBuffer.solverdt = solverdt;
-	
+
 	// Todo: factor this out. Number of nodes is static and sdt might be, too, we can update this just once on setup
 	D3D11_MAPPED_SUBRESOURCE MappedResource = {0};
 	m_dx11Context->Map( integrateKernel.constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource );
-	memcpy( MappedResource.pData, &constBuffer, sizeof(IntegrateCB) );	
+	memcpy( MappedResource.pData, &constBuffer, sizeof(IntegrateCB) );
 	m_dx11Context->Unmap( integrateKernel.constBuffer, 0 );
 	m_dx11Context->CSSetConstantBuffers( 0, 1, &integrateKernel.constBuffer );
 
@@ -1019,7 +661,7 @@ void btDX11SoftBodySolver::integrate( float solverdt )
 	m_dx11Context->Dispatch(numBlocks, 1, 1 );
 
 	{
-		// Tidy up 
+		// Tidy up
 		ID3D11ShaderResourceView* pViewNULL = NULL;
 		m_dx11Context->CSSetShaderResources( 0, 1, &pViewNULL );
 
@@ -1031,10 +673,10 @@ void btDX11SoftBodySolver::integrate( float solverdt )
 
 		ID3D11Buffer *pBufferNull = NULL;
 		m_dx11Context->CSSetConstantBuffers( 0, 1, &pBufferNull );
-	}	
-} // btDX11SoftBodySolver::integrate
+	}
+} // btDX11SIMDAwareSoftBodySolver::integrate
 
-float btDX11SoftBodySolver::computeTriangleArea( 
+float btDX11SIMDAwareSoftBodySolver::computeTriangleArea(
 	const Vectormath::Aos::Point3 &vertex0,
 	const Vectormath::Aos::Point3 &vertex1,
 	const Vectormath::Aos::Point3 &vertex2 )
@@ -1044,9 +686,10 @@ float btDX11SoftBodySolver::computeTriangleArea(
 	Vectormath::Aos::Vector3 crossProduct = cross(a, b);
 	float area = length( crossProduct );
 	return area;
-} // btDX11SoftBodySolver::computeTriangleArea
+} // btDX11SIMDAwareSoftBodySolver::computeTriangleArea
 
-void btDX11SoftBodySolver::updateConstants( float timeStep )
+// Update constants here is a simple CPU version that is run on optimize
+void btDX11SIMDAwareSoftBodySolver::updateConstants( float timeStep )
 {
 	using namespace Vectormath::Aos;
 
@@ -1072,11 +715,11 @@ void btDX11SoftBodySolver::updateConstants( float timeStep )
 			m_linkData.getRestLengthSquared(linkIndex) = restLengthSquared;
 		}
 	}
-} // btDX11SoftBodySolver::updateConstants
+} // btDX11SIMDAwareSoftBodySolver::updateConstants
 
 
 
-void btDX11SoftBodySolver::solveConstraints( float solverdt )
+void btDX11SIMDAwareSoftBodySolver::solveConstraints( float solverdt )
 {
 
 	//std::cerr << "'GPU' solve constraints\n";
@@ -1097,118 +740,57 @@ void btDX11SoftBodySolver::solveConstraints( float solverdt )
 	m_dx11PerClothVelocityCorrectionCoefficient.moveToGPU();
 
 
+
 	// Ensure data is on accelerator
 	m_linkData.moveToAccelerator();
 	m_vertexData.moveToAccelerator();
 
-
-	prepareLinks();	
-
-	for( int iteration = 0; iteration < m_numberOfVelocityIterations ; ++iteration )
-	{
-		for( int i = 0; i < m_linkData.m_batchStartLengths.size(); ++i )
-		{
-			int startLink = m_linkData.m_batchStartLengths[i].start;
-			int numLinks = m_linkData.m_batchStartLengths[i].length;
-
-			solveLinksForVelocity( startLink, numLinks, kst );
-		}
-	}
-
-	// Compute new positions from velocity
-	// Also update the previous position so that our position computation is now based on the new position from the velocity solution
-	// rather than based directly on the original positions
-	if( m_numberOfVelocityIterations > 0 )
-	{
-		updateVelocitiesFromPositionsWithVelocities( 1.f/solverdt );
-	} else {
-		updateVelocitiesFromPositionsWithoutVelocities( 1.f/solverdt );
-	}
-
-
 	// Solve drift
-	for( int iteration = 0; iteration < m_numberOfPositionIterations ; ++iteration )
+  	for( int iteration = 0; iteration < m_numberOfPositionIterations ; ++iteration )
 	{
-		for( int i = 0; i < m_linkData.m_batchStartLengths.size(); ++i )
-		{
-			int startLink = m_linkData.m_batchStartLengths[i].start;
-			int numLinks = m_linkData.m_batchStartLengths[i].length;
+ 		int it = iteration;
 
-			solveLinksForPosition( startLink, numLinks, kst, ti );
+		for( int i = 0; i < m_linkData.m_wavefrontBatchStartLengths.size(); ++i )
+		{
+			int startWave = m_linkData.m_wavefrontBatchStartLengths[i].start;
+			int numWaves = m_linkData.m_wavefrontBatchStartLengths[i].length;
+
+			solveLinksForPosition( startWave, numWaves, kst, ti );
 		}
-		
+
 	} // for( int iteration = 0; iteration < m_numberOfPositionIterations ; ++iteration )
 
+
+
+
 	updateVelocitiesFromPositionsWithoutVelocities( 1.f/solverdt );
-} // btDX11SoftBodySolver::solveConstraints
+
+} // btDX11SIMDAwareSoftBodySolver::solveConstraints
 
 
 
 
 //////////////////////////////////////
 // Kernel dispatches
-void btDX11SoftBodySolver::prepareLinks()
-{
-	// No need to batch link solver, it is entirely parallel
-	// Copy kernel parameters to GPU
-	PrepareLinksCB constBuffer;
-	
-	constBuffer.numLinks = m_linkData.getNumLinks();
-	
-	D3D11_MAPPED_SUBRESOURCE MappedResource = {0};
-	m_dx11Context->Map( prepareLinksKernel.constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource );
-	memcpy( MappedResource.pData, &constBuffer, sizeof(PrepareLinksCB) );	
-	m_dx11Context->Unmap( prepareLinksKernel.constBuffer, 0 );
-	m_dx11Context->CSSetConstantBuffers( 0, 1, &prepareLinksKernel.constBuffer );
-
-	// Set resources and dispatch
-	m_dx11Context->CSSetShaderResources( 0, 1, &(m_linkData.m_dx11Links.getSRV()) );
-	m_dx11Context->CSSetShaderResources( 1, 1, &(m_linkData.m_dx11LinksMassLSC.getSRV()) );
-	m_dx11Context->CSSetShaderResources( 2, 1, &(m_vertexData.m_dx11VertexPreviousPosition.getSRV()) );
-
-	m_dx11Context->CSSetUnorderedAccessViews( 0, 1, &(m_linkData.m_dx11LinksLengthRatio.getUAV()), NULL );
-	m_dx11Context->CSSetUnorderedAccessViews( 1, 1, &(m_linkData.m_dx11LinksCLength.getUAV()), NULL );
-
-	// Execute the kernel
-	m_dx11Context->CSSetShader( prepareLinksKernel.kernel, NULL, 0 );
-
-	int	numBlocks = (constBuffer.numLinks + (128-1)) / 128;
-	m_dx11Context->Dispatch(numBlocks , 1, 1 );
-
-	{
-		// Tidy up 
-		ID3D11ShaderResourceView* pViewNULL = NULL;
-		m_dx11Context->CSSetShaderResources( 0, 1, &pViewNULL );
-		m_dx11Context->CSSetShaderResources( 1, 1, &pViewNULL );
-		m_dx11Context->CSSetShaderResources( 2, 1, &pViewNULL );
-
-		ID3D11UnorderedAccessView* pUAViewNULL = NULL;
-		m_dx11Context->CSSetUnorderedAccessViews( 0, 1, &pUAViewNULL, NULL );
-		m_dx11Context->CSSetUnorderedAccessViews( 1, 1, &pUAViewNULL, NULL );
-		
-		ID3D11Buffer *pBufferNull = NULL;
-		m_dx11Context->CSSetConstantBuffers( 0, 1, &pBufferNull );
-	}
-} // btDX11SoftBodySolver::prepareLinks
 
 
-void btDX11SoftBodySolver::updatePositionsFromVelocities( float solverdt )
+void btDX11SIMDAwareSoftBodySolver::updatePositionsFromVelocities( float solverdt )
 {
 	// No need to batch link solver, it is entirely parallel
 	// Copy kernel parameters to GPU
 	UpdatePositionsFromVelocitiesCB constBuffer;
-	
+
 	constBuffer.numNodes = m_vertexData.getNumVertices();
 	constBuffer.solverSDT = solverdt;
-	
+
 	// Todo: factor this out. Number of nodes is static and sdt might be, too, we can update this just once on setup
 	D3D11_MAPPED_SUBRESOURCE MappedResource = {0};
 	m_dx11Context->Map( updatePositionsFromVelocitiesKernel.constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource );
-	memcpy( MappedResource.pData, &constBuffer, sizeof(UpdatePositionsFromVelocitiesCB) );	
+	memcpy( MappedResource.pData, &constBuffer, sizeof(UpdatePositionsFromVelocitiesCB) );
 	m_dx11Context->Unmap( updatePositionsFromVelocitiesKernel.constBuffer, 0 );
 	m_dx11Context->CSSetConstantBuffers( 0, 1, &updatePositionsFromVelocitiesKernel.constBuffer );
 
-	// Set resources and dispatch			
+	// Set resources and dispatch
 	m_dx11Context->CSSetShaderResources( 0, 1, &(m_vertexData.m_dx11VertexVelocity.getSRV()) );
 
 	m_dx11Context->CSSetUnorderedAccessViews( 0, 1, &(m_vertexData.m_dx11VertexPreviousPosition.getUAV()), NULL );
@@ -1221,7 +803,7 @@ void btDX11SoftBodySolver::updatePositionsFromVelocities( float solverdt )
 	m_dx11Context->Dispatch(numBlocks, 1, 1 );
 
 	{
-		// Tidy up 
+		// Tidy up
 		ID3D11ShaderResourceView* pViewNULL = NULL;
 		m_dx11Context->CSSetShaderResources( 0, 1, &pViewNULL );
 
@@ -1231,109 +813,69 @@ void btDX11SoftBodySolver::updatePositionsFromVelocities( float solverdt )
 
 		ID3D11Buffer *pBufferNull = NULL;
 		m_dx11Context->CSSetConstantBuffers( 0, 1, &pBufferNull );
-	}	
-} // btDX11SoftBodySolver::updatePositionsFromVelocities
+	}
+} // btDX11SIMDAwareSoftBodySolver::updatePositionsFromVelocities
 
-void btDX11SoftBodySolver::solveLinksForPosition( int startLink, int numLinks, float kst, float ti )
+
+void btDX11SIMDAwareSoftBodySolver::solveLinksForPosition( int startWave, int numWaves, float kst, float ti )
 {
+
+
+	m_vertexData.moveToAccelerator();
+	m_linkData.moveToAccelerator();
+
 	// Copy kernel parameters to GPU
 	SolvePositionsFromLinksKernelCB constBuffer;
 
-	// Set the first link of the batch
-	// and the batch size
-	constBuffer.startLink = startLink;
-	constBuffer.numLinks = numLinks;
+	// Set the first wave of the batch and the number of waves
+	constBuffer.startWave = startWave;
+	constBuffer.numWaves = numWaves;
 
 	constBuffer.kst = kst;
 	constBuffer.ti = ti;
-	
+
 	D3D11_MAPPED_SUBRESOURCE MappedResource = {0};
 	m_dx11Context->Map( solvePositionsFromLinksKernel.constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource );
-	memcpy( MappedResource.pData, &constBuffer, sizeof(SolvePositionsFromLinksKernelCB) );	
+	memcpy( MappedResource.pData, &constBuffer, sizeof(SolvePositionsFromLinksKernelCB) );
 	m_dx11Context->Unmap( solvePositionsFromLinksKernel.constBuffer, 0 );
 	m_dx11Context->CSSetConstantBuffers( 0, 1, &solvePositionsFromLinksKernel.constBuffer );
 
 	// Set resources and dispatch
-	m_dx11Context->CSSetShaderResources( 0, 1, &(m_linkData.m_dx11Links.getSRV()) );
-	m_dx11Context->CSSetShaderResources( 1, 1, &(m_linkData.m_dx11LinksMassLSC.getSRV()) );
-	m_dx11Context->CSSetShaderResources( 2, 1, &(m_linkData.m_dx11LinksRestLengthSquared.getSRV()) );
-	m_dx11Context->CSSetShaderResources( 3, 1, &(m_vertexData.m_dx11VertexInverseMass.getSRV()) );
+	m_dx11Context->CSSetShaderResources( 0, 1, &(m_linkData.m_dx11NumBatchesAndVerticesWithinWaves.getSRV()) );
+	m_dx11Context->CSSetShaderResources( 1, 1, &(m_linkData.m_dx11WavefrontVerticesGlobalAddresses.getSRV()) );
+	m_dx11Context->CSSetShaderResources( 2, 1, &(m_vertexData.m_dx11VertexInverseMass.getSRV()) );
+	m_dx11Context->CSSetShaderResources( 3, 1, &(m_linkData.m_dx11LinkVerticesLocalAddresses.getSRV()) );
+	m_dx11Context->CSSetShaderResources( 4, 1, &(m_linkData.m_dx11LinksMassLSC.getSRV()) );
+	m_dx11Context->CSSetShaderResources( 5, 1, &(m_linkData.m_dx11LinksRestLengthSquared.getSRV()) );
 
 	m_dx11Context->CSSetUnorderedAccessViews( 0, 1, &(m_vertexData.m_dx11VertexPosition.getUAV()), NULL );
 
 	// Execute the kernel
 	m_dx11Context->CSSetShader( solvePositionsFromLinksKernel.kernel, NULL, 0 );
 
-	int	numBlocks = (constBuffer.numLinks + (128-1)) / 128;
+	int	numBlocks = ((constBuffer.numWaves + WAVEFRONT_BLOCK_MULTIPLIER - 1) / WAVEFRONT_BLOCK_MULTIPLIER );
 	m_dx11Context->Dispatch(numBlocks , 1, 1 );
 
 	{
-		// Tidy up 
+		// Tidy up
 		ID3D11ShaderResourceView* pViewNULL = NULL;
 		m_dx11Context->CSSetShaderResources( 0, 1, &pViewNULL );
 		m_dx11Context->CSSetShaderResources( 1, 1, &pViewNULL );
 		m_dx11Context->CSSetShaderResources( 2, 1, &pViewNULL );
 		m_dx11Context->CSSetShaderResources( 3, 1, &pViewNULL );
+		m_dx11Context->CSSetShaderResources( 4, 1, &pViewNULL );
+		m_dx11Context->CSSetShaderResources( 5, 1, &pViewNULL );
 
 		ID3D11UnorderedAccessView* pUAViewNULL = NULL;
 		m_dx11Context->CSSetUnorderedAccessViews( 0, 1, &pUAViewNULL, NULL );
 
 		ID3D11Buffer *pBufferNull = NULL;
 		m_dx11Context->CSSetConstantBuffers( 0, 1, &pBufferNull );
-	}	
-	
-} // btDX11SoftBodySolver::solveLinksForPosition
-
-void btDX11SoftBodySolver::solveLinksForVelocity( int startLink, int numLinks, float kst )
-{
-	// Copy kernel parameters to GPU
-	VSolveLinksCB constBuffer;
-
-	// Set the first link of the batch
-	// and the batch size
-
-	constBuffer.startLink = startLink;
-	constBuffer.numLinks = numLinks;
-	constBuffer.kst = kst;
-	
-	D3D11_MAPPED_SUBRESOURCE MappedResource = {0};
-	m_dx11Context->Map( vSolveLinksKernel.constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource );
-	memcpy( MappedResource.pData, &constBuffer, sizeof(VSolveLinksCB) );	
-	m_dx11Context->Unmap( vSolveLinksKernel.constBuffer, 0 );
-	m_dx11Context->CSSetConstantBuffers( 0, 1, &vSolveLinksKernel.constBuffer );
-
-	// Set resources and dispatch
-	m_dx11Context->CSSetShaderResources( 0, 1, &(m_linkData.m_dx11Links.getSRV()) );
-	m_dx11Context->CSSetShaderResources( 1, 1, &(m_linkData.m_dx11LinksLengthRatio.getSRV()) );
-	m_dx11Context->CSSetShaderResources( 2, 1, &(m_linkData.m_dx11LinksCLength.getSRV()) );
-	m_dx11Context->CSSetShaderResources( 3, 1, &(m_vertexData.m_dx11VertexInverseMass.getSRV()) );
-
-	m_dx11Context->CSSetUnorderedAccessViews( 0, 1, &(m_vertexData.m_dx11VertexVelocity.getUAV()), NULL );
-
-	// Execute the kernel
-	m_dx11Context->CSSetShader( vSolveLinksKernel.kernel, NULL, 0 );
-
-	int	numBlocks = (constBuffer.numLinks + (128-1)) / 128;
-	m_dx11Context->Dispatch(numBlocks , 1, 1 );
-
-	{
-		// Tidy up 
-		ID3D11ShaderResourceView* pViewNULL = NULL;
-		m_dx11Context->CSSetShaderResources( 0, 1, &pViewNULL );
-		m_dx11Context->CSSetShaderResources( 1, 1, &pViewNULL );
-		m_dx11Context->CSSetShaderResources( 2, 1, &pViewNULL );
-		m_dx11Context->CSSetShaderResources( 3, 1, &pViewNULL );
-
-		ID3D11UnorderedAccessView* pUAViewNULL = NULL;
-		m_dx11Context->CSSetUnorderedAccessViews( 0, 1, &pUAViewNULL, NULL );
-
-		ID3D11Buffer *pBufferNull = NULL;
-		m_dx11Context->CSSetConstantBuffers( 0, 1, &pBufferNull );
-	}	
-} // btDX11SoftBodySolver::solveLinksForVelocity
+	}
+} // btDX11SIMDAwareSoftBodySolver::solveLinksForPosition
 
 
-void btDX11SoftBodySolver::updateVelocitiesFromPositionsWithVelocities( float isolverdt )
+void btDX11SIMDAwareSoftBodySolver::updateVelocitiesFromPositionsWithVelocities( float isolverdt )
 {
 	// Copy kernel parameters to GPU
 	UpdateVelocitiesFromPositionsWithVelocitiesCB constBuffer;
@@ -1345,7 +887,7 @@ void btDX11SoftBodySolver::updateVelocitiesFromPositionsWithVelocities( float is
 
 	D3D11_MAPPED_SUBRESOURCE MappedResource = {0};
 	m_dx11Context->Map( updateVelocitiesFromPositionsWithVelocitiesKernel.constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource );
-	memcpy( MappedResource.pData, &constBuffer, sizeof(UpdateVelocitiesFromPositionsWithVelocitiesCB) );	
+	memcpy( MappedResource.pData, &constBuffer, sizeof(UpdateVelocitiesFromPositionsWithVelocitiesCB) );
 	m_dx11Context->Unmap( updateVelocitiesFromPositionsWithVelocitiesKernel.constBuffer, 0 );
 	m_dx11Context->CSSetConstantBuffers( 0, 1, &updateVelocitiesFromPositionsWithVelocitiesKernel.constBuffer );
 
@@ -1367,7 +909,7 @@ void btDX11SoftBodySolver::updateVelocitiesFromPositionsWithVelocities( float is
 	m_dx11Context->Dispatch(numBlocks , 1, 1 );
 
 	{
-		// Tidy up 
+		// Tidy up
 		ID3D11ShaderResourceView* pViewNULL = NULL;
 		m_dx11Context->CSSetShaderResources( 0, 1, &pViewNULL );
 		m_dx11Context->CSSetShaderResources( 1, 1, &pViewNULL );
@@ -1381,11 +923,11 @@ void btDX11SoftBodySolver::updateVelocitiesFromPositionsWithVelocities( float is
 
 		ID3D11Buffer *pBufferNull = NULL;
 		m_dx11Context->CSSetConstantBuffers( 0, 1, &pBufferNull );
-	}	
+	}
 
-} // btDX11SoftBodySolver::updateVelocitiesFromPositionsWithVelocities
+} // btDX11SIMDAwareSoftBodySolver::updateVelocitiesFromPositionsWithVelocities
 
-void btDX11SoftBodySolver::updateVelocitiesFromPositionsWithoutVelocities( float isolverdt )
+void btDX11SIMDAwareSoftBodySolver::updateVelocitiesFromPositionsWithoutVelocities( float isolverdt )
 {
 	// Copy kernel parameters to GPU
 	UpdateVelocitiesFromPositionsWithoutVelocitiesCB constBuffer;
@@ -1397,7 +939,7 @@ void btDX11SoftBodySolver::updateVelocitiesFromPositionsWithoutVelocities( float
 
 	D3D11_MAPPED_SUBRESOURCE MappedResource = {0};
 	m_dx11Context->Map( updateVelocitiesFromPositionsWithoutVelocitiesKernel.constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource );
-	memcpy( MappedResource.pData, &constBuffer, sizeof(UpdateVelocitiesFromPositionsWithoutVelocitiesCB) );	
+	memcpy( MappedResource.pData, &constBuffer, sizeof(UpdateVelocitiesFromPositionsWithoutVelocitiesCB) );
 	m_dx11Context->Unmap( updateVelocitiesFromPositionsWithoutVelocitiesKernel.constBuffer, 0 );
 	m_dx11Context->CSSetConstantBuffers( 0, 1, &updateVelocitiesFromPositionsWithoutVelocitiesKernel.constBuffer );
 
@@ -1418,7 +960,7 @@ void btDX11SoftBodySolver::updateVelocitiesFromPositionsWithoutVelocities( float
 	m_dx11Context->Dispatch(numBlocks , 1, 1 );
 
 	{
-		// Tidy up 
+		// Tidy up
 		ID3D11ShaderResourceView* pViewNULL = NULL;
 		m_dx11Context->CSSetShaderResources( 0, 1, &pViewNULL );
 		m_dx11Context->CSSetShaderResources( 1, 1, &pViewNULL );
@@ -1431,9 +973,9 @@ void btDX11SoftBodySolver::updateVelocitiesFromPositionsWithoutVelocities( float
 
 		ID3D11Buffer *pBufferNull = NULL;
 		m_dx11Context->CSSetConstantBuffers( 0, 1, &pBufferNull );
-	}	
+	}
 
-} // btDX11SoftBodySolver::updateVelocitiesFromPositionsWithoutVelocities
+} // btDX11SIMDAwareSoftBodySolver::updateVelocitiesFromPositionsWithoutVelocities
 
 // End kernel dispatches
 /////////////////////////////////////
@@ -1446,42 +988,36 @@ void btDX11SoftBodySolver::updateVelocitiesFromPositionsWithoutVelocities( float
 
 
 
-
-
-
-
-
-btDX11AcceleratedSoftBodyInterface *btDX11SoftBodySolver::findSoftBodyInterface( const btSoftBody* const softBody )
+btDX11SIMDAwareSoftBodySolver::btAcceleratedSoftBodyInterface *btDX11SIMDAwareSoftBodySolver::findSoftBodyInterface( const btSoftBody* const softBody )
 {
 	for( int softBodyIndex = 0; softBodyIndex < m_softBodySet.size(); ++softBodyIndex )
 	{
-		btDX11AcceleratedSoftBodyInterface *softBodyInterface = m_softBodySet[softBodyIndex];
+		btAcceleratedSoftBodyInterface *softBodyInterface = m_softBodySet[softBodyIndex];
 		if( softBodyInterface->getSoftBody() == softBody )
 			return softBodyInterface;
 	}
 	return 0;
 }
 
-void btDX11SoftBodySolver::copySoftBodyToVertexBuffer( const btSoftBody * const softBody, btVertexBufferDescriptor *vertexBuffer )
+void btDX11SIMDAwareSoftBodySolver::copySoftBodyToVertexBuffer( const btSoftBody * const softBody, btVertexBufferDescriptor *vertexBuffer )
 {
 	checkInitialized();
-	
-	btDX11AcceleratedSoftBodyInterface *currentCloth = findSoftBodyInterface( softBody );
 
+	btAcceleratedSoftBodyInterface *currentCloth = findSoftBodyInterface( softBody );
 
 	const int firstVertex = currentCloth->getFirstVertex();
 	const int lastVertex = firstVertex + currentCloth->getNumVertices();
 
 	if( vertexBuffer->getBufferType() == btVertexBufferDescriptor::CPU_BUFFER )
-	{		
+	{
 		// If we're doing a CPU-buffer copy must copy the data back to the host first
 		m_vertexData.m_dx11VertexPosition.copyFromGPU();
 		m_vertexData.m_dx11VertexNormal.copyFromGPU();
 
 		const int firstVertex = currentCloth->getFirstVertex();
 		const int lastVertex = firstVertex + currentCloth->getNumVertices();
-		const btCPUVertexBufferDescriptor *cpuVertexBuffer = static_cast< btCPUVertexBufferDescriptor* >(vertexBuffer);						
-		float *basePointer = cpuVertexBuffer->getBasePointer();						
+		const btCPUVertexBufferDescriptor *cpuVertexBuffer = static_cast< btCPUVertexBufferDescriptor* >(vertexBuffer);
+		float *basePointer = cpuVertexBuffer->getBasePointer();
 
 		if( vertexBuffer->hasVertexPositions() )
 		{
@@ -1517,14 +1053,14 @@ void btDX11SoftBodySolver::copySoftBodyToVertexBuffer( const btSoftBody * const 
 	{
 		// Do a DX11 copy shader DX to DX copy
 
-		const btDX11VertexBufferDescriptor *dx11VertexBuffer = static_cast< btDX11VertexBufferDescriptor* >(vertexBuffer);	
+		const btDX11VertexBufferDescriptor *dx11VertexBuffer = static_cast< btDX11VertexBufferDescriptor* >(vertexBuffer);
 
 		// No need to batch link solver, it is entirely parallel
 		// Copy kernel parameters to GPU
 		OutputToVertexArrayCB constBuffer;
 		ID3D11ComputeShader* outputToVertexArrayShader = outputToVertexArrayWithoutNormalsKernel.kernel;
 		ID3D11Buffer* outputToVertexArrayConstBuffer = outputToVertexArrayWithoutNormalsKernel.constBuffer;
-		
+
 		constBuffer.startNode = firstVertex;
 		constBuffer.numNodes = currentCloth->getNumVertices();
 		constBuffer.positionOffset = vertexBuffer->getVertexOffset();
@@ -1535,12 +1071,12 @@ void btDX11SoftBodySolver::copySoftBodyToVertexBuffer( const btSoftBody * const 
 			constBuffer.normalStride = vertexBuffer->getNormalStride();
 			outputToVertexArrayShader = outputToVertexArrayWithNormalsKernel.kernel;
 			outputToVertexArrayConstBuffer = outputToVertexArrayWithNormalsKernel.constBuffer;
-		}	
-		
+		}
+
 		// TODO: factor this out. Number of nodes is static and sdt might be, too, we can update this just once on setup
 		D3D11_MAPPED_SUBRESOURCE MappedResource = {0};
 		m_dx11Context->Map( outputToVertexArrayConstBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource );
-		memcpy( MappedResource.pData, &constBuffer, sizeof(OutputToVertexArrayCB) );	
+		memcpy( MappedResource.pData, &constBuffer, sizeof(OutputToVertexArrayCB) );
 		m_dx11Context->Unmap( outputToVertexArrayConstBuffer, 0 );
 		m_dx11Context->CSSetConstantBuffers( 0, 1, &outputToVertexArrayConstBuffer );
 
@@ -1558,7 +1094,7 @@ void btDX11SoftBodySolver::copySoftBodyToVertexBuffer( const btSoftBody * const 
 		m_dx11Context->Dispatch(numBlocks, 1, 1 );
 
 		{
-			// Tidy up 
+			// Tidy up
 			ID3D11ShaderResourceView* pViewNULL = NULL;
 			m_dx11Context->CSSetShaderResources( 0, 1, &pViewNULL );
 			m_dx11Context->CSSetShaderResources( 1, 1, &pViewNULL );
@@ -1568,57 +1104,16 @@ void btDX11SoftBodySolver::copySoftBodyToVertexBuffer( const btSoftBody * const 
 
 			ID3D11Buffer *pBufferNull = NULL;
 			m_dx11Context->CSSetConstantBuffers( 0, 1, &pBufferNull );
-		}	
-	}
-
-
-
-
-
-	if( vertexBuffer->getBufferType() == btVertexBufferDescriptor::CPU_BUFFER )
-	{		
-		const int firstVertex = currentCloth->getFirstVertex();
-		const int lastVertex = firstVertex + currentCloth->getNumVertices();
-		const btCPUVertexBufferDescriptor *cpuVertexBuffer = static_cast< btCPUVertexBufferDescriptor* >(vertexBuffer);						
-		float *basePointer = cpuVertexBuffer->getBasePointer();						
-
-		if( vertexBuffer->hasVertexPositions() )
-		{
-			const int vertexOffset = cpuVertexBuffer->getVertexOffset();
-			const int vertexStride = cpuVertexBuffer->getVertexStride();
-			float *vertexPointer = basePointer + vertexOffset;
-
-			for( int vertexIndex = firstVertex; vertexIndex < lastVertex; ++vertexIndex )
-			{
-				Vectormath::Aos::Point3 position = m_vertexData.getPosition(vertexIndex);
-				*(vertexPointer + 0) = position.getX();
-				*(vertexPointer + 1) = position.getY();
-				*(vertexPointer + 2) = position.getZ();
-				vertexPointer += vertexStride;
-			}
-		}
-		if( vertexBuffer->hasNormals() )
-		{
-			const int normalOffset = cpuVertexBuffer->getNormalOffset();
-			const int normalStride = cpuVertexBuffer->getNormalStride();
-			float *normalPointer = basePointer + normalOffset;
-
-			for( int vertexIndex = firstVertex; vertexIndex < lastVertex; ++vertexIndex )
-			{
-				Vectormath::Aos::Vector3 normal = m_vertexData.getNormal(vertexIndex);
-				*(normalPointer + 0) = normal.getX();
-				*(normalPointer + 1) = normal.getY();
-				*(normalPointer + 2) = normal.getZ();
-				normalPointer += normalStride;
-			}
 		}
 	}
+
 } // btDX11SoftBodySolver::outputToVertexBuffers
 
 
 
 
-btDX11SoftBodySolver::KernelDesc btDX11SoftBodySolver::compileComputeShaderFromString( const char* shaderString, const char* shaderName, int constBufferSize )
+
+btDX11SIMDAwareSoftBodySolver::KernelDesc btDX11SIMDAwareSoftBodySolver::compileComputeShaderFromString( const char* shaderString, const char* shaderName, int constBufferSize, D3D10_SHADER_MACRO *compileMacros )
 {
 	const char *cs5String = "cs_5_0";
 
@@ -1626,12 +1121,12 @@ btDX11SoftBodySolver::KernelDesc btDX11SoftBodySolver::compileComputeShaderFromS
 	ID3DBlob* pErrorBlob = NULL;
 	ID3DBlob* pBlob = NULL;
 	ID3D11ComputeShader*		kernelPointer = 0;
-	
-	hr = D3DX11CompileFromMemory( 
+
+	hr = D3DX11CompileFromMemory(
 		shaderString,
 		strlen(shaderString),
-		shaderName, // file name
-		NULL,
+		shaderName,
+		compileMacros,
 		NULL,
 		shaderName,
 		cs5String,
@@ -1647,23 +1142,24 @@ btDX11SoftBodySolver::KernelDesc btDX11SoftBodySolver::compileComputeShaderFromS
 	{
 		if( pErrorBlob ) {
 			btAssert( "Compilation of compute shader failed\n" );
-			//OutputDebugStringA( (char*)pErrorBlob->GetBufferPointer() );
+			char *debugString = (char*)pErrorBlob->GetBufferPointer();
+			OutputDebugStringA( debugString );
 		}
-	
-		SAFE_RELEASE( pErrorBlob );
-		SAFE_RELEASE( pBlob );    
 
-		btDX11SoftBodySolver::KernelDesc descriptor;
+		SAFE_RELEASE( pErrorBlob );
+		SAFE_RELEASE( pBlob );
+
+		btDX11SIMDAwareSoftBodySolver::KernelDesc descriptor;
 		descriptor.kernel = 0;
 		descriptor.constBuffer = 0;
 		return descriptor;
-	}    
+	}
 
 	// Create the Compute Shader
 	hr = m_dx11Device->CreateComputeShader( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), NULL, &kernelPointer );
 	if( FAILED( hr ) )
 	{
-		btDX11SoftBodySolver::KernelDesc descriptor;
+		btDX11SIMDAwareSoftBodySolver::KernelDesc descriptor;
 		descriptor.kernel = 0;
 		descriptor.constBuffer = 0;
 		return descriptor;
@@ -1692,36 +1188,51 @@ btDX11SoftBodySolver::KernelDesc btDX11SoftBodySolver::compileComputeShaderFromS
 	SAFE_RELEASE( pErrorBlob );
 	SAFE_RELEASE( pBlob );
 
-	btDX11SoftBodySolver::KernelDesc descriptor;
+	btDX11SIMDAwareSoftBodySolver::KernelDesc descriptor;
 	descriptor.kernel = kernelPointer;
 	descriptor.constBuffer = constBuffer;
 	return descriptor;
 } // compileComputeShader
 
 
-bool btDX11SoftBodySolver::buildShaders()
+bool btDX11SIMDAwareSoftBodySolver::buildShaders()
 {
+	// Ensure current kernels are released first
+	releaseKernels();
+
 	bool returnVal = true;
+
 
 	if( m_shadersInitialized )
 		return true;
 
-	prepareLinksKernel = compileComputeShaderFromString( PrepareLinksHLSLString, "PrepareLinksKernel", sizeof(PrepareLinksCB) );
-	if( !prepareLinksKernel.constBuffer )
-		returnVal = false;
+
 	updatePositionsFromVelocitiesKernel = compileComputeShaderFromString( UpdatePositionsFromVelocitiesHLSLString, "UpdatePositionsFromVelocitiesKernel", sizeof(UpdatePositionsFromVelocitiesCB) );
 	if( !updatePositionsFromVelocitiesKernel.constBuffer )
 		returnVal = false;
-	solvePositionsFromLinksKernel = compileComputeShaderFromString( SolvePositionsHLSLString, "SolvePositionsFromLinksKernel", sizeof(SolvePositionsFromLinksKernelCB) );
-	if( !updatePositionsFromVelocitiesKernel.constBuffer )
+
+	char maxVerticesPerWavefront[20];
+	char maxBatchesPerWavefront[20];
+	char waveFrontSize[20];
+	char waveFrontBlockMultiplier[20];
+	char blockSize[20];
+
+	sprintf(maxVerticesPerWavefront, "%d", m_linkData.getMaxVerticesPerWavefront());
+	sprintf(maxBatchesPerWavefront, "%d", m_linkData.getMaxBatchesPerWavefront());
+	sprintf(waveFrontSize, "%d", m_linkData.getWavefrontSize());
+	sprintf(waveFrontBlockMultiplier, "%d", WAVEFRONT_BLOCK_MULTIPLIER);
+	sprintf(blockSize, "%d", WAVEFRONT_BLOCK_MULTIPLIER*m_linkData.getWavefrontSize());
+
+	D3D10_SHADER_MACRO solvePositionsMacros[6] = { "MAX_NUM_VERTICES_PER_WAVE", maxVerticesPerWavefront, "MAX_BATCHES_PER_WAVE", maxBatchesPerWavefront, "WAVEFRONT_SIZE", waveFrontSize, "WAVEFRONT_BLOCK_MULTIPLIER", waveFrontBlockMultiplier, "BLOCK_SIZE", blockSize, 0, 0 };
+
+	solvePositionsFromLinksKernel = compileComputeShaderFromString( SolvePositionsSIMDBatchedHLSLString, "SolvePositionsFromLinksKernel", sizeof(SolvePositionsFromLinksKernelCB), solvePositionsMacros );
+	if( !solvePositionsFromLinksKernel.constBuffer )
 		returnVal = false;
-	vSolveLinksKernel = compileComputeShaderFromString( VSolveLinksHLSLString, "VSolveLinksKernel", sizeof(VSolveLinksCB) );
-	if( !vSolveLinksKernel.constBuffer )
-		returnVal = false;
+
 	updateVelocitiesFromPositionsWithVelocitiesKernel = compileComputeShaderFromString( UpdateNodesHLSLString, "updateVelocitiesFromPositionsWithVelocitiesKernel", sizeof(UpdateVelocitiesFromPositionsWithVelocitiesCB) );
 	if( !updateVelocitiesFromPositionsWithVelocitiesKernel.constBuffer )
 		returnVal = false;
-	updateVelocitiesFromPositionsWithoutVelocitiesKernel = compileComputeShaderFromString( UpdatePositionsHLSLString, "updateVelocitiesFromPositionsWithoutVelocitiesKernel", sizeof(UpdateVelocitiesFromPositionsWithoutVelocitiesCB) );
+	updateVelocitiesFromPositionsWithoutVelocitiesKernel = compileComputeShaderFromString( UpdatePositionsHLSLString, "updateVelocitiesFromPositionsWithoutVelocitiesKernel", sizeof(UpdateVelocitiesFromPositionsWithoutVelocitiesCB));
 	if( !updateVelocitiesFromPositionsWithoutVelocitiesKernel.constBuffer )
 		returnVal = false;
 	integrateKernel = compileComputeShaderFromString( IntegrateHLSLString, "IntegrateKernel", sizeof(IntegrateCB) );
@@ -1749,7 +1260,6 @@ bool btDX11SoftBodySolver::buildShaders()
 		returnVal = false;
 
 
-
 	if( returnVal )
 		m_shadersInitialized = true;
 
@@ -1757,14 +1267,15 @@ bool btDX11SoftBodySolver::buildShaders()
 }
 
 
-void btDX11SoftBodySolver::predictMotion( float timeStep )
+
+void btDX11SIMDAwareSoftBodySolver::predictMotion( float timeStep )
 {
 	// Fill the force arrays with current acceleration data etc
 	m_perClothWindVelocity.resize( m_softBodySet.size() );
 	for( int softBodyIndex = 0; softBodyIndex < m_softBodySet.size(); ++softBodyIndex )
 	{
 		btSoftBody *softBody = m_softBodySet[softBodyIndex]->getSoftBody();
-		
+
 		m_perClothWindVelocity[softBodyIndex] = toVector3(softBody->getWindVelocity());
 	}
 	m_dx11PerClothWindVelocity.changedOnCPU();
@@ -1777,3 +1288,510 @@ void btDX11SoftBodySolver::predictMotion( float timeStep )
 	// End prediction work for solvers
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static void generateBatchesOfWavefronts( btAlignedObjectArray < btAlignedObjectArray <int> > &linksForWavefronts, btSoftBodyLinkData &linkData, int numVertices, btAlignedObjectArray < btAlignedObjectArray <int> > &wavefrontBatches )
+{
+	// A per-batch map of truth values stating whether a given vertex is in that batch
+	// This allows us to significantly optimize the batching
+	btAlignedObjectArray <btAlignedObjectArray<bool> > mapOfVerticesInBatches;
+
+	for( int waveIndex = 0; waveIndex < linksForWavefronts.size(); ++waveIndex )
+	{
+		btAlignedObjectArray <int> &wavefront( linksForWavefronts[waveIndex] );
+
+		int batch = 0;
+		bool placed = false;
+		while( batch < wavefrontBatches.size() && !placed )
+		{
+			// Test the current batch, see if this wave shares any vertex with the waves in the batch
+			bool foundSharedVertex = false;
+			for( int link = 0; link < wavefront.size(); ++link )
+			{
+				btSoftBodyLinkData::LinkNodePair vertices = linkData.getVertexPair( wavefront[link] );
+				if( (mapOfVerticesInBatches[batch])[vertices.vertex0] || (mapOfVerticesInBatches[batch])[vertices.vertex1] )
+				{
+					foundSharedVertex = true;
+				}
+			}
+
+			if( !foundSharedVertex )
+			{
+				wavefrontBatches[batch].push_back( waveIndex );
+				// Insert vertices into this batch too
+				for( int link = 0; link < wavefront.size(); ++link )
+				{
+					btSoftBodyLinkData::LinkNodePair vertices = linkData.getVertexPair( wavefront[link] );
+					(mapOfVerticesInBatches[batch])[vertices.vertex0] = true;
+					(mapOfVerticesInBatches[batch])[vertices.vertex1] = true;
+				}
+				placed = true;
+			}
+			batch++;
+		}
+		if( batch == wavefrontBatches.size() && !placed )
+		{
+			wavefrontBatches.resize( batch + 1 );
+			wavefrontBatches[batch].push_back( waveIndex );
+
+			// And resize map as well
+			mapOfVerticesInBatches.resize( batch + 1 );
+
+			// Resize maps with total number of vertices
+			mapOfVerticesInBatches[batch].resize( numVertices, false );
+
+			// Insert vertices into this batch too
+			for( int link = 0; link < wavefront.size(); ++link )
+			{
+				btSoftBodyLinkData::LinkNodePair vertices = linkData.getVertexPair( wavefront[link] );
+				(mapOfVerticesInBatches[batch])[vertices.vertex0] = true;
+				(mapOfVerticesInBatches[batch])[vertices.vertex1] = true;
+			}
+		}
+	}
+	mapOfVerticesInBatches.clear();
+}
+
+// Function to remove an object from a vector maintaining correct ordering of the vector
+template< typename T > static void removeFromVector( btAlignedObjectArray< T > &vectorToUpdate, int indexToRemove )
+{
+	int currentSize = vectorToUpdate.size();
+	for( int i = indexToRemove; i < (currentSize-1); ++i )
+	{
+		vectorToUpdate[i] = vectorToUpdate[i+1];
+	}
+	if( currentSize > 0 )
+		vectorToUpdate.resize( currentSize - 1 );
+}
+
+/**
+ * Insert element into vectorToUpdate at index index.
+ */
+template< typename T > static void insertAtIndex( btAlignedObjectArray< T > &vectorToUpdate, int index, T element )
+{
+	vectorToUpdate.resize( vectorToUpdate.size() + 1 );
+	for( int i = (vectorToUpdate.size() - 1); i > index; --i )
+	{
+		vectorToUpdate[i] = vectorToUpdate[i-1];
+	}
+	vectorToUpdate[index] = element;
+}
+
+/**
+ * Insert into btAlignedObjectArray assuming the array is ordered and maintaining both ordering and uniqueness.
+ * ie it treats vectorToUpdate as an ordered set.
+ */
+template< typename T > static void insertUniqueAndOrderedIntoVector( btAlignedObjectArray<T> &vectorToUpdate, T element )
+{
+	int index = 0;
+	while( index < vectorToUpdate.size() && vectorToUpdate[index] < element )
+	{
+		index++;
+	}
+	if( index == vectorToUpdate.size() || vectorToUpdate[index] != element )
+		insertAtIndex( vectorToUpdate, index, element );
+}
+
+// Experimental batch generation that we could use in the simulations
+// Attempts to generate larger batches that work on a per-wavefront basis
+void generateLinksPerVertex( int numVertices, btSoftBodyLinkData &linkData, btAlignedObjectArray< int > &listOfLinksPerVertex, btAlignedObjectArray <int> &numLinksPerVertex, int &maxLinks )
+{
+	for( int linkIndex = 0; linkIndex < linkData.getNumLinks(); ++linkIndex )
+	{
+		btSoftBodyLinkData::LinkNodePair nodes( linkData.getVertexPair(linkIndex) );
+		numLinksPerVertex[nodes.vertex0]++;
+		numLinksPerVertex[nodes.vertex1]++;
+	}
+	int maxLinksPerVertex = 0;
+	for( int vertexIndex = 0; vertexIndex < numVertices; ++vertexIndex )
+	{
+		maxLinksPerVertex = btMax(numLinksPerVertex[vertexIndex], maxLinksPerVertex);
+	}
+	maxLinks = maxLinksPerVertex;
+
+	btAlignedObjectArray< int > linksFoundPerVertex;
+	linksFoundPerVertex.resize( numVertices, 0 );
+
+	listOfLinksPerVertex.resize( maxLinksPerVertex * numVertices );
+
+	for( int linkIndex = 0; linkIndex < linkData.getNumLinks(); ++linkIndex )
+	{
+		btSoftBodyLinkData::LinkNodePair nodes( linkData.getVertexPair(linkIndex) );
+		{
+			// Do vertex 0
+			int vertexIndex = nodes.vertex0;
+			int linkForVertex = linksFoundPerVertex[nodes.vertex0];
+			int linkAddress = vertexIndex * maxLinksPerVertex + linkForVertex;
+
+			listOfLinksPerVertex[linkAddress] = linkIndex;
+
+			linksFoundPerVertex[nodes.vertex0] = linkForVertex + 1;
+		}
+		{
+			// Do vertex 1
+			int vertexIndex = nodes.vertex1;
+			int linkForVertex = linksFoundPerVertex[nodes.vertex1];
+			int linkAddress = vertexIndex * maxLinksPerVertex + linkForVertex;
+
+			listOfLinksPerVertex[linkAddress] = linkIndex;
+
+			linksFoundPerVertex[nodes.vertex1] = linkForVertex + 1;
+		}
+	}
+}
+
+static void computeBatchingIntoWavefronts(
+	btSoftBodyLinkData &linkData,
+	int wavefrontSize,
+	int linksPerWorkItem,
+	int maxLinksPerWavefront,
+	btAlignedObjectArray < btAlignedObjectArray <int> > &linksForWavefronts,
+	btAlignedObjectArray< btAlignedObjectArray < btAlignedObjectArray <int> > > &batchesWithinWaves, /* wave, batch, links in batch */
+	btAlignedObjectArray< btAlignedObjectArray< int > > &verticesForWavefronts /* wavefront, vertex */
+	)
+{
+
+
+	// Attempt generation of larger batches of links.
+	btAlignedObjectArray< bool > processedLink;
+	processedLink.resize( linkData.getNumLinks() );
+	btAlignedObjectArray< int > listOfLinksPerVertex;
+	int maxLinksPerVertex = 0;
+
+	// Count num vertices
+	int numVertices = 0;
+	for( int linkIndex = 0; linkIndex < linkData.getNumLinks(); ++linkIndex )
+	{
+		btSoftBodyLinkData::LinkNodePair nodes( linkData.getVertexPair(linkIndex) );
+		numVertices = btMax( numVertices, nodes.vertex0 + 1 );
+		numVertices = btMax( numVertices, nodes.vertex1 + 1 );
+	}
+
+	// Need list of links per vertex
+	// Compute valence of each vertex
+	btAlignedObjectArray <int> numLinksPerVertex;
+	numLinksPerVertex.resize(0);
+	numLinksPerVertex.resize( numVertices, 0 );
+
+	generateLinksPerVertex( numVertices, linkData, listOfLinksPerVertex, numLinksPerVertex, maxLinksPerVertex );
+
+	for( int vertex = 0; vertex < 10; ++vertex )
+	{
+		for( int link = 0; link < numLinksPerVertex[vertex]; ++link )
+		{
+			int linkAddress = vertex * maxLinksPerVertex + link;
+		}
+	}
+
+
+	// At this point we know what links we have for each vertex so we can start batching
+
+	// We want a vertex to start with, let's go with 0
+	int currentVertex = 0;
+	int linksProcessed = 0;
+
+	btAlignedObjectArray <int> verticesToProcess;
+
+	while( linksProcessed < linkData.getNumLinks() )
+	{
+		// Next wavefront
+		int nextWavefront = linksForWavefronts.size();
+		linksForWavefronts.resize( nextWavefront + 1 );
+		btAlignedObjectArray <int> &linksForWavefront(linksForWavefronts[nextWavefront]);
+		verticesForWavefronts.resize( nextWavefront + 1 );
+		btAlignedObjectArray<int> &vertexSet( verticesForWavefronts[nextWavefront] );
+
+		linksForWavefront.resize(0);
+
+		// Loop to find enough links to fill the wavefront
+		// Stopping if we either run out of links, or fill it
+		while( linksProcessed < linkData.getNumLinks() && linksForWavefront.size() < maxLinksPerWavefront )
+		{
+			// Go through the links for the current vertex
+			for( int link = 0; link < numLinksPerVertex[currentVertex] && linksForWavefront.size() < maxLinksPerWavefront; ++link )
+			{
+				int linkAddress = currentVertex * maxLinksPerVertex + link;
+				int linkIndex = listOfLinksPerVertex[linkAddress];
+
+				// If we have not already processed this link, add it to the wavefront
+				// Claim it as another processed link
+				// Add the vertex at the far end to the list of vertices to process.
+				if( !processedLink[linkIndex] )
+				{
+					linksForWavefront.push_back( linkIndex );
+					linksProcessed++;
+					processedLink[linkIndex] = true;
+					int v0 = linkData.getVertexPair(linkIndex).vertex0;
+					int v1 = linkData.getVertexPair(linkIndex).vertex1;
+					if( v0 == currentVertex )
+						verticesToProcess.push_back( v1 );
+					else
+						verticesToProcess.push_back( v0 );
+				}
+			}
+			if( verticesToProcess.size() > 0 )
+			{
+				// Get the element on the front of the queue and remove it
+				currentVertex = verticesToProcess[0];
+				removeFromVector( verticesToProcess, 0 );
+			} else {
+				// If we've not yet processed all the links, find the first unprocessed one
+				// and select one of its vertices as the current vertex
+				if( linksProcessed < linkData.getNumLinks() )
+				{
+					int searchLink = 0;
+					while( processedLink[searchLink] )
+						searchLink++;
+					currentVertex = linkData.getVertexPair(searchLink).vertex0;
+				}
+			}
+		}
+
+		// We have either finished or filled a wavefront
+		for( int link = 0; link < linksForWavefront.size(); ++link )
+		{
+			int v0 = linkData.getVertexPair( linksForWavefront[link] ).vertex0;
+			int v1 = linkData.getVertexPair( linksForWavefront[link] ).vertex1;
+			insertUniqueAndOrderedIntoVector( vertexSet, v0 );
+			insertUniqueAndOrderedIntoVector( vertexSet, v1 );
+		}
+		// Iterate over links mapped to the wave and batch those
+		// We can run a batch on each cycle trivially
+
+		batchesWithinWaves.resize( batchesWithinWaves.size() + 1 );
+		btAlignedObjectArray < btAlignedObjectArray <int> > &batchesWithinWave( batchesWithinWaves[batchesWithinWaves.size()-1] );
+
+
+		for( int link = 0; link < linksForWavefront.size(); ++link )
+		{
+			int linkIndex = linksForWavefront[link];
+			btSoftBodyLinkData::LinkNodePair vertices = linkData.getVertexPair( linkIndex );
+
+			int batch = 0;
+			bool placed = false;
+			while( batch < batchesWithinWave.size() && !placed )
+			{
+				bool foundSharedVertex = false;
+				if( batchesWithinWave[batch].size() >= wavefrontSize )
+				{
+					// If we have already filled this batch, move on to another
+					foundSharedVertex = true;
+				} else {
+					for( int link2 = 0; link2 < batchesWithinWave[batch].size(); ++link2 )
+					{
+						btSoftBodyLinkData::LinkNodePair vertices2 = linkData.getVertexPair( (batchesWithinWave[batch])[link2] );
+
+						if( vertices.vertex0 == vertices2.vertex0 ||
+							vertices.vertex1 == vertices2.vertex0 ||
+							vertices.vertex0 == vertices2.vertex1 ||
+							vertices.vertex1 == vertices2.vertex1 )
+						{
+							foundSharedVertex = true;
+							break;
+						}
+					}
+				}
+				if( !foundSharedVertex )
+				{
+					batchesWithinWave[batch].push_back( linkIndex );
+					placed = true;
+				} else {
+					++batch;
+				}
+			}
+			if( batch == batchesWithinWave.size() && !placed )
+			{
+				batchesWithinWave.resize( batch + 1 );
+				batchesWithinWave[batch].push_back( linkIndex );
+			}
+		}
+
+	}
+
+}
+
+void btSoftBodyLinkDataDX11SIMDAware::generateBatches()
+{
+	btAlignedObjectArray < btAlignedObjectArray <int> > linksForWavefronts;
+	btAlignedObjectArray < btAlignedObjectArray <int> > wavefrontBatches;
+	btAlignedObjectArray< btAlignedObjectArray < btAlignedObjectArray <int> > > batchesWithinWaves;
+	btAlignedObjectArray< btAlignedObjectArray< int > > verticesForWavefronts; // wavefronts, vertices in wavefront as an ordered set
+
+	// Group the links into wavefronts
+	computeBatchingIntoWavefronts( *this, m_wavefrontSize, m_linksPerWorkItem, m_maxLinksPerWavefront, linksForWavefronts, batchesWithinWaves, verticesForWavefronts );
+
+
+	// Batch the wavefronts
+	generateBatchesOfWavefronts( linksForWavefronts, *this, m_maxVertex, wavefrontBatches );
+
+	m_numWavefronts = linksForWavefronts.size();
+
+	// At this point we have a description of which links we need to process in each wavefront
+
+	// First correctly fill the batch ranges vector
+	int numBatches = wavefrontBatches.size();
+	m_wavefrontBatchStartLengths.resize(0);
+	int prefixSum = 0;
+	for( int batchIndex = 0; batchIndex < numBatches; ++batchIndex )
+	{
+		int wavesInBatch = wavefrontBatches[batchIndex].size();
+		int nextPrefixSum = prefixSum + wavesInBatch;
+		m_wavefrontBatchStartLengths.push_back( BatchPair( prefixSum, nextPrefixSum - prefixSum ) );
+
+		prefixSum += wavesInBatch;
+	}
+
+	// Also find max number of batches within a wave
+	m_maxBatchesWithinWave = 0;
+	m_maxVerticesWithinWave = 0;
+	m_numBatchesAndVerticesWithinWaves.resize( m_numWavefronts );
+	for( int waveIndex = 0; waveIndex < m_numWavefronts; ++waveIndex )
+	{
+		// See if the number of batches in this wave is greater than the current maxium
+		int batchesInCurrentWave = batchesWithinWaves[waveIndex].size();
+		int verticesInCurrentWave = verticesForWavefronts[waveIndex].size();
+		m_maxBatchesWithinWave = btMax( batchesInCurrentWave, m_maxBatchesWithinWave );
+		m_maxVerticesWithinWave = btMax( verticesInCurrentWave, m_maxVerticesWithinWave );
+	}
+
+	// Add padding values both for alignment and as dudd addresses within LDS to compute junk rather than branch around
+	m_maxVerticesWithinWave = 16*((m_maxVerticesWithinWave/16)+2);
+
+	// Now we know the maximum number of vertices per-wave we can resize the global vertices array
+	m_wavefrontVerticesGlobalAddresses.resize( m_maxVerticesWithinWave * m_numWavefronts );
+
+	// Grab backup copies of all the link data arrays for the sorting process
+	btAlignedObjectArray<btSoftBodyLinkData::LinkNodePair>				m_links_Backup(m_links);
+	btAlignedObjectArray<float>											m_linkStrength_Backup(m_linkStrength);
+	btAlignedObjectArray<float>											m_linksMassLSC_Backup(m_linksMassLSC);
+	btAlignedObjectArray<float>											m_linksRestLengthSquared_Backup(m_linksRestLengthSquared);
+	//btAlignedObjectArray<Vectormath::Aos::Vector3>						m_linksCLength_Backup(m_linksCLength);
+	//btAlignedObjectArray<float>											m_linksLengthRatio_Backup(m_linksLengthRatio);
+	btAlignedObjectArray<float>											m_linksRestLength_Backup(m_linksRestLength);
+	btAlignedObjectArray<float>											m_linksMaterialLinearStiffnessCoefficient_Backup(m_linksMaterialLinearStiffnessCoefficient);
+
+	// Resize to a wavefront sized batch per batch per wave so we get perfectly coherent memory accesses.
+	m_links.resize( m_maxBatchesWithinWave * m_wavefrontSize * m_numWavefronts );
+	m_linkVerticesLocalAddresses.resize( m_maxBatchesWithinWave * m_wavefrontSize * m_numWavefronts );
+	m_linkStrength.resize( m_maxBatchesWithinWave * m_wavefrontSize * m_numWavefronts );
+	m_linksMassLSC.resize( m_maxBatchesWithinWave * m_wavefrontSize * m_numWavefronts );
+	m_linksRestLengthSquared.resize( m_maxBatchesWithinWave * m_wavefrontSize * m_numWavefronts );
+	m_linksRestLength.resize( m_maxBatchesWithinWave * m_wavefrontSize * m_numWavefronts );
+	m_linksMaterialLinearStiffnessCoefficient.resize( m_maxBatchesWithinWave * m_wavefrontSize * m_numWavefronts );
+
+	// Then re-order links into wavefront blocks
+
+	// Total number of wavefronts moved. This will decide the ordering of sorted wavefronts.
+	int wavefrontCount = 0;
+
+	// Iterate over batches of wavefronts, then wavefronts in the batch
+	for( int batchIndex = 0; batchIndex < numBatches; ++batchIndex )
+	{
+		btAlignedObjectArray <int> &batch( wavefrontBatches[batchIndex] );
+		int wavefrontsInBatch = batch.size();
+
+
+		for( int wavefrontIndex = 0; wavefrontIndex < wavefrontsInBatch; ++wavefrontIndex )
+		{
+
+			int originalWavefrontIndex = batch[wavefrontIndex];
+			btAlignedObjectArray< int > &wavefrontVertices( verticesForWavefronts[originalWavefrontIndex] );
+			int verticesUsedByWavefront = wavefrontVertices.size();
+
+			// Copy the set of vertices into the correctly structured array for use on the device
+			// Fill the non-vertices with -1s
+			// so we can mask out those reads
+			for( int vertex = 0; vertex < verticesUsedByWavefront; ++vertex )
+			{
+				m_wavefrontVerticesGlobalAddresses[m_maxVerticesWithinWave * wavefrontCount + vertex] = wavefrontVertices[vertex];
+			}
+			for( int vertex = verticesUsedByWavefront; vertex < m_maxVerticesWithinWave; ++vertex )
+			{
+				m_wavefrontVerticesGlobalAddresses[m_maxVerticesWithinWave * wavefrontCount + vertex] = -1;
+			}
+
+			// Obtain the set of batches within the current wavefront
+			btAlignedObjectArray < btAlignedObjectArray <int> > &batchesWithinWavefront( batchesWithinWaves[originalWavefrontIndex] );
+			// Set the size of the batches for use in the solver, correctly ordered
+			NumBatchesVerticesPair batchesAndVertices;
+			batchesAndVertices.numBatches = batchesWithinWavefront.size();
+			batchesAndVertices.numVertices = verticesUsedByWavefront;
+			m_numBatchesAndVerticesWithinWaves[wavefrontCount] = batchesAndVertices;
+
+
+			// Now iterate over batches within the wavefront to structure the links correctly
+			for( int wavefrontBatch = 0; wavefrontBatch < batchesWithinWavefront.size(); ++wavefrontBatch )
+			{
+				btAlignedObjectArray <int> &linksInBatch( batchesWithinWavefront[wavefrontBatch] );
+				int wavefrontBatchSize = linksInBatch.size();
+
+				int batchAddressInTarget = m_maxBatchesWithinWave * m_wavefrontSize * wavefrontCount + m_wavefrontSize * wavefrontBatch;
+
+				for( int linkIndex = 0; linkIndex < wavefrontBatchSize; ++linkIndex )
+				{
+					int originalLinkAddress = linksInBatch[linkIndex];
+					// Reorder simple arrays trivially
+					m_links[batchAddressInTarget + linkIndex] = m_links_Backup[originalLinkAddress];
+					m_linkStrength[batchAddressInTarget + linkIndex] = m_linkStrength_Backup[originalLinkAddress];
+					m_linksMassLSC[batchAddressInTarget + linkIndex] = m_linksMassLSC_Backup[originalLinkAddress];
+					m_linksRestLengthSquared[batchAddressInTarget + linkIndex] = m_linksRestLengthSquared_Backup[originalLinkAddress];
+					m_linksRestLength[batchAddressInTarget + linkIndex] = m_linksRestLength_Backup[originalLinkAddress];
+					m_linksMaterialLinearStiffnessCoefficient[batchAddressInTarget + linkIndex] = m_linksMaterialLinearStiffnessCoefficient_Backup[originalLinkAddress];
+
+					// The local address is more complicated. We need to work out where a given vertex will end up
+					// by searching the set of vertices for this link and using the index as the local address
+					btSoftBodyLinkData::LinkNodePair localPair;
+					btSoftBodyLinkData::LinkNodePair globalPair = m_links[batchAddressInTarget + linkIndex];
+					localPair.vertex0 = wavefrontVertices.findLinearSearch( globalPair.vertex0 );
+					localPair.vertex1 = wavefrontVertices.findLinearSearch( globalPair.vertex1 );
+					m_linkVerticesLocalAddresses[batchAddressInTarget + linkIndex] = localPair;
+				}
+				for( int linkIndex = wavefrontBatchSize; linkIndex < m_wavefrontSize; ++linkIndex )
+				{
+					// Put 0s into these arrays for padding for cleanliness
+					m_links[batchAddressInTarget + linkIndex] = btSoftBodyLinkData::LinkNodePair(0, 0);
+					m_linkStrength[batchAddressInTarget + linkIndex] = 0.f;
+					m_linksMassLSC[batchAddressInTarget + linkIndex] = 0.f;
+					m_linksRestLengthSquared[batchAddressInTarget + linkIndex] = 0.f;
+					m_linksRestLength[batchAddressInTarget + linkIndex] = 0.f;
+					m_linksMaterialLinearStiffnessCoefficient[batchAddressInTarget + linkIndex] = 0.f;
+
+
+					// For local addresses of junk data choose a set of addresses just above the range of valid ones
+					// and cycling tyhrough % 16 so that we don't have bank conficts between all dud addresses
+					// The valid addresses will do scatter and gather in the valid range, the junk ones should happily work
+					// off the end of that range so we need no control
+					btSoftBodyLinkData::LinkNodePair localPair;
+					localPair.vertex0 = verticesUsedByWavefront + (linkIndex % 16);
+					localPair.vertex1 = verticesUsedByWavefront + (linkIndex % 16);
+					m_linkVerticesLocalAddresses[batchAddressInTarget + linkIndex] = localPair;
+				}
+
+			}
+
+
+			wavefrontCount++;
+		}
+
+
+	}
+
+} // void btSoftBodyLinkDataDX11SIMDAware::generateBatches()
+
+#endif // #ifdef _WIN32

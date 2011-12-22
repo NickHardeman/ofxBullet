@@ -5,22 +5,22 @@ void testApp::setup() {
 	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
 	ofBackground( 10, 10, 10);
-	
+
 	camera.setPosition(ofVec3f(0, -4.f, -40.f));
 	camera.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, -1, 0));
-	
+
 	camera.cacheMatrices(true);
-	
+
 	world.setup();
 	// enables mouse Pick events //
 	world.enableGrabbing();
 	ofAddListener(world.MOUSE_PICK_EVENT, this, &testApp::mousePickEvent);
-	
+
 	world.enableCollisionEvents();
 	ofAddListener(world.COLLISION_EVENT, this, &testApp::onCollision);
 	world.setCamera(&camera);
 	world.setGravity( ofVec3f(0, 25., 0) );
-	
+
 	int ii = 0;
 	// let's make a shape that all of the rigid bodies use, since it is faster //
 	// though all of the spheres will be the same radius //
@@ -35,7 +35,7 @@ void testApp::setup() {
 		shapes[ii]->add();
 		bColliding.push_back( false );
 	}
-	
+
 	// now lets add some boxes //
 	boxShape = ofBtGetBoxCollisionShape(2.65, 2.65, 2.65);
 	for (int i = 0; i < 4; i++) {
@@ -47,14 +47,14 @@ void testApp::setup() {
 		shapes[ii]->add();
 		bColliding.push_back( false );
 	}
-	
+
 	ofVec3f startLoc;
 	ofPoint dimens;
 	boundsWidth = 30.;
 	float hwidth = boundsWidth*.5;
 	float depth = 2.;
 	float hdepth = depth*.5;
-	
+
 	for(int i = 0; i < 6; i++) {
 		bounds.push_back( new ofxBulletBox() );
 		if(i == 0) { // ground //
@@ -76,12 +76,12 @@ void testApp::setup() {
 			startLoc.set(0, 0, -hwidth-hdepth);
 			dimens.set(boundsWidth, boundsWidth, depth);
 		}
-		
+
 		bounds[i]->create( world.world, startLoc, 0., dimens.x, dimens.y, dimens.z );
 		bounds[i]->setProperties(.25, .95);
 		bounds[i]->add();
 	}
-	
+
 	mousePickIndex	= -1;
 	bDrawDebug		= false;
 	bRenderShapes	= true;
@@ -95,7 +95,7 @@ void testApp::update() {
 		bColliding[i] = false;
 	}
 	mousePickIndex = -1;
-	
+
 	if(bSpacebar) {
 		ofVec3f mouseLoc = camera.screenToWorld( ofVec3f((float)ofGetMouseX(), (float)ofGetMouseY(), 0) );
 		mouseLoc.z += 15;
@@ -107,7 +107,7 @@ void testApp::update() {
 			shapes[i]->applyCentralForce( diff );
 		}
 	}
-	
+
 	world.update();
 	ofSetWindowTitle(ofToString(ofGetFrameRate(), 0));
 }
@@ -116,20 +116,20 @@ void testApp::update() {
 void testApp::draw() {
 	glEnable( GL_DEPTH_TEST );
 	camera.begin();
-	
+
 	ofSetLineWidth(1.f);
 	ofSetColor(255, 0, 200);
 	if(bDrawDebug) world.drawDebug();
-	
+
 	ofEnableLighting();
 	light.enable();
-	
+
 	if(bRenderShapes) {
 		ofSetColor(100, 100, 100);
 		for(int i = 0; i < bounds.size()-1; i++) {
 			bounds[i]->draw();
 		}
-		
+
 		for(int i = 0; i < shapes.size(); i++) {
 			if(shapes[i]->getType() == ofxBulletBaseShape::OFX_BULLET_BOX_SHAPE) {
 				ofSetColor(15,197,138);
@@ -154,15 +154,15 @@ void testApp::draw() {
 	}
 	light.disable();
 	ofDisableLighting();
-	
+
 	camera.end();
 	glDisable(GL_DEPTH_TEST);
-	
+
 	ofEnableAlphaBlending();
 	ofSetColor(0, 0, 0, 150);
 	ofRect(0, 0, 250, 100);
 	ofDisableAlphaBlending();
-	
+
 	ofSetColor(255, 255, 255);
 	stringstream ss;
 	ss << "framerate: " << ofToString(ofGetFrameRate(),0) << endl;
@@ -183,7 +183,7 @@ void testApp::onCollision(ofxBulletCollisionData& cdata) {
 			return;
 		}
 	}
-	
+
 	for (int i = 0; i < shapes.size(); i++) {
 		if(*shapes[i] == cdata) {
 			bColliding[i] = true;
@@ -206,14 +206,13 @@ void testApp::mousePickEvent( ofxBulletMousePickEvent &e ) {
 //--------------------------------------------------------------
 void testApp::keyPressed(int key) {
 	int ii = 0;
-	
+
 	ofVec3f mouseLoc = camera.screenToWorld( ofVec3f((float)ofGetMouseX(), (float)ofGetMouseY(), 0) );
 	float rsize = ofRandom(.3, 1.8);
 	mouseLoc.z += 15;
-	
+
 	switch (key) {
 		case OF_KEY_DEL:
-		case 127:
 			if(mousePickIndex > -1) {
 				if(shapes.size() > 0) {
 					delete shapes[mousePickIndex];
@@ -267,35 +266,35 @@ void testApp::keyReleased(int key) {
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y) {
-	
+
 }
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button) {
-	
+
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button) {
-	
+
 }
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
-	
+
 }
 
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h) {
-	
+
 }
 
 //--------------------------------------------------------------
 void testApp::gotMessage(ofMessage msg) {
-	
+
 }
 
 //--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo) { 
-	
+void testApp::dragEvent(ofDragInfo dragInfo) {
+
 }
