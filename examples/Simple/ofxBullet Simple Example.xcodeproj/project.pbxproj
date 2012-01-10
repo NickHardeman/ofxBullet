@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2EA8E56313CB9AEB00D93448 /* ofxBulletJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EA8E49313CB9AEB00D93448 /* ofxBulletJoint.cpp */; };
 		2EA8E56413CB9AEB00D93448 /* ofxBulletWorldRigid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EA8E49913CB9AEB00D93448 /* ofxBulletWorldRigid.cpp */; };
-		2EA8E56513CB9AEB00D93448 /* btShapeHull.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EA8E49C13CB9AEB00D93448 /* btShapeHull.cpp */; };
 		2EA8E56613CB9AEB00D93448 /* GLDebugDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EA8E49E13CB9AEB00D93448 /* GLDebugDrawer.cpp */; };
 		2EA8E56713CB9AEB00D93448 /* ofxBulletBaseShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EA8E4A113CB9AEB00D93448 /* ofxBulletBaseShape.cpp */; };
 		2EA8E56813CB9AEB00D93448 /* ofxBulletBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EA8E4A313CB9AEB00D93448 /* ofxBulletBox.cpp */; };
@@ -77,8 +76,6 @@
 		2EA8E49813CB9AEB00D93448 /* ofxBulletUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletUtils.h; sourceTree = "<group>"; };
 		2EA8E49913CB9AEB00D93448 /* ofxBulletWorldRigid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletWorldRigid.cpp; sourceTree = "<group>"; };
 		2EA8E49A13CB9AEB00D93448 /* ofxBulletWorldRigid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletWorldRigid.h; sourceTree = "<group>"; };
-		2EA8E49C13CB9AEB00D93448 /* btShapeHull.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = btShapeHull.cpp; sourceTree = "<group>"; };
-		2EA8E49D13CB9AEB00D93448 /* btShapeHull.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = btShapeHull.h; sourceTree = "<group>"; };
 		2EA8E49E13CB9AEB00D93448 /* GLDebugDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLDebugDrawer.cpp; sourceTree = "<group>"; };
 		2EA8E49F13CB9AEB00D93448 /* GLDebugDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLDebugDrawer.h; sourceTree = "<group>"; };
 		2EA8E4A113CB9AEB00D93448 /* ofxBulletBaseShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletBaseShape.cpp; sourceTree = "<group>"; };
@@ -190,8 +187,6 @@
 		2EA8E49B13CB9AEB00D93448 /* render */ = {
 			isa = PBXGroup;
 			children = (
-				2EA8E49C13CB9AEB00D93448 /* btShapeHull.cpp */,
-				2EA8E49D13CB9AEB00D93448 /* btShapeHull.h */,
 				2EA8E49E13CB9AEB00D93448 /* GLDebugDrawer.cpp */,
 				2EA8E49F13CB9AEB00D93448 /* GLDebugDrawer.h */,
 			);
@@ -389,7 +384,6 @@
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
 				2EA8E56313CB9AEB00D93448 /* ofxBulletJoint.cpp in Sources */,
 				2EA8E56413CB9AEB00D93448 /* ofxBulletWorldRigid.cpp in Sources */,
-				2EA8E56513CB9AEB00D93448 /* btShapeHull.cpp in Sources */,
 				2EA8E56613CB9AEB00D93448 /* GLDebugDrawer.cpp in Sources */,
 				2EA8E56713CB9AEB00D93448 /* ofxBulletBaseShape.cpp in Sources */,
 				2EA8E56813CB9AEB00D93448 /* ofxBulletBox.cpp in Sources */,
@@ -431,23 +425,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_BULLET = "\"$(OF_PATH)/addons/ofxBullet/bullet/include/**\"";
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_BULLET)",
 					"$(OF_CORE_HEADERS)",
 				);
-				LIB_BULLET_ALL = "$(LIB_BULLET_COLLISION) $(LIB_BULLET_DYNAMICS) $(LIB_BULLET_MATH) $(LIB_BULLET_MINI_CL) $(LIB_BULLET_SOFT_BODY)";
-				LIB_BULLET_COLLISION = "\"../../../addons/ofxBullet/bullet/lib/osx/Debug/libBulletCollision.a\"";
-				LIB_BULLET_DYNAMICS = "\"../../../addons/ofxBullet/bullet/lib/osx/Debug/libBulletDynamics.a\"";
-				LIB_BULLET_MATH = "\"../../../addons/ofxBullet/bullet/lib/osx/Debug/libLinearMath.a\"";
-				LIB_BULLET_MINI_CL = "\"../../../addons/ofxBullet/bullet/lib/osx/Debug/libMiniCL.a\"";
-				LIB_BULLET_SOFT_BODY = "\"../../../addons/ofxBullet/bullet/lib/osx/Debug/libBulletSoftBody.a\"";
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
 					"-lpthread",
 				);
 				OTHER_LDFLAGS = (
-					"$(LIB_BULLET_ALL)",
+					"$(LIB_BULLET_ALL_DEBUG)",
 					"$(OF_CORE_LIBS)",
 				);
 			};
@@ -475,23 +462,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_BULLET = "\"$(OF_PATH)/addons/ofxBullet/bullet/include/**\"";
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_BULLET)",
 					"$(OF_CORE_HEADERS)",
 				);
-				LIB_BULLET_ALL = "$(LIB_BULLET_COLLISION) $(LIB_BULLET_DYNAMICS) $(LIB_BULLET_MATH) $(LIB_BULLET_MINI_CL) $(LIB_BULLET_SOFT_BODY)";
-				LIB_BULLET_COLLISION = "\"../../../addons/ofxBullet/bullet/lib/osx/Release/libBulletCollision.a\"";
-				LIB_BULLET_DYNAMICS = "\"../../../addons/ofxBullet/bullet/lib/osx/Release/libBulletDynamics.a\"";
-				LIB_BULLET_MATH = "\"../../../addons/ofxBullet/bullet/lib/osx/Release/libLinearMath.a\"";
-				LIB_BULLET_MINI_CL = "\"../../../addons/ofxBullet/bullet/lib/osx/Release/libMiniCL.a\"";
-				LIB_BULLET_SOFT_BODY = "\"../../../addons/ofxBullet/bullet/lib/osx/Release/libBulletSoftBody.a\"";
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
 					"-lpthread",
 				);
 				OTHER_LDFLAGS = (
-					"$(LIB_BULLET_ALL)",
+					"$(LIB_BULLET_ALL_RELEASE)",
 					"$(OF_CORE_LIBS)",
 				);
 			};
