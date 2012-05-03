@@ -1,3 +1,5 @@
 examples/*/obj
 examples/*/bin/*
 *.layout
+*.mode1v3
+*.pbxuser
