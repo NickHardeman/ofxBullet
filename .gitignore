@@ -1,5 +1,10 @@
-examples/*/obj
-examples/*/bin/*
+*/obj
+*/bin/*
 *.layout
 *.mode1v3
 *.pbxuser
+*.app
+*.xcworkspacedata
+*.xcuserstate
+*.xcscheme
+*/*.xcodeproj/xcuserdata
