@@ -1,0 +1,26 @@
+//THE PATH TO THE ROOT OF OUR OF PATH RELATIVE TO THIS PROJECT.
+//THIS NEEDS TO BE DEFINED BEFORE CoreOF.xcconfig IS INCLUDED
+OF_PATH = ../../..
+
+//THIS HAS ALL THE HEADER AND LIBS FOR OF CORE
+#include "../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig"
+
+HEADER_BULLET = "$(OF_PATH)/addons/ofxBullet/libs/bullet/include/**"
+
+LIB_BULLET_COLLISION_DEBUG = "../../../addons/ofxBullet/libs/bullet/lib/osx/Debug/libBulletCollision.a"
+LIB_BULLET_DYNAMICS_DEBUG = "../../../addons/ofxBullet/libs/bullet/lib/osx/Debug/libBulletDynamics.a"
+LIB_BULLET_MATH_DEBUG = "../../../addons/ofxBullet/libs/bullet/lib/osx/Debug/libLinearMath.a"
+LIB_BULLET_MINI_CL_DEBUG = "../../../addons/ofxBullet/libs/bullet/lib/osx/Debug/libMiniCL.a"
+LIB_BULLET_SOFT_BODY_DEBUG = "../../../addons/ofxBullet/libs/bullet/lib/osx/Debug/libBulletSoftBody.a"
+
+LIB_BULLET_COLLISION_RELEASE = "../../../addons/ofxBullet/libs/bullet/lib/osx/Release/libBulletCollision.a"
+LIB_BULLET_DYNAMICS_RELEASE = "../../../addons/ofxBullet/libs/bullet/lib/osx/Release/libBulletDynamics.a"
+LIB_BULLET_MATH_RELEASE = "../../../addons/ofxBullet/libs/bullet/lib/osx/Release/libLinearMath.a"
+LIB_BULLET_MINI_CL_RELEASE = "../../../addons/ofxBullet/libs/bullet/lib/osx/Release/libMiniCL.a"
+LIB_BULLET_SOFT_BODY_RELEASE = "../../../addons/ofxBullet/libs/bullet/lib/osx/Release/libBulletSoftBody.a"
+
+LIB_BULLET_ALL_DEBUG = $(LIB_BULLET_COLLISION_DEBUG) $(LIB_BULLET_DYNAMICS_DEBUG) $(LIB_BULLET_MATH_DEBUG) $(LIB_BULLET_MINI_CL_DEBUG) $(LIB_BULLET_SOFT_BODY_DEBUG)
+LIB_BULLET_ALL_RELEASE = $(LIB_BULLET_COLLISION_RELEASE) $(LIB_BULLET_DYNAMICS_RELEASE) $(LIB_BULLET_MATH_RELEASE) $(LIB_BULLET_MINI_CL_RELEASE) $(LIB_BULLET_SOFT_BODY_RELEASE)
+// the bullet libs are added depending on debug / release in project settings //
+OTHER_LDFLAGS = $(OF_CORE_LIBS) 
+HEADER_SEARCH_PATHS = $(OF_CORE_HEADERS) $(HEADER_BULLET)
