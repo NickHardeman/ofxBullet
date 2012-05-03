@@ -16,6 +16,7 @@ Bullet Physics 2.77 - http://code.google.com/p/bullet/downloads/list
 
 INSTALLATION (currently libs for osx and linux):
 Move the ofxBullet folder into OpenFrameworks > addons 
+Move the ofxBullet_Examples folder (inside ofxBullet) into the apps folder
 
 3D logo by Lauren Licherdell: http://www.laurenlicherdell.com/
 
