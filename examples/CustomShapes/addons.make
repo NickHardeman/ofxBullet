@@ -1,2 +1,0 @@
-ofxBullet
-ofxAssimpModelLoader
