@@ -8,9 +8,7 @@ void testApp::setup() {
 	
 	camera.setPosition(ofVec3f(0, -7.f, -10.f));
 	camera.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, -1, 0));
-	
-	camera.cacheMatrices(true);
-	
+
 	world.setup();
 	world.enableGrabbing();
 	world.enableDebugDraw();

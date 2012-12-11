@@ -9,8 +9,6 @@ void testApp::setup() {
 	camera.setPosition(ofVec3f(0, -4.f, -40.f));
 	camera.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, -1, 0));
 
-	camera.cacheMatrices(true);
-
 	world.setup();
 	// enables mouse Pick events //
 	world.enableGrabbing();
