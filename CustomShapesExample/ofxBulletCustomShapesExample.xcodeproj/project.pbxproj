@@ -28,6 +28,7 @@
 		2EFCD33A17BB36C500C9A987 /* ofxAssimpMeshHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EFCD32B17BB36C400C9A987 /* ofxAssimpMeshHelper.cpp */; };
 		2EFCD33B17BB36C500C9A987 /* ofxAssimpModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EFCD32D17BB36C400C9A987 /* ofxAssimpModelLoader.cpp */; };
 		2EFCD33C17BB36C500C9A987 /* ofxAssimpTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EFCD32F17BB36C400C9A987 /* ofxAssimpTexture.cpp */; };
+		2EFCD34A17BB3ED900C9A987 /* ofxBulletConvexShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EFCD34817BB3ED900C9A987 /* ofxBulletConvexShape.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -161,6 +162,8 @@
 		2EFCD32F17BB36C400C9A987 /* ofxAssimpTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAssimpTexture.cpp; sourceTree = "<group>"; };
 		2EFCD33017BB36C400C9A987 /* ofxAssimpTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxAssimpTexture.h; sourceTree = "<group>"; };
 		2EFCD33117BB36C400C9A987 /* ofxAssimpUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxAssimpUtils.h; sourceTree = "<group>"; };
+		2EFCD34817BB3ED900C9A987 /* ofxBulletConvexShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletConvexShape.cpp; sourceTree = "<group>"; };
+		2EFCD34917BB3ED900C9A987 /* ofxBulletConvexShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletConvexShape.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -279,6 +282,8 @@
 		2EEF318A17BB2A73003CFA1C /* shapes */ = {
 			isa = PBXGroup;
 			children = (
+				2EFCD34817BB3ED900C9A987 /* ofxBulletConvexShape.cpp */,
+				2EFCD34917BB3ED900C9A987 /* ofxBulletConvexShape.h */,
 				2EEF318B17BB2A73003CFA1C /* ofxBulletBaseShape.cpp */,
 				2EEF318C17BB2A73003CFA1C /* ofxBulletBaseShape.h */,
 				2EEF318D17BB2A73003CFA1C /* ofxBulletBox.cpp */,
@@ -669,6 +674,7 @@
 				2EFCD33A17BB36C500C9A987 /* ofxAssimpMeshHelper.cpp in Sources */,
 				2EFCD33B17BB36C500C9A987 /* ofxAssimpModelLoader.cpp in Sources */,
 				2EFCD33C17BB36C500C9A987 /* ofxAssimpTexture.cpp in Sources */,
+				2EFCD34A17BB3ED900C9A987 /* ofxBulletConvexShape.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
