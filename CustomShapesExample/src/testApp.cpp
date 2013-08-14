@@ -83,14 +83,13 @@ void testApp::setup() {
 	// let's make an object for the light to follow //
 	shapes.push_back( new ofxBulletSphere() );
 	((ofxBulletSphere*)shapes[0])->create(world.world, ofVec3f(0, -hwidth+5, -5), .15f, 2.);
-	((ofxBulletSphere*)shapes[0])->setSphereResolution( 10 );
 	((ofxBulletSphere*)shapes[0])->setActivationState( DISABLE_DEACTIVATION );
 	shapes[0]->add();
 	
-	ofSetSmoothLighting(true);
-	light.setAmbientColor(ofColor(.0, .0, .0));
-	light.setDiffuseColor(ofColor(.0, .0, .0));
-	light.setSpecularColor(ofColor(255, .1, .1));
+//	ofSetSmoothLighting(true);
+//	light.setAmbientColor(ofColor(.0, .0, .0));
+//	light.setDiffuseColor(ofColor(.0, .0, .0));
+//	light.setSpecularColor(ofColor(255, .1, .1));
 	
 	logoMat.setAmbientColor(ofFloatColor(0, 0, 0));
 	logoMat.setDiffuseColor(ofFloatColor(150, 0, 150));
@@ -156,7 +155,7 @@ void testApp::draw() {
 		ofGetOpenGLMatrixFromRigidBody( boundsShape->getRigidBody(), m );
 		glPushMatrix(); 
 		glMultMatrixf( m );
-		ofBox(ofVec3f(0, 0,0), boundsWidth);
+		ofDrawBox(ofVec3f(0, 0,0), boundsWidth);
 		glPopMatrix();
 		ofFill();
 	}
@@ -233,7 +232,6 @@ void testApp::keyPressed(int key) {
 		case 's':
 			shapes.push_back( new ofxBulletSphere() );
 			((ofxBulletSphere*)shapes[shapes.size()-1])->create( world.world, mouseLoc, rsize*.2, rsize );
-			((ofxBulletSphere*)shapes[shapes.size()-1])->setSphereResolution( 16 );
 			((ofxBulletSphere*)shapes[shapes.size()-1])->setActivationState( DISABLE_DEACTIVATION );
 			shapes[shapes.size()-1]->add();
 			break;
