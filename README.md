@@ -16,9 +16,9 @@ OpenFrameworks 008 - https://github.com/openframeworks/openFrameworks <br/>
 Bullet Physics 2.77 - http://code.google.com/p/bullet/downloads/list <br/>
 
 <h4>Previous Versions</h4>
-ofxBullet v1.0 (supports OF 007x) - https://github.com/NickHardeman/ofxBullet/releases/tag/v1.0 <br/>
+ofxBullet v1.0 (supports OF 007x and Linux) - https://github.com/NickHardeman/ofxBullet/releases/tag/v1.0 <br/>
 
-<h4>INSTALLATION (currently libs for osx and linux): </h4>
+<h4>INSTALLATION</h4>
 Move the ofxBullet folder into OpenFrameworks > addons <br/>
 Copy the EmptyExample Folder from ofxBullet into the OF/apps/yourFolderName/
 
