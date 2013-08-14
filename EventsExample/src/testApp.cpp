@@ -148,7 +148,7 @@ void testApp::draw() {
 	}
 	if(mousePickIndex > -1) {
 		ofSetColor(255, 20, 255);
-		ofSphere(mousePickPos.x, mousePickPos.y, mousePickPos.z, .1);
+		ofDrawSphere(mousePickPos.x, mousePickPos.y, mousePickPos.z, .1);
 	}
 	light.disable();
 	ofDisableLighting();
