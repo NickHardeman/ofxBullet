@@ -3,7 +3,6 @@
  *  ofxBullet_v5_sphere_texture
  *
  *  Created by Nick Hardeman on 6/3/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
@@ -22,6 +21,7 @@
 #include "ofxBulletCone.h"
 #include "ofxBulletCapsule.h"
 #include "ofxBulletCustomShape.h"
+#include "ofxBulletConvexShape.h"
 
 // dynamics //
 #include "ofxBulletJoint.h"

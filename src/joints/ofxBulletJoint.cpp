@@ -3,7 +3,6 @@
  *  ofxBullet_v7_joints
  *
  *  Created by Nick Hardeman on 7/6/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 

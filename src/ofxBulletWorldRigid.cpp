@@ -3,7 +3,6 @@
  *  ofxBullet_v1
  *
  *  Created by Nick Hardeman on 3/22/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
@@ -123,7 +122,7 @@ void ofxBulletWorldRigid::checkCollisions() {
 		}
 	}
 	//you can un-comment out this line, and then all points are removed
-	//contactManifold->clearManifold();	
+	//contactManifold->clearManifold();
 	
 }
 
@@ -343,7 +342,7 @@ void ofxBulletWorldRigid::destroy() {
 
 //--------------------------------------------------------------
 void ofxBulletWorldRigid::mouseMoved( ofMouseEventArgs &a ) {
-			
+    
 }
 
 //--------------------------------------------------------------
