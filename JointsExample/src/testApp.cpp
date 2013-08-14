@@ -35,11 +35,6 @@ void testApp::setup() {
 	joints[joints.size()-1]->create( world.world, shapes[0], ofVec3f(0, 0, 0));
 	joints[joints.size()-1]->add();
 	
-	ofSetSmoothLighting(true);
-	light.setAmbientColor(ofColor(.0, .0, .0));
-	light.setDiffuseColor(ofColor(.0, .0, .0));
-	light.setSpecularColor(ofColor(255, .1, .1));
-	
 	bDrawDebug	= false;
 	bSpacebar	= false;
 	bShapesNeedErase = false;
