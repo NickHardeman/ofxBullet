@@ -202,9 +202,9 @@ void ofxBulletJoint::drawJointConstraints() {
 	glEnd();
 	
 	ofSetColor(255, 0, 0);
-	ofSphere(pa, .5);
+	ofDrawSphere(pa, .5);
 	ofSetColor(0, 0, 255);
-	ofSphere(pb, .5);
+	ofDrawSphere(pb, .5);
 }
 
 
