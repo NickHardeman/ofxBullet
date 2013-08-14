@@ -3,7 +3,6 @@
  *  ofxBullet_v7_joints
  *
  *  Created by Nick Hardeman on 7/6/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
@@ -202,9 +201,9 @@ void ofxBulletJoint::drawJointConstraints() {
 	glEnd();
 	
 	ofSetColor(255, 0, 0);
-	ofSphere(pa, .5);
+	ofDrawSphere(pa, .5);
 	ofSetColor(0, 0, 255);
-	ofSphere(pb, .5);
+	ofDrawSphere(pb, .5);
 }
 
 

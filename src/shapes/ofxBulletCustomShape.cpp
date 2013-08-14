@@ -3,7 +3,6 @@
  *  ofxBullet Events Example
  *
  *  Created by Nick Hardeman on 7/12/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
@@ -25,6 +24,8 @@ void ofxBulletCustomShape::init( btCompoundShape* a_colShape, ofVec3f a_centroid
 	_shape		= (btCollisionShape*)a_colShape;
 	_centroid	= a_centroid;
 	_bInited	= true;
+    // shape passed in externally, so not responsible for deleteing pointer
+    _bColShapeCreatedInternally = false;
 }
 
 //--------------------------------------------------------------
@@ -175,7 +176,7 @@ void ofxBulletCustomShape::add() {
 		((btCompoundShape*)_shape)->addChildShape( trans, shapes[i]);
 	}
 	_rigidBody = ofGetBtRigidBodyFromCollisionShape( _shape, _startTrans, _mass);
-	setData( new ofxBulletUserData() );
+	createInternalUserData();
 	_world->addRigidBody(_rigidBody);
 	setProperties(.4, .75);
 	setDamping( .25 );
@@ -197,6 +198,12 @@ int ofxBulletCustomShape::getNumChildShapes() {
 //--------------------------------------------------------------
 void ofxBulletCustomShape::draw() {
 	
+}
+
+//--------------------------------------------------------------
+void ofxBulletCustomShape::transformGL() {
+    ofxBulletBaseShape::transformGL();
+    glTranslatef(-getCentroid().x, -getCentroid().y, -getCentroid().z);
 }
 
 
