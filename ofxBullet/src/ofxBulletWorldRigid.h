@@ -3,11 +3,10 @@
  *  ofxBullet_v1
  *
  *  Created by Nick Hardeman on 3/22/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
-#pragma once 
+#pragma once
 
 // http://bulletphysics.org/mediawiki-1.5.8/index.php/Hello_World
 #include "ofMain.h"

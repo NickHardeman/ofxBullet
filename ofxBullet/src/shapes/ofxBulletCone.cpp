@@ -3,18 +3,10 @@
  *  ofxBullet_v3
  *
  *  Created by Nick Hardeman on 5/24/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
 #include "ofxBulletCone.h"
-//#ifdef TARGET_LINUX
-//#include <GL/glu.h>
-//#include <GL/glut.h>
-//#else
-//#include <OpenGL/glu.h>
-#include <glut.h>
-//#endif
 
 //--------------------------------------------------------------
 ofxBulletCone::ofxBulletCone() {
@@ -36,6 +28,8 @@ void ofxBulletCone::init(float a_radius, float a_height) {
 void ofxBulletCone::init( btConeShape* a_colShape ) {
 	_shape		= (btCollisionShape*)a_colShape;
 	_bInited	= true;
+    // shape passed in externally, so not responsible for deleteing pointer
+    _bColShapeCreatedInternally = false;
 }
 
 //--------------------------------------------------------------
@@ -52,13 +46,13 @@ void ofxBulletCone::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQ
 }
 
 //--------------------------------------------------------------
-void ofxBulletCone::create( btDiscreteDynamicsWorld* a_world, btTransform &a_bt_tr, float a_mass, float a_radius, float a_height ) {
+void ofxBulletCone::create( btDiscreteDynamicsWorld* a_world, btTransform const& a_bt_tr, float a_mass, float a_radius, float a_height ) {
 	if(!_bInited || _shape == NULL) {
 		ofxBulletBaseShape::create( a_world, (btCollisionShape*)new btConeShape(a_radius, a_height ), a_bt_tr, a_mass );
 	} else {
 		ofxBulletBaseShape::create( a_world, _shape, a_bt_tr, a_mass );
 	}
-	setData( new ofxBulletUserData() );
+	createInternalUserData();
 }
 
 //--------------------------------------------------------------
@@ -76,40 +70,18 @@ int ofxBulletCone::getUpIndex() {
 	return ((btConeShape*)_rigidBody->getCollisionShape())->getConeUpIndex();
 }
 
-// TODO: VBO drawing, no GLUT //
 //--------------------------------------------------------------
 void ofxBulletCone::draw() {
 	if(!_bCreated || _rigidBody == NULL) {
 		ofLog(OF_LOG_WARNING, "ofxBulletCone :: draw : must call create() first and add() after");
 		return;
 	}
-	btScalar	m[16];
-	ofGetOpenGLMatrixFromRigidBody( _rigidBody, m );
-	glPushMatrix();
-	glMultMatrixf( m );
-
-	glPushMatrix();
-	int upIndex		= getUpIndex();
-	float radius	= getRadius();
-	float height	= getHeight();
-	switch (upIndex) {
-		case 0:
-			glRotatef(90.0, 0.0, 1.0, 0.0);
-			break;
-		case 1:
-			glRotatef(-90.0, 1.0, 0.0, 0.0);
-			break;
-		case 2:
-			break;
-		default:
-		{
-		}
-	};
-	glTranslatef(0.0, 0.0, -0.5*height);
-	glutSolidCone(radius, height, 10, 10);
-
-	glPopMatrix();
-	glPopMatrix();
+	transformGL();
+    glPushMatrix();
+    glRotatef(180, 1, 0, 0);
+    ofDrawCone( 0, 0, 0, getRadius(), getHeight() );
+    glPopMatrix();
+    restoreTramsformGL();
 }
 
 

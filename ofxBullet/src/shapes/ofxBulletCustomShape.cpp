@@ -3,7 +3,6 @@
  *  ofxBullet Events Example
  *
  *  Created by Nick Hardeman on 7/12/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
@@ -25,6 +24,8 @@ void ofxBulletCustomShape::init( btCompoundShape* a_colShape, ofVec3f a_centroid
 	_shape		= (btCollisionShape*)a_colShape;
 	_centroid	= a_centroid;
 	_bInited	= true;
+    // shape passed in externally, so not responsible for deleteing pointer
+    _bColShapeCreatedInternally = false;
 }
 
 //--------------------------------------------------------------
@@ -41,7 +42,7 @@ void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_l
 }
 
 //--------------------------------------------------------------
-void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, btTransform &a_bt_tr, float a_mass ) {
+void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, btTransform const&  a_bt_tr, float a_mass ) {
 	_world = a_world;
 	_mass = a_mass;
 	if(!_bInited) {
@@ -88,7 +89,7 @@ bool ofxBulletCustomShape::addMesh( ofMesh a_mesh, ofVec3f a_localScaling, bool 
 		}
 		centroid /= (float)verticies.size();
 		
-		/*vector<btVector3> newVerts;
+		vector<btVector3> newVerts;
 		for ( int i = 0; i < indicies.size(); i++) {
 			btVector3 vertex( verticies[indicies[i]].x, verticies[indicies[i]].y, verticies[indicies[i]].z);
 			vertex *= localScaling;
@@ -99,7 +100,7 @@ bool ofxBulletCustomShape::addMesh( ofMesh a_mesh, ofVec3f a_localScaling, bool 
 		btConvexHullShape* convexShape = new btConvexHullShape(&(newVerts[0].getX()), newVerts.size());
 		convexShape->setMargin( 0.01f );
 		shapes.push_back( convexShape );
-		centroids.push_back( ofVec3f(centroid.getX(), centroid.getY(), centroid.getZ()) );*/
+		centroids.push_back( ofVec3f(centroid.getX(), centroid.getY(), centroid.getZ()) );
 	} else {
 		// HULL Building code from example ConvexDecompositionDemo.cpp //
 		btTriangleMesh* trimesh = new btTriangleMesh();
@@ -175,7 +176,7 @@ void ofxBulletCustomShape::add() {
 		((btCompoundShape*)_shape)->addChildShape( trans, shapes[i]);
 	}
 	_rigidBody = ofGetBtRigidBodyFromCollisionShape( _shape, _startTrans, _mass);
-	setData( new ofxBulletUserData() );
+	createInternalUserData();
 	_world->addRigidBody(_rigidBody);
 	setProperties(.4, .75);
 	setDamping( .25 );
@@ -197,6 +198,12 @@ int ofxBulletCustomShape::getNumChildShapes() {
 //--------------------------------------------------------------
 void ofxBulletCustomShape::draw() {
 	
+}
+
+//--------------------------------------------------------------
+void ofxBulletCustomShape::transformGL() {
+    ofxBulletBaseShape::transformGL();
+    glTranslatef(-getCentroid().x, -getCentroid().y, -getCentroid().z);
 }
 
 

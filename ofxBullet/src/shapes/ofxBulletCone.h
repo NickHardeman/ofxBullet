@@ -3,7 +3,6 @@
  *  ofxBullet_v3
  *
  *  Created by Nick Hardeman on 5/24/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
@@ -23,7 +22,7 @@ public:
 	
 	void	create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc=ofVec3f(0,0,0), float a_mass=1.f, float a_radius=1.f, float a_height=2.f );
 	void	create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass=1.f, float a_radius=1.f, float a_height=2.f );
-	void	create( btDiscreteDynamicsWorld* a_world, btTransform &a_bt_tr, float a_mass=1.f, float a_radius=1.f, float a_height=2.f );
+	void	create( btDiscreteDynamicsWorld* a_world, btTransform const& a_bt_tr, float a_mass=1.f, float a_radius=1.f, float a_height=2.f );
 	
 	// GETTERS //
 	float getHeight();

@@ -3,7 +3,6 @@
  *  ofxBullet_v3
  *
  *  Created by Nick Hardeman on 5/18/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
@@ -27,10 +26,11 @@ public:
 		OFX_BULLET_CAPSULE_SHAPE = 3,
 		OFX_BULLET_CONE_SHAPE = 4,
 		OFX_BULLET_CYLINDER_SHAPE = 5,
-		OFX_BULLET_CUSTOM_SHAPE = 6
+		OFX_BULLET_CUSTOM_SHAPE = 6,
+        OFX_BULLET_CONVEX_SHAPE = 7
 	};
 	
-	virtual void create( btDiscreteDynamicsWorld* a_world, btCollisionShape* a_colShape, btTransform &a_bt_tr, float a_mass );
+	virtual void create( btDiscreteDynamicsWorld* a_world, btCollisionShape* a_colShape, btTransform const& a_bt_tr, float a_mass );
 	virtual void add();
 	void	remove();
 	void	removeRigidBody();
@@ -42,6 +42,7 @@ public:
 	int				getActivationState();
 	
 	int				getType();
+    bool            isCollisionShapeInternal();
 	
 	float			getMass() const;
 	void			getOpenGLMatrix( btScalar* a_m );
@@ -102,13 +103,15 @@ public:
 	void applyTorque( float a_x, float a_y, float a_z );
 	void applyTorque( const btVector3& a_torque );
 	
-	// TODO: utilize ofVbo //
 	virtual void draw() {};
+    
+    virtual void transformGL();
+    virtual void restoreTramsformGL();
 	
-	/*
-	 const btCylinderShape* cylinder = static_cast<const btCylinderShape*>(shapes[Body::UPPER]);
-	*/
 protected:
+    // initially use call this function in shape constructors so we know that the data was created
+    // internally //
+    void createInternalUserData();
 	
 	btDiscreteDynamicsWorld*	_world;
 	btCollisionShape*			_shape;
@@ -120,6 +123,9 @@ protected:
 	bool						_bInited;
 	bool						_bCreated;
 	bool						_bAdded;
+    // if the collision shape was created internally, then, we must delete it //
+    bool                        _bColShapeCreatedInternally;
+    bool                        _bUserDataCreatedInternally;
 	
 	int							_type;
 };

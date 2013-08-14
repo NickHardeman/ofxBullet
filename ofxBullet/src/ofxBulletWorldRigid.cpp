@@ -3,7 +3,6 @@
  *  ofxBullet_v1
  *
  *  Created by Nick Hardeman on 3/22/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
@@ -91,7 +90,7 @@ void ofxBulletWorldRigid::checkCollisions() {
 	//cout << "numManifolds: " << numManifolds << endl;
 	for (int i = 0; i < numManifolds; i++) {
 		btPersistentManifold* contactManifold =  world->getDispatcher()->getManifoldByIndexInternal(i);
-		btCollisionObject* obA = const_cast<btCollisionObject*>(contactManifold->getBody0());   //这里改为const_cast
+		btCollisionObject* obA = const_cast<btCollisionObject*>(contactManifold->getBody0());
 		btCollisionObject* obB = const_cast<btCollisionObject*>(contactManifold->getBody1());
 		
 		int numContacts = contactManifold->getNumContacts();
@@ -123,7 +122,7 @@ void ofxBulletWorldRigid::checkCollisions() {
 		}
 	}
 	//you can un-comment out this line, and then all points are removed
-	//contactManifold->clearManifold();	
+	//contactManifold->clearManifold();
 	
 }
 
@@ -155,11 +154,11 @@ ofxBulletRaycastData ofxBulletWorldRigid::raycastTest( ofVec3f a_rayStart, ofVec
 	world->rayTest( rayStart, rayEnd, rayCallback );
 	
 	if (rayCallback.hasHit()) {
-		btRigidBody* body = (btRigidBody*)btRigidBody::upcast(rayCallback.m_collisionObject);
+		btRigidBody* body = const_cast<btRigidBody*>(btRigidBody::upcast(rayCallback.m_collisionObject));
 		if (body) {
 			data.bHasHit			= true;
 			data.userData			= (ofxBulletUserData*)body->getUserPointer();
-			data.body				= body;    //临时去掉
+			data.body				= body;
 			data.rayWorldPos		= a_rayEnd;
 			btVector3 pickPos		= rayCallback.m_hitPointWorld;
 			data.pickPosWorld		= ofVec3f(pickPos.getX(), pickPos.getY(), pickPos.getZ());
@@ -343,7 +342,7 @@ void ofxBulletWorldRigid::destroy() {
 
 //--------------------------------------------------------------
 void ofxBulletWorldRigid::mouseMoved( ofMouseEventArgs &a ) {
-			
+    
 }
 
 //--------------------------------------------------------------
