@@ -3,7 +3,6 @@
  *  ofxBullet_v3
  *
  *  Created by Nick Hardeman on 5/18/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
@@ -18,6 +17,8 @@ ofxBulletBaseShape::ofxBulletBaseShape() {
 	_bInited		= false;
 	_bAdded			= false;
 	_userPointer	= NULL;
+    _bColShapeCreatedInternally = true;
+    _bUserDataCreatedInternally = true;
 }
 
 //--------------------------------------------------------------
@@ -51,10 +52,21 @@ void ofxBulletBaseShape::add() {
 
 //--------------------------------------------------------------
 void ofxBulletBaseShape::remove() {
-	if(_userPointer != NULL) {
-		delete _userPointer;
-		_userPointer = NULL;
-	}
+    
+    if(_bUserDataCreatedInternally) {
+        if(_userPointer != NULL) {
+            delete ((ofxBulletUserData*)_userPointer);
+            _userPointer = NULL;
+        }
+    }
+    
+    if(_bColShapeCreatedInternally) {
+        if(_shape) {
+            delete _shape;
+            _shape = NULL;
+        }
+    }
+    
 	removeRigidBody();
 }
 
@@ -70,6 +82,7 @@ void ofxBulletBaseShape::removeRigidBody() {
 		_rigidBody = NULL;
 		
 	}
+    
 	_bCreated = _bInited = _bAdded = false;
 }
 
@@ -135,6 +148,11 @@ int ofxBulletBaseShape::getActivationState() {
 //--------------------------------------------------------------
 int ofxBulletBaseShape::getType() {
 	return _type;
+}
+
+//--------------------------------------------------------------
+bool ofxBulletBaseShape::isCollisionShapeInternal() {
+    return _bColShapeCreatedInternally;
 }
 
 
@@ -252,8 +270,25 @@ void ofxBulletBaseShape::setActivationState( int a_state ) {
 // SETTERS, may be called after create() //
 //--------------------------------------------------------------
 void ofxBulletBaseShape::setData(void* userPointer) {
+    if(_bUserDataCreatedInternally) {
+        if(_userPointer != NULL) {
+            delete ((ofxBulletUserData*)_userPointer);
+            _userPointer = NULL;
+        }
+    }
+    _bUserDataCreatedInternally = false;
+    
 	_userPointer = userPointer;
 	_rigidBody->setUserPointer( _userPointer );
+}
+
+//--------------------------------------------------------------
+void ofxBulletBaseShape::createInternalUserData() {
+    _bUserDataCreatedInternally = true;
+    if(_userPointer == NULL) {
+        _userPointer = new ofxBulletUserData();
+        _rigidBody->setUserPointer( _userPointer );
+    }
 }
 
 //--------------------------------------------------------------
@@ -349,7 +384,18 @@ void ofxBulletBaseShape::applyTorque( const btVector3& a_torque ) {
 	_rigidBody->applyTorque( a_torque );
 }
 
+//--------------------------------------------------------------
+void ofxBulletBaseShape::transformGL() {
+    btScalar	m[16];
+    ofGetOpenGLMatrixFromRigidBody( getRigidBody(), m );
+    glPushMatrix();
+    glMultMatrixf( m );
+}
 
+//--------------------------------------------------------------
+void ofxBulletBaseShape::restoreTramsformGL() {
+    glPopMatrix();
+}
 
 
 

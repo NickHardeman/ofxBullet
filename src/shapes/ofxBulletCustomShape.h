@@ -3,7 +3,6 @@
  *  ofxBullet Events Example
  *
  *  Created by Nick Hardeman on 7/12/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
@@ -31,6 +30,7 @@ public:
 	int		getNumChildShapes();
 	
 	void draw();
+    void transformGL();
 	
 protected:
 	btTransform				_startTrans;
