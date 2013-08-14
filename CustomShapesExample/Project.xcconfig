@@ -7,20 +7,32 @@ OF_PATH = ../../..
 
 HEADER_BULLET = "$(OF_PATH)/addons/ofxBullet/libs/bullet/include/**"
 
-LIB_BULLET_COLLISION_DEBUG = "../../../addons/ofxBullet/libs/bullet/lib/osx/Debug/libBulletCollision.a"
-LIB_BULLET_DYNAMICS_DEBUG = "../../../addons/ofxBullet/libs/bullet/lib/osx/Debug/libBulletDynamics.a"
-LIB_BULLET_MATH_DEBUG = "../../../addons/ofxBullet/libs/bullet/lib/osx/Debug/libLinearMath.a"
-LIB_BULLET_MINI_CL_DEBUG = "../../../addons/ofxBullet/libs/bullet/lib/osx/Debug/libMiniCL.a"
-LIB_BULLET_SOFT_BODY_DEBUG = "../../../addons/ofxBullet/libs/bullet/lib/osx/Debug/libBulletSoftBody.a"
+//LIB_BULLET_COLLISION_DEBUG = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Debug/libBulletCollision.a"
+//LIB_BULLET_DYNAMICS_DEBUG = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Debug/libBulletDynamics.a"
+//LIB_BULLET_MATH_DEBUG = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Debug/libLinearMath.a"
+//LIB_BULLET_MINI_CL_DEBUG = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Debug/libMiniCL.a"
+//LIB_BULLET_SOFT_BODY_DEBUG = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Debug/libBulletSoftBody.a"
 
-LIB_BULLET_COLLISION_RELEASE = "../../../addons/ofxBullet/libs/bullet/lib/osx/Release/libBulletCollision.a"
-LIB_BULLET_DYNAMICS_RELEASE = "../../../addons/ofxBullet/libs/bullet/lib/osx/Release/libBulletDynamics.a"
-LIB_BULLET_MATH_RELEASE = "../../../addons/ofxBullet/libs/bullet/lib/osx/Release/libLinearMath.a"
-LIB_BULLET_MINI_CL_RELEASE = "../../../addons/ofxBullet/libs/bullet/lib/osx/Release/libMiniCL.a"
-LIB_BULLET_SOFT_BODY_RELEASE = "../../../addons/ofxBullet/libs/bullet/lib/osx/Release/libBulletSoftBody.a"
+LIB_BULLET_COLLISION_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Release/libBulletCollision.a"
+LIB_BULLET_DYNAMICS_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Release/libBulletDynamics.a"
+LIB_BULLET_MATH_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Release/libLinearMath.a"
+LIB_BULLET_MINI_CL_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Release/libMiniCL.a"
+LIB_BULLET_SOFT_BODY_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Release/libBulletSoftBody.a"
 
-LIB_BULLET_ALL_DEBUG = $(LIB_BULLET_COLLISION_DEBUG) $(LIB_BULLET_DYNAMICS_DEBUG) $(LIB_BULLET_MATH_DEBUG) $(LIB_BULLET_MINI_CL_DEBUG) $(LIB_BULLET_SOFT_BODY_DEBUG)
+// removed Debug libs, only using release now //
+//LIB_BULLET_ALL_DEBUG = $(LIB_BULLET_COLLISION_DEBUG) $(LIB_BULLET_DYNAMICS_DEBUG) $(LIB_BULLET_MATH_DEBUG) $(LIB_BULLET_MINI_CL_DEBUG) $(LIB_BULLET_SOFT_BODY_DEBUG)
 LIB_BULLET_ALL_RELEASE = $(LIB_BULLET_COLLISION_RELEASE) $(LIB_BULLET_DYNAMICS_RELEASE) $(LIB_BULLET_MATH_RELEASE) $(LIB_BULLET_MINI_CL_RELEASE) $(LIB_BULLET_SOFT_BODY_RELEASE)
-// the bullet libs are added depending on debug / release in project settings //
-OTHER_LDFLAGS = $(OF_CORE_LIBS) 
-HEADER_SEARCH_PATHS = $(OF_CORE_HEADERS) $(HEADER_BULLET)
+
+LIB_ASSIMP = "$(OF_PATH)/addons/ofxAssimpModelLoader/libs/assimp/lib/osx/assimp.a"
+HEADER_ASSIMP = "$(OF_PATH)/addons/ofxAssimpModelLoader/libs/assimp/include"
+
+OTHER_LDFLAGS = $(OF_CORE_LIBS) $(LIB_BULLET_ALL_RELEASE) $(LIB_ASSIMP)
+HEADER_SEARCH_PATHS = $(OF_CORE_HEADERS) $(HEADER_ASSIMP)
+
+//ICONS - NEW IN 0072
+ICON_NAME_DEBUG = icon-debug.icns
+ICON_NAME_RELEASE = icon.icns
+ICON_FILE_PATH = $(OF_PATH)/libs/openFrameworksCompiled/project/osx/
+
+//IF YOU WANT AN APP TO HAVE A CUSTOM ICON - PUT THEM IN YOUR DATA FOLDER AND CHANGE ICON_FILE_PATH to:
+//ICON_FILE_PATH = bin/data/
