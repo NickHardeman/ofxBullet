@@ -79,6 +79,8 @@ void testApp::setup() {
 		bounds[i]->setProperties(.25, .95);
 		bounds[i]->add();
 	}
+    
+    light.setPosition(camera.getPosition().x, camera.getPosition().y-14, camera.getPosition().z);
 
 	mousePickIndex	= -1;
 	bDrawDebug		= false;
@@ -92,9 +94,9 @@ void testApp::update() {
 	for(int i = 0; i < shapes.size(); i++) {
 		bColliding[i] = false;
 	}
-	mousePickIndex = -1;
-
+	
 	if(bSpacebar) {
+        mousePickIndex = -1;
 		ofVec3f mouseLoc = camera.screenToWorld( ofVec3f((float)ofGetMouseX(), (float)ofGetMouseY(), 0) );
 		mouseLoc.z += 15;
 		ofVec3f diff;
@@ -146,10 +148,6 @@ void testApp::draw() {
 			shapes[i]->draw();
 		}
 	}
-	if(mousePickIndex > -1) {
-		ofSetColor(255, 20, 255);
-		ofDrawSphere(mousePickPos.x, mousePickPos.y, mousePickPos.z, .1);
-	}
 	light.disable();
 	ofDisableLighting();
 
@@ -158,7 +156,7 @@ void testApp::draw() {
 
 	ofEnableAlphaBlending();
 	ofSetColor(0, 0, 0, 150);
-	ofRect(0, 0, 250, 100);
+	ofRect(0, 0, 250, 120);
 	ofDisableAlphaBlending();
 
 	ofSetColor(255, 255, 255);
@@ -279,7 +277,7 @@ void testApp::mousePressed(int x, int y, int button) {
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
-
+    mousePickIndex = -1;
 }
 
 //--------------------------------------------------------------
