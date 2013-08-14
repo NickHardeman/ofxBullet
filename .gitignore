@@ -8,4 +8,6 @@
 *.xcuserstate
 *.xcscheme
 */*.xcodeproj/xcuserdata
+*/*.xcodeproj/project.xcworkspace
+*/build/*
 .DS_Store

@@ -3,7 +3,6 @@
  *  ofxBullet_v3
  *
  *  Created by Nick Hardeman on 5/23/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
@@ -30,7 +29,6 @@ public:
 	float	getHeight();
 	
 	void	draw();
-	void	drawCylinder(float radius, float halfHeight, int upAxis);
 	//void	destroy();
 	
 protected:

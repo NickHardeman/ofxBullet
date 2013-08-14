@@ -3,7 +3,6 @@
  *  ofxBullet_v3
  *
  *  Created by Nick Hardeman on 5/24/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 

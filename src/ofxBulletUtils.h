@@ -3,7 +3,6 @@
  *  ofxBullet_v1
  *
  *  Created by Nick Hardeman on 3/25/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
@@ -35,8 +34,6 @@ static btRigidBody* ofGetBtRigidBodyFromCollisionShape(btCollisionShape* a_cs, o
 
 // Collision Shapes //
 static btBoxShape* ofBtGetBoxCollisionShape( float a_sizeX, float a_sizeY, float a_sizeZ ) {
-	//btVector3 boxHalfExtents;
-	//boxHalfExtents.setX(a_sizeX*.5f); boxHalfExtents.setY(a_sizeY*.5f); boxHalfExtents.setZ(a_sizeZ*.5f);
 	return new btBoxShape( btVector3(a_sizeX*.5, a_sizeY*.5, a_sizeZ*.5) );
 }
 
@@ -50,9 +47,8 @@ static btCylinderShape* ofBtGetCylinderCollisionShape( float a_radius, float a_h
 }
 
 static btSphereShape* ofBtGetSphereCollisionShape( float a_radius ) {
-		return new btSphereShape( a_radius );
+    return new btSphereShape( a_radius );
 }
-
 
 
 static float ofGetRadiusFromBtSphere( btRigidBody* a_s ) {
@@ -79,19 +75,19 @@ static ofVec3f ofGetRotationFromRigidBody( btRigidBody* a_rb ) {
 
 // in degress //
 /*
-static void ofSetRotationRigidBody( btRigidBody* a_rb, float a_yaw, float a_pitch, float a_roll) {
-	btTransform transform;
-	a_rb->getMotionState()->getWorldTransform( transform );
-	
-	//btScalar yaw, pitch, roll;
-	btMatrix3x3 mat = btMatrix3x3( transform.getRotation() );
-	mat.setEulerYPR(a_yaw, a_pitch, a_roll);
-	
-	transform.setBasis( mat );
-	
-	a_rb->getMotionState()->setWorldTransform( transform );
-}
-*/
+ static void ofSetRotationRigidBody( btRigidBody* a_rb, float a_yaw, float a_pitch, float a_roll) {
+ btTransform transform;
+ a_rb->getMotionState()->getWorldTransform( transform );
+ 
+ //btScalar yaw, pitch, roll;
+ btMatrix3x3 mat = btMatrix3x3( transform.getRotation() );
+ mat.setEulerYPR(a_yaw, a_pitch, a_roll);
+ 
+ transform.setBasis( mat );
+ 
+ a_rb->getMotionState()->setWorldTransform( transform );
+ }
+ */
 
 static void ofGetOpenGLMatrixFromRigidBody( btRigidBody* a_rb, btScalar* a_m ) {
 	btDefaultMotionState* myMotionState = (btDefaultMotionState*)a_rb->getMotionState();

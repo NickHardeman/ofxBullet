@@ -3,7 +3,6 @@
  *  ofxBullet_v3
  *
  *  Created by Nick Hardeman on 5/27/11.
- *  Copyright 2011 Arnold Worldwide. All rights reserved.
  *
  */
 
@@ -31,5 +30,6 @@ public:
 	
 protected:
 	btShapeHull* hull;
+    ofMesh _cachedMesh;
 	
 };
