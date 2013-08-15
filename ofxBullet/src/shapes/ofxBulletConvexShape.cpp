@@ -119,7 +119,7 @@ void ofxBulletConvexShape::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_l
 }
 
 //--------------------------------------------------------------
-void ofxBulletConvexShape::create( btDiscreteDynamicsWorld* a_world, btTransform a_bt_tr, float a_mass ) {
+void ofxBulletConvexShape::create( btDiscreteDynamicsWorld* a_world, btTransform const& a_bt_tr, float a_mass ) {
 	if(!_bInited || _shape == NULL) {
 		ofLogWarning("ofxBulletConvexShape :: create : must call init first");
         return;
