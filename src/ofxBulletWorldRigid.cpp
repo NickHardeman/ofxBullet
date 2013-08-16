@@ -90,8 +90,8 @@ void ofxBulletWorldRigid::checkCollisions() {
 	//cout << "numManifolds: " << numManifolds << endl;
 	for (int i = 0; i < numManifolds; i++) {
 		btPersistentManifold* contactManifold =  world->getDispatcher()->getManifoldByIndexInternal(i);
-		btCollisionObject* obA = static_cast<btCollisionObject*>(contactManifold->getBody0());
-		btCollisionObject* obB = static_cast<btCollisionObject*>(contactManifold->getBody1());
+		const btCollisionObject* obA = static_cast<const btCollisionObject*>(contactManifold->getBody0());
+		const btCollisionObject* obB = static_cast<const btCollisionObject*>(contactManifold->getBody1());
 		
 		int numContacts = contactManifold->getNumContacts();
 		ofxBulletCollisionData cdata;
@@ -154,7 +154,7 @@ ofxBulletRaycastData ofxBulletWorldRigid::raycastTest( ofVec3f a_rayStart, ofVec
 	world->rayTest( rayStart, rayEnd, rayCallback );
 	
 	if (rayCallback.hasHit()) {
-		btRigidBody* body = btRigidBody::upcast(rayCallback.m_collisionObject);
+		btRigidBody* body = btRigidBody::upcast( (btCollisionObject*)rayCallback.m_collisionObject );
 		if (body) {
 			data.bHasHit			= true;
 			data.userData			= (ofxBulletUserData*)body->getUserPointer();

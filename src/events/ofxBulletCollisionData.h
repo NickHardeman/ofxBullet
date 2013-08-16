@@ -17,10 +17,10 @@ public:
 	int numContactPoints;
 	ofxBulletUserData* userData1;
 	vector<ofVec3f>	worldContactPoints1;
-	btRigidBody* body1;
+	const btRigidBody* body1;
 	
 	ofxBulletUserData* userData2;
 	vector<ofVec3f>	worldContactPoints2;
 	vector<ofVec3f> normalsOnShape2;
-	btRigidBody* body2;
+	const btRigidBody* body2;
 };
