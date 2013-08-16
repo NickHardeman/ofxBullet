@@ -5,22 +5,14 @@ OF_PATH = ../../..
 //THIS HAS ALL THE HEADER AND LIBS FOR OF CORE
 #include "../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig"
 
-HEADER_BULLET = "$(OF_PATH)/addons/ofxBullet/libs/bullet/include/**"
+HEADER_BULLET = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/include/**"
 
-//LIB_BULLET_COLLISION_DEBUG = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Debug/libBulletCollision.a"
-//LIB_BULLET_DYNAMICS_DEBUG = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Debug/libBulletDynamics.a"
-//LIB_BULLET_MATH_DEBUG = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Debug/libLinearMath.a"
-//LIB_BULLET_MINI_CL_DEBUG = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Debug/libMiniCL.a"
-//LIB_BULLET_SOFT_BODY_DEBUG = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Debug/libBulletSoftBody.a"
+LIB_BULLET_COLLISION_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/libBulletCollision.a"
+LIB_BULLET_DYNAMICS_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/libBulletDynamics.a"
+LIB_BULLET_MATH_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/libLinearMath.a"
+LIB_BULLET_MINI_CL_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/libMiniCL.a"
+LIB_BULLET_SOFT_BODY_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/libBulletSoftBody.a"
 
-LIB_BULLET_COLLISION_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Release/libBulletCollision.a"
-LIB_BULLET_DYNAMICS_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Release/libBulletDynamics.a"
-LIB_BULLET_MATH_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Release/libLinearMath.a"
-LIB_BULLET_MINI_CL_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Release/libMiniCL.a"
-LIB_BULLET_SOFT_BODY_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet/lib/osx/Release/libBulletSoftBody.a"
-
-// removed Debug libs, only using release now //
-//LIB_BULLET_ALL_DEBUG = $(LIB_BULLET_COLLISION_DEBUG) $(LIB_BULLET_DYNAMICS_DEBUG) $(LIB_BULLET_MATH_DEBUG) $(LIB_BULLET_MINI_CL_DEBUG) $(LIB_BULLET_SOFT_BODY_DEBUG)
 LIB_BULLET_ALL_RELEASE = $(LIB_BULLET_COLLISION_RELEASE) $(LIB_BULLET_DYNAMICS_RELEASE) $(LIB_BULLET_MATH_RELEASE) $(LIB_BULLET_MINI_CL_RELEASE) $(LIB_BULLET_SOFT_BODY_RELEASE)
 
 OTHER_LDFLAGS = $(OF_CORE_LIBS) $(LIB_BULLET_ALL_RELEASE)
