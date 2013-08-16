@@ -181,11 +181,8 @@ void ofxBulletJoint::draw() {
 	} else {
 		pa = _targetPos;
 	}
-	
-	glBegin(GL_LINES);
-		glVertex3f(pa.x, pa.y, pa.z);
-		glVertex3f(pb.x, pb.y, pb.z);
-	glEnd();
+    
+    ofLine( pa, pb );
 }
 
 //--------------------------------------------------------------
@@ -195,10 +192,7 @@ void ofxBulletJoint::drawJointConstraints() {
 	ofVec3f pa = getPivotAWorldPos();
 	ofVec3f pb = getPivotBWorldPos();
 	
-	glBegin(GL_LINES);
-		glVertex3f(pa.x, pa.y, pa.z);
-		glVertex3f(pb.x, pb.y, pb.z);
-	glEnd();
+	ofLine( pa, pb );
 	
 	ofSetColor(255, 0, 0);
 	ofDrawSphere(pa, .5);

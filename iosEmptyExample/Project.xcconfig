@@ -1,0 +1,24 @@
+//THE PATH TO THE ROOT OF OUR OF PATH RELATIVE TO THIS PROJECT.
+//THIS NEEDS TO BE DEFINED BEFORE CoreOF.xcconfig IS INCLUDED
+OF_PATH = ../../..
+
+//THIS HAS ALL THE HEADER AND LIBS FOR OF CORE
+#include "../../../libs/openFrameworksCompiled/project/ios/CoreOF.xcconfig"
+
+HEADER_BULLET = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/include/**"
+
+LIB_BULLET_COLLISION_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/ios/arm7/libBulletCollision.a"
+LIB_BULLET_DYNAMICS_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/ios/arm7/libBulletDynamics.a"
+LIB_BULLET_MATH_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/ios/arm7/libLinearMath.a"
+LIB_BULLET_MINI_CL_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/ios/arm7/libMiniCL.a"
+LIB_BULLET_SOFT_BODY_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/ios/arm7/libBulletSoftBody.a"
+
+LIB_BULLET_ALL_RELEASE = $(LIB_BULLET_COLLISION_RELEASE) $(LIB_BULLET_DYNAMICS_RELEASE) $(LIB_BULLET_MATH_RELEASE) $(LIB_BULLET_MINI_CL_RELEASE) $(LIB_BULLET_SOFT_BODY_RELEASE)
+
+OTHER_LDFLAGS = $(OF_CORE_LIBS) $(LIB_BULLET_ALL_RELEASE)
+HEADER_SEARCH_PATHS = $(OF_CORE_HEADERS) 
+
+COMPRESS_PNG_FILES = NO
+GCC_THUMB_SUPPORT = NO
+IPHONEOS_DEPLOYMENT_TARGET = 3.1
+TARGETED_DEVICE_FAMILY = 1

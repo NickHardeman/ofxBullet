@@ -7,11 +7,11 @@ OF_PATH = ../../..
 
 HEADER_BULLET = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/include/**"
 
-LIB_BULLET_COLLISION_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/libBulletCollision.a"
-LIB_BULLET_DYNAMICS_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/libBulletDynamics.a"
-LIB_BULLET_MATH_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/libLinearMath.a"
-LIB_BULLET_MINI_CL_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/libMiniCL.a"
-LIB_BULLET_SOFT_BODY_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/libBulletSoftBody.a"
+LIB_BULLET_COLLISION_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/i386/libBulletCollision.a"
+LIB_BULLET_DYNAMICS_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/i386/libBulletDynamics.a"
+LIB_BULLET_MATH_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/i386/libLinearMath.a"
+LIB_BULLET_MINI_CL_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/i386/libMiniCL.a"
+LIB_BULLET_SOFT_BODY_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/i386/libBulletSoftBody.a"
 
 LIB_BULLET_ALL_RELEASE = $(LIB_BULLET_COLLISION_RELEASE) $(LIB_BULLET_DYNAMICS_RELEASE) $(LIB_BULLET_MATH_RELEASE) $(LIB_BULLET_MINI_CL_RELEASE) $(LIB_BULLET_SOFT_BODY_RELEASE)
 
