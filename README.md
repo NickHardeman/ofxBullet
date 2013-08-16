@@ -3,7 +3,7 @@ An OpenFrameworks add-on for Bullet Physics
 
 ![ofxBullet](http://farm7.staticflickr.com/6146/5975738528_39dd3a8022_b.jpg)
 
-Currently bullet libs are compiled for osx and linux. <b>(Not tested on Linux with 008)</b> <br/>
+Currently bullet libs are compiled for osx, iOS and linux. <b>(Not tested on Linux with 008)</b> <br/>
 Linux compatibility thanks to Benjamin Knofe aka benben
 
 <i>To compile libs for PC, view here: http://code.google.com/p/bullet/downloads/list </i> <br/>
