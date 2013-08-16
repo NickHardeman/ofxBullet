@@ -87,8 +87,6 @@ void testApp::update() {
 //--------------------------------------------------------------
 void testApp::draw() {
     
-    cout << "shapes.size() = " << shapes.size() << endl;
-    
     camera.begin();
     
     ofEnableLighting();
@@ -160,6 +158,8 @@ void testApp::touchMoved(ofTouchEventArgs & touch) {
 			shapes[ii]->setActivationState( DISABLE_DEACTIVATION );
 			shapes[ii]->add();
         }
+        // make sure the pieces land in the box //
+        shapes[ii]->applyCentralForce( camera.getLookAtDir() * (2000.f * shapes[ii]->getMass()) );
         
         ofColor tcolor(200, 200, 60);
         tcolor.setHue( (sin(ofGetElapsedTimef()*2.f)*.5f + .5f) * 255.f );
@@ -177,7 +177,7 @@ void testApp::touchUp(ofTouchEventArgs & touch){
 //--------------------------------------------------------------
 void testApp::touchDoubleTap(ofTouchEventArgs & touch){
     for(int i = 0; i < shapes.size(); i++ ) {
-        shapes[i]->applyCentralForce(ofVec3f(0,0,-700.f));
+        shapes[i]->applyCentralForce(ofVec3f(0,0,-900.f));
     }
 }
 
