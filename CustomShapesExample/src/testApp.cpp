@@ -86,11 +86,6 @@ void testApp::setup() {
 	((ofxBulletSphere*)shapes[0])->setActivationState( DISABLE_DEACTIVATION );
 	shapes[0]->add();
 	
-//	ofSetSmoothLighting(true);
-//	light.setAmbientColor(ofColor(.0, .0, .0));
-//	light.setDiffuseColor(ofColor(.0, .0, .0));
-//	light.setSpecularColor(ofColor(255, .1, .1));
-	
 	logoMat.setAmbientColor(ofFloatColor(0, 0, 0));
 	logoMat.setDiffuseColor(ofFloatColor(150, 0, 150));
 	logoMat.setSpecularColor(ofFloatColor(220, 0, 220));
@@ -122,7 +117,6 @@ void testApp::update() {
 	}
 	
 	world.update();
-	ofSetWindowTitle(ofToString(ofGetFrameRate(), 0));
 	
 }
 
@@ -151,12 +145,9 @@ void testApp::draw() {
 		boundsMat.end();
 	} else {
 		ofNoFill();
-		btScalar	m[16];
-		ofGetOpenGLMatrixFromRigidBody( boundsShape->getRigidBody(), m );
-		glPushMatrix(); 
-		glMultMatrixf( m );
+        boundsShape->transformGL();
 		ofDrawBox(ofVec3f(0, 0,0), boundsWidth);
-		glPopMatrix();
+		boundsShape->restoreTramsformGL();
 		ofFill();
 	}
 	
@@ -172,14 +163,10 @@ void testApp::draw() {
 	ofSetColor(0, 0, 0);
 	logoMat.begin();
 	for(int i = 0; i < logos.size(); i++) {
-		btScalar	m[16];
-		ofGetOpenGLMatrixFromRigidBody( logos[i]->getRigidBody(), m );
-		glPushMatrix(); 
-		glMultMatrixf( m );
-		glTranslatef(-logos[i]->getCentroid().x, -logos[i]->getCentroid().y, -logos[i]->getCentroid().z);
+        logos[i]->transformGL();
 		ofScale(scale.x,scale.y,scale.z);
 		assimpModel.getMesh(0).drawFaces();
-		glPopMatrix();
+		logos[i]->restoreTramsformGL();
 	}
 	glPopAttrib();
 	logoMat.end();
