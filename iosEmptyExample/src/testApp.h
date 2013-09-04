@@ -24,12 +24,7 @@ public:
     void deviceOrientationChanged(int newOrientation);
     
     ofxBulletWorldRigid			world;
-    vector<ofxBulletBaseShape*>	shapes;
-    vector<ofColor> colors;
-    float lastShapeAddTimef;
     ofCamera    camera;
-    ofLight     light;
-    vector <ofxBulletBox*>		bounds;
 };
 
 
