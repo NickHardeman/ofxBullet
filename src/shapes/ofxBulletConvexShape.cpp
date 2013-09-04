@@ -136,13 +136,15 @@ ofVec3f ofxBulletConvexShape::getCentroid() const {
 //--------------------------------------------------------------
 void ofxBulletConvexShape::transformGL() {
     ofxBulletBaseShape::transformGL();
-    glTranslatef(-getCentroid().x, -getCentroid().y, -getCentroid().z);
+    ofTranslate(-getCentroid().x, -getCentroid().y, -getCentroid().z);
 }
 
 //--------------------------------------------------------------
 bool ofxBulletConvexShape::isInside(const ofVec3f& a_pt, float tolerance) {
-    if(_shape != NULL)
+    if(_shape != NULL) {
         return ((btConvexHullShape*)_shape)->isInside( btVector3(a_pt.x, a_pt.y, a_pt.z), tolerance);
+    }
+    return false;
 }
 
 

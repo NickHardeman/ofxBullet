@@ -77,10 +77,10 @@ void ofxBulletCone::draw() {
 		return;
 	}
 	transformGL();
-    glPushMatrix();
-    glRotatef(180, 1, 0, 0);
+    ofPushMatrix();
+    ofRotate(180, 1, 0, 0);
     ofDrawCone( 0, 0, 0, getRadius(), getHeight() );
-    glPopMatrix();
+    ofPopMatrix();
     restoreTramsformGL();
 }
 

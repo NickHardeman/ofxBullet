@@ -203,7 +203,7 @@ void ofxBulletCustomShape::draw() {
 //--------------------------------------------------------------
 void ofxBulletCustomShape::transformGL() {
     ofxBulletBaseShape::transformGL();
-    glTranslatef(-getCentroid().x, -getCentroid().y, -getCentroid().z);
+    ofTranslate(-getCentroid().x, -getCentroid().y, -getCentroid().z);
 }
 
 

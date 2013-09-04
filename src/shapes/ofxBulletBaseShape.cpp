@@ -388,13 +388,13 @@ void ofxBulletBaseShape::applyTorque( const btVector3& a_torque ) {
 void ofxBulletBaseShape::transformGL() {
     btScalar	m[16];
     ofGetOpenGLMatrixFromRigidBody( getRigidBody(), m );
-    glPushMatrix();
-    glMultMatrixf( m );
+    ofPushMatrix();
+    ofMultMatrix( ofMatrix4x4(m) );
 }
 
 //--------------------------------------------------------------
 void ofxBulletBaseShape::restoreTramsformGL() {
-    glPopMatrix();
+    ofPopMatrix();
 }
 
 

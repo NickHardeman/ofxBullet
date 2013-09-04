@@ -72,8 +72,8 @@ void ofxBulletCylinder::draw() {
 		ofLog(OF_LOG_WARNING, "ofxBulletCylinder :: draw : must call create() first and add() after");
 		return;
 	}
-	int upAxis			= ((btCylinderShape*)_rigidBody->getCollisionShape())->getUpAxis();
-	float halfHeight	= ((btCylinderShape*)_rigidBody->getCollisionShape())->getHalfExtentsWithMargin()[upAxis];
+//	int upAxis			= ((btCylinderShape*)_rigidBody->getCollisionShape())->getUpAxis();
+//	float halfHeight	= ((btCylinderShape*)_rigidBody->getCollisionShape())->getHalfExtentsWithMargin()[upAxis];
 	
 	transformGL();
     ofDrawCylinder( 0, 0, 0, getRadius(), getHeight() );
