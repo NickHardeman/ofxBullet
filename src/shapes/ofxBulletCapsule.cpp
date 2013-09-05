@@ -57,6 +57,16 @@ void ofxBulletCapsule::create( btDiscreteDynamicsWorld* a_world, btTransform a_b
 }
 
 //--------------------------------------------------------------
+void ofxBulletCapsule::removeShape() {
+    if(_bColShapeCreatedInternally) {
+        if(_shape) {
+            delete (btCapsuleShape *)_shape;
+            _shape = NULL;
+        }
+    }
+}
+
+//--------------------------------------------------------------
 void ofxBulletCapsule::draw() {
 	if(!_bCreated || _rigidBody == NULL) {
 		ofLog(OF_LOG_WARNING, "ofxBulletCapsule :: draw : must call create() first and add() after");

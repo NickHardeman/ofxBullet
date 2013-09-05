@@ -54,6 +54,16 @@ void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, btTransform
 }
 
 //--------------------------------------------------------------
+void ofxBulletCustomShape::removeShape() {
+    if(_bColShapeCreatedInternally) {
+        if(_shape) {
+            delete (btCompoundShape *)_shape;
+            _shape = NULL;
+        }
+    }
+}
+
+//--------------------------------------------------------------
 bool ofxBulletCustomShape::addShape( btCollisionShape* a_colShape, ofVec3f a_localCentroidPos ) {
 	if(_bAdded == true) {
 		ofLog( OF_LOG_ERROR, "ofxBulletCustomShape :: addShape : can not call after calling add()" );

@@ -25,6 +25,8 @@ public:
 	void	create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc=ofVec3f(0,0,0), ofQuaternion a_rot=ofQuaternion(0, 1, 0, 1), 
 				   float a_mass=1.f, float a_radius=1.f, float a_height=10.f );
 	void	create( btDiscreteDynamicsWorld* a_world, btTransform a_bt_tr, float a_mass=1.f, float a_radius=1.f, float a_height=10.f );
+    
+    void    removeShape();
 	
 	void	draw();
 	

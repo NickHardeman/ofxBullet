@@ -56,6 +56,16 @@ void ofxBulletCone::create( btDiscreteDynamicsWorld* a_world, btTransform a_bt_t
 }
 
 //--------------------------------------------------------------
+void ofxBulletCone::removeShape() {
+    if(_bColShapeCreatedInternally) {
+        if(_shape) {
+            delete (btConeShape *)_shape;
+            _shape = NULL;
+        }
+    }
+}
+
+//--------------------------------------------------------------
 float ofxBulletCone::getHeight() {
 	return (float)((btConeShape*)_rigidBody->getCollisionShape())->getHeight();
 }

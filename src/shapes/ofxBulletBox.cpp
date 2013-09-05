@@ -56,6 +56,16 @@ void ofxBulletBox::create( btDiscreteDynamicsWorld* a_world, btTransform a_bt_tr
 }
 
 //--------------------------------------------------------------
+void ofxBulletBox::removeShape() {
+    if(_bColShapeCreatedInternally) {
+        if(_shape) {
+            delete (btBoxShape *)_shape;
+            _shape = NULL;
+        }
+    }
+}
+
+//--------------------------------------------------------------
 void ofxBulletBox::draw() {
 	if(!_bCreated || _rigidBody == NULL) {
 		ofLog(OF_LOG_WARNING, "ofxBulletBox :: draw : must call create() first and add() after");

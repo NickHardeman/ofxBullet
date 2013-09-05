@@ -56,6 +56,16 @@ void ofxBulletCylinder::create( btDiscreteDynamicsWorld* a_world, btTransform a_
 }
 
 //--------------------------------------------------------------
+void ofxBulletCylinder::removeShape() {
+    if(_bColShapeCreatedInternally) {
+        if(_shape) {
+            delete (btCylinderShape *)_shape;
+            _shape = NULL;
+        }
+    }
+}
+
+//--------------------------------------------------------------
 float ofxBulletCylinder::getRadius() {
 	return ((btCylinderShape*)_rigidBody->getCollisionShape())->getRadius();
 }

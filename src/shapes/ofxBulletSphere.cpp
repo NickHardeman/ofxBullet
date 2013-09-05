@@ -15,7 +15,7 @@ ofxBulletSphere::ofxBulletSphere() {
 
 //--------------------------------------------------------------
 ofxBulletSphere::~ofxBulletSphere() {
-	//destroy();
+	
 }
 
 //--------------------------------------------------------------
@@ -53,6 +53,16 @@ void ofxBulletSphere::create( btDiscreteDynamicsWorld* a_world, btTransform a_bt
 		ofxBulletBaseShape::create( a_world, _shape, a_bt_tr, a_mass );
 	}
 	createInternalUserData();
+}
+
+//--------------------------------------------------------------
+void ofxBulletSphere::removeShape() {
+    if(_bColShapeCreatedInternally) {
+        if(_shape) {
+            delete (btSphereShape *)_shape;
+            _shape = NULL;
+        }
+    }
 }
 
 //--------------------------------------------------------------

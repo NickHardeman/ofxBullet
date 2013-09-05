@@ -129,6 +129,16 @@ void ofxBulletConvexShape::create( btDiscreteDynamicsWorld* a_world, btTransform
 }
 
 //--------------------------------------------------------------
+void ofxBulletConvexShape::removeShape() {
+    if(_bColShapeCreatedInternally) {
+        if(_shape) {
+            delete (btConvexHullShape *)_shape;
+            _shape = NULL;
+        }
+    }
+}
+
+//--------------------------------------------------------------
 ofVec3f ofxBulletConvexShape::getCentroid() const {
     return _centroid;
 }
@@ -146,6 +156,8 @@ bool ofxBulletConvexShape::isInside(const ofVec3f& a_pt, float tolerance) {
     }
     return false;
 }
+
+
 
 
 
