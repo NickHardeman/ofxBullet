@@ -9,28 +9,34 @@
 #include "ofxBulletStaticPlane.h"
 #include "btBulletDynamicsCommon.h"
 
+//--------------------------------------------------------------
 ofxBulletStaticPlane::ofxBulletStaticPlane() {
     //
 }
 
+//--------------------------------------------------------------
 ofxBulletStaticPlane::~ofxBulletStaticPlane() {
     //
 }
 
+//--------------------------------------------------------------
 void ofxBulletStaticPlane::init(btStaticPlaneShape * shape) {
     _shape = shape;
     _bColShapeCreatedInternally = false;
     _bInited = true;
 }
 
+//--------------------------------------------------------------
 void ofxBulletStaticPlane::createFloor(btDiscreteDynamicsWorld * world, ofPoint planePosition) {
     create(world, planePosition, ofPoint(0, -1, 0));
 }
 
+//--------------------------------------------------------------
 void ofxBulletStaticPlane::createCeiling(btDiscreteDynamicsWorld * world, ofPoint planePosition) {
     create(world, planePosition, ofPoint(0, 1, 0));
 }
 
+//--------------------------------------------------------------
 void ofxBulletStaticPlane::create(btDiscreteDynamicsWorld * world, ofPoint planePosition, ofPoint planeNormal, float planeConstant) {
     btStaticPlaneShape * staticPlaneShape = NULL;
     if(_bInited == false || _shape == NULL) {
@@ -47,6 +53,7 @@ void ofxBulletStaticPlane::create(btDiscreteDynamicsWorld * world, ofPoint plane
     createInternalUserData();
 }
 
+//--------------------------------------------------------------
 void ofxBulletStaticPlane::removeShape() {
     if(_bColShapeCreatedInternally) {
         if(_shape) {
