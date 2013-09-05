@@ -11,3 +11,4 @@
 */*.xcodeproj/project.xcworkspace
 */build/*
 .DS_Store
+Bullet-src/
