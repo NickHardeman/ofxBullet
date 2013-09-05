@@ -60,14 +60,18 @@ void ofxBulletBaseShape::remove() {
         }
     }
     
+    removeShape();
+	removeRigidBody();
+}
+
+//--------------------------------------------------------------
+void ofxBulletBaseShape::removeShape() {
     if(_bColShapeCreatedInternally) {
         if(_shape) {
             delete _shape;
             _shape = NULL;
         }
     }
-    
-	removeRigidBody();
 }
 
 //--------------------------------------------------------------
