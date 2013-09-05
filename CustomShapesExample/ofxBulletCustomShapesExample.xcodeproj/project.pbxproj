@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E78C20D17D8D0A40020A15A /* ofxBulletStaticPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E78C20B17D8D0A40020A15A /* ofxBulletStaticPlane.cpp */; };
 		2EEF326317BB2A74003CFA1C /* ofxBulletJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EEF317F17BB2A73003CFA1C /* ofxBulletJoint.cpp */; };
 		2EEF326417BB2A74003CFA1C /* ofxBulletWorldRigid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EEF318517BB2A73003CFA1C /* ofxBulletWorldRigid.cpp */; };
 		2EEF326517BB2A74003CFA1C /* GLDebugDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EEF318817BB2A73003CFA1C /* GLDebugDrawer.cpp */; };
@@ -82,6 +83,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2E78C20B17D8D0A40020A15A /* ofxBulletStaticPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletStaticPlane.cpp; sourceTree = "<group>"; };
+		2E78C20C17D8D0A40020A15A /* ofxBulletStaticPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletStaticPlane.h; sourceTree = "<group>"; };
 		2EEF317B17BB2A73003CFA1C /* ofxBulletCollisionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCollisionData.h; sourceTree = "<group>"; };
 		2EEF317C17BB2A73003CFA1C /* ofxBulletMousePickEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletMousePickEvent.h; sourceTree = "<group>"; };
 		2EEF317D17BB2A73003CFA1C /* ofxBulletRaycastData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletRaycastData.h; sourceTree = "<group>"; };
@@ -282,6 +285,8 @@
 		2EEF318A17BB2A73003CFA1C /* shapes */ = {
 			isa = PBXGroup;
 			children = (
+				2E78C20B17D8D0A40020A15A /* ofxBulletStaticPlane.cpp */,
+				2E78C20C17D8D0A40020A15A /* ofxBulletStaticPlane.h */,
 				2EFCD34817BB3ED900C9A987 /* ofxBulletConvexShape.cpp */,
 				2EFCD34917BB3ED900C9A987 /* ofxBulletConvexShape.h */,
 				2EEF318B17BB2A73003CFA1C /* ofxBulletBaseShape.cpp */,
@@ -675,6 +680,7 @@
 				2EFCD33B17BB36C500C9A987 /* ofxAssimpModelLoader.cpp in Sources */,
 				2EFCD33C17BB36C500C9A987 /* ofxAssimpTexture.cpp in Sources */,
 				2EFCD34A17BB3ED900C9A987 /* ofxBulletConvexShape.cpp in Sources */,
+				2E78C20D17D8D0A40020A15A /* ofxBulletStaticPlane.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
