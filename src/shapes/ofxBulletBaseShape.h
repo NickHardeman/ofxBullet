@@ -32,8 +32,9 @@ public:
 	
 	virtual void create( btDiscreteDynamicsWorld* a_world, btCollisionShape* a_colShape, btTransform a_bt_tr, float a_mass );
 	virtual void add();
-	void	remove();
-	void	removeRigidBody();
+    virtual void remove();
+    virtual void removeShape();
+	virtual void removeRigidBody();
 	
 	// GETTERS //
 	btRigidBody*	getRigidBody();
