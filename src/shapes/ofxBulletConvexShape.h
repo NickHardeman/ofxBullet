@@ -19,7 +19,7 @@ public:
 	
 	void	create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, float a_mass );
 	void	create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass );
-	void	create( btDiscreteDynamicsWorld* a_world, btTransform a_bt_tr, float a_mass );
+	void	create( btDiscreteDynamicsWorld* a_world, btTransform &a_bt_tr, float a_mass );
     
     void    removeShape();
 	

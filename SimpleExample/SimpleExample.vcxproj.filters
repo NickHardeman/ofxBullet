@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\testApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxBullet\src\ofxBulletWorldRigid.cpp">
+      <Filter>addons\ofxBullet\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletCustomShape.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletCylinder.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletSphere.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletStaticPlane.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletBaseShape.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletBox.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletCapsule.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletCone.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletConvexShape.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxBullet\src\render\GLDebugDrawer.cpp">
+      <Filter>addons\ofxBullet\src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxBullet\src\joints\ofxBulletJoint.cpp">
+      <Filter>addons\ofxBullet\src\joints</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons">
+      <UniqueIdentifier>{99ff1d6e-74c8-4187-a726-1a91f4742e8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxBullet">
+      <UniqueIdentifier>{09a96ece-b32e-4feb-88ea-f94208fe5467}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxBullet\src">
+      <UniqueIdentifier>{da6e86fc-c55a-402b-b261-2fd836caae70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxBullet\src\events">
+      <UniqueIdentifier>{e8889fea-b3cc-4c18-b71e-17465fe55171}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxBullet\src\joints">
+      <UniqueIdentifier>{0861882f-11b1-4cc4-9599-a24f9696c808}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxBullet\src\render">
+      <UniqueIdentifier>{e8324d24-e03e-49c7-a8bc-87b91aa9045e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxBullet\src\shapes">
+      <UniqueIdentifier>{df56df09-bbd1-462a-ae35-1080fbe8d682}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\testApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\ofxBulletConstants.h">
+      <Filter>addons\ofxBullet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\ofxBulletUserData.h">
+      <Filter>addons\ofxBullet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\ofxBulletUtils.h">
+      <Filter>addons\ofxBullet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\ofxBulletWorldRigid.h">
+      <Filter>addons\ofxBullet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\ofxBullet.h">
+      <Filter>addons\ofxBullet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletConvexShape.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletCustomShape.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletCylinder.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletSphere.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletStaticPlane.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletBaseShape.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletBox.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletCapsule.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\shapes\ofxBulletCone.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\render\GLDebugDrawer.h">
+      <Filter>addons\ofxBullet\src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\joints\ofxBulletJoint.h">
+      <Filter>addons\ofxBullet\src\joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\events\ofxBulletMousePickEvent.h">
+      <Filter>addons\ofxBullet\src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\events\ofxBulletRaycastData.h">
+      <Filter>addons\ofxBullet\src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxBullet\src\events\ofxBulletCollisionData.h">
+      <Filter>addons\ofxBullet\src\events</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+</Project>

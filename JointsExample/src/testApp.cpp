@@ -1,5 +1,9 @@
 #include "testApp.h"
 
+#ifndef round
+#define round(x) (x<0?ceil((x)-0.5):floor((x)+0.5))
+#endif
+
 //--------------------------------------------------------------
 void testApp::setup() {
 	ofSetFrameRate(60);

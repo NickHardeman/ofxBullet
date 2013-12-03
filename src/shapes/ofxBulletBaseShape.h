@@ -30,7 +30,7 @@ public:
         OFX_BULLET_CONVEX_SHAPE = 7
 	};
 	
-	virtual void create( btDiscreteDynamicsWorld* a_world, btCollisionShape* a_colShape, btTransform a_bt_tr, float a_mass );
+	virtual void create( btDiscreteDynamicsWorld* a_world, btCollisionShape* a_colShape, btTransform &a_bt_tr, float a_mass );
 	virtual void add();
     virtual void remove();
     virtual void removeShape();
