@@ -42,7 +42,7 @@ void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_l
 }
 
 //--------------------------------------------------------------
-void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, btTransform a_bt_tr, float a_mass ) {
+void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, btTransform &a_bt_tr, float a_mass ) {
 	_world = a_world;
 	_mass = a_mass;
 	if(!_bInited) {

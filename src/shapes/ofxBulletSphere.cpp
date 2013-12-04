@@ -34,7 +34,8 @@ void ofxBulletSphere::init( btSphereShape* a_colShape ) {
 
 //--------------------------------------------------------------
 void ofxBulletSphere::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, float a_mass, float a_radius ) {
-	create(a_world, ofGetBtTransformFromVec3f( a_loc ), a_mass, a_radius);
+	btTransform tr=ofGetBtTransformFromVec3f( a_loc );
+	create(a_world, tr, a_mass, a_radius);
 }
 
 //--------------------------------------------------------------
@@ -46,7 +47,7 @@ void ofxBulletSphere::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, o
 }
 
 //--------------------------------------------------------------
-void ofxBulletSphere::create( btDiscreteDynamicsWorld* a_world, btTransform a_bt_tr, float a_mass, float a_radius ) {
+void ofxBulletSphere::create( btDiscreteDynamicsWorld* a_world, btTransform &a_bt_tr, float a_mass, float a_radius ) {
 	if(!_bInited || _shape == NULL) {
 		ofxBulletBaseShape::create( a_world, (btCollisionShape*)new btSphereShape( a_radius ), a_bt_tr, a_mass );
 	} else {

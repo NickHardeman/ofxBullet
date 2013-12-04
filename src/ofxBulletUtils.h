@@ -18,7 +18,7 @@ static btTransform ofGetBtTransformFromVec3f( ofVec3f a_v ) {
 	return tr;
 }
 
-static btRigidBody* ofGetBtRigidBodyFromCollisionShape(btCollisionShape* a_cs, btTransform a_tr, float a_mass) {
+static btRigidBody* ofGetBtRigidBodyFromCollisionShape(btCollisionShape* a_cs, btTransform &a_tr, float a_mass) {
 	btDefaultMotionState* motionState	= new btDefaultMotionState( a_tr );
 	btScalar mass	= btScalar( a_mass );
 	btVector3 fallInertia(0., 0., 0.);
@@ -29,7 +29,8 @@ static btRigidBody* ofGetBtRigidBodyFromCollisionShape(btCollisionShape* a_cs, b
 }
 
 static btRigidBody* ofGetBtRigidBodyFromCollisionShape(btCollisionShape* a_cs, ofVec3f a_loc, float a_mass) {
-	return ofGetBtRigidBodyFromCollisionShape( a_cs, ofGetBtTransformFromVec3f(a_loc), a_mass);
+	btTransform tr=ofGetBtTransformFromVec3f(a_loc);
+	return ofGetBtRigidBodyFromCollisionShape( a_cs, tr, a_mass);
 }
 
 // Collision Shapes //

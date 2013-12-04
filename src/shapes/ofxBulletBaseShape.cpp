@@ -29,7 +29,7 @@ ofxBulletBaseShape::~ofxBulletBaseShape() {
 // you can call this function directly if you wish to use the same collision object for multiple rigid bodies,
 // which will increase performance //
 //--------------------------------------------------------------
-void ofxBulletBaseShape::create( btDiscreteDynamicsWorld* a_world, btCollisionShape* a_colShape, btTransform a_bt_tr, float a_mass ) {
+void ofxBulletBaseShape::create( btDiscreteDynamicsWorld* a_world, btCollisionShape* a_colShape, btTransform &a_bt_tr, float a_mass ) {
 	if(a_world == NULL) {
 		ofLog(OF_LOG_ERROR, "ofxBulletSphere :: create : a_world param is NULL");
 		return;
