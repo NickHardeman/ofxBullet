@@ -28,7 +28,7 @@ public:
 	~ofxBulletWorldRigid();
 	
 	void setup();
-	void update();
+	void update( float aDeltaTimef=1.0f/60.0f, int aNumIterations=6 );
 	void setCameraPosition( ofVec3f a_pos );
 	void setCamera( ofCamera* a_cam );
 	

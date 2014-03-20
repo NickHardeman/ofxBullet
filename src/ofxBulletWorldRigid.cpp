@@ -51,10 +51,9 @@ void ofxBulletWorldRigid::setup() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletWorldRigid::update() {
+void ofxBulletWorldRigid::update( float aDeltaTimef, int aNumIterations ) {
 	if(!checkWorld()) return;
-	// should this run on delta time? //
-	world->stepSimulation(1.0f/60.0f, 6 );
+	world->stepSimulation( aDeltaTimef, aNumIterations );
 	
 	if(bDispatchCollisionEvents) {
 		world->performDiscreteCollisionDetection();
