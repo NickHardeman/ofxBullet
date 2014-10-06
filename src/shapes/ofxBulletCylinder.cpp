@@ -20,7 +20,7 @@ ofxBulletCylinder::~ofxBulletCylinder() {
 
 //--------------------------------------------------------------
 void ofxBulletCylinder::init(float a_radius, float a_height) {
-	_shape		= (btCollisionShape*)ofBtGetCylinderCollisionShape(a_radius, a_height);
+	_shape		= (btCollisionShape*)ofBtGetCylinderCollisionShape(a_radius, a_height/2.f);
 	_bInited	= true;
 }
 
@@ -35,7 +35,7 @@ void ofxBulletCylinder::init( btCylinderShape* a_colShape ) {
 //--------------------------------------------------------------
 void ofxBulletCylinder::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, float a_mass, float a_radius, float a_height ) {
 	btTransform tr=ofGetBtTransformFromVec3f( a_loc );
-	create(a_world, tr, a_mass, a_radius, a_height);
+	create(a_world, tr, a_mass, a_radius, a_height/2.f);
 }
 
 //--------------------------------------------------------------
@@ -43,13 +43,13 @@ void ofxBulletCylinder::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc,
 	btTransform tr	= ofGetBtTransformFromVec3f( a_loc );
 	tr.setRotation( btQuaternion(btVector3(a_rot.x(), a_rot.y(), a_rot.z()), a_rot.w()) );
 	
-	create( a_world, tr, a_mass, a_radius, a_height );
+	create( a_world, tr, a_mass, a_radius, a_height/2.f );
 }
 
 //--------------------------------------------------------------
 void ofxBulletCylinder::create( btDiscreteDynamicsWorld* a_world, btTransform &a_bt_tr, float a_mass, float a_radius, float a_height) {
 	if(!_bInited || _shape == NULL) {
-		ofxBulletBaseShape::create( a_world, (btCollisionShape*)ofBtGetCylinderCollisionShape(a_radius, a_height), a_bt_tr, a_mass );
+		ofxBulletBaseShape::create( a_world, (btCollisionShape*)ofBtGetCylinderCollisionShape(a_radius, a_height/2.f), a_bt_tr, a_mass );
 	} else {
 		ofxBulletBaseShape::create( a_world, _shape, a_bt_tr, a_mass );
 	}
