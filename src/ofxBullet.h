@@ -9,6 +9,7 @@
 #pragma once
 
 #include "ofxBulletWorldRigid.h"
+#include "ofxBulletWorldSoft.h"
 #include "ofxBulletConstants.h"
 #include "ofxBulletUtils.h"
 #include "ofxBulletUserData.h"
