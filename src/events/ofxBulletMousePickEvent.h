@@ -10,7 +10,6 @@
 
 #include "ofMain.h"
 #include "ofxBulletRaycastData.h"
-#include "ofxBulletBaseShape.h"
 
 class ofxBulletMousePickEvent : public ofxBulletRaycastData {
 public:
