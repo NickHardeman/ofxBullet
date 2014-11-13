@@ -172,25 +172,21 @@ void ofxBulletBaseShape::getOpenGLMatrix( btScalar* a_m ) {
 
 //--------------------------------------------------------------
 ofMatrix4x4 ofxBulletBaseShape::getTransformationMatrix() const {
-	float	m[16];
-	ofGetOpenGLMatrixFromRigidBody( _rigidBody, m );
+    const btTransform& tr = _rigidBody->getWorldTransform();
 	ofMatrix4x4 mat;
-	mat.set(m[0], m[1], m[2], m[3],
-			m[4], m[5], m[6], m[7],
-			m[8], m[9], m[10], m[11],
-			m[12], m[13], m[14], m[15]);
+    tr.getOpenGLMatrix(mat.getPtr());
 	return mat;
 }
 
 //--------------------------------------------------------------
 ofVec3f ofxBulletBaseShape::getPosition() const {
-	return ofGetVec3fPosFromRigidBody( _rigidBody );
+    return getTransformationMatrix().getTranslation();
 }
 
 // returns yaw, pitch, roll //
 //--------------------------------------------------------------
 ofVec3f ofxBulletBaseShape::getRotation( ) const {
-	return ofGetRotationFromRigidBody( _rigidBody );
+    return getRotationQuat().getEuler();
 }
 
 //--------------------------------------------------------------
@@ -208,8 +204,7 @@ float ofxBulletBaseShape::getRotationAngle() const {
 
 //--------------------------------------------------------------
 ofQuaternion ofxBulletBaseShape::getRotationQuat() const {
-	ofVec3f axis	= getRotationAxis();
-	return ofQuaternion( axis.x, axis.y, axis.z, getRotationAngle());
+    return getTransformationMatrix().getRotate();
 }
 
 
