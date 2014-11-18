@@ -12,7 +12,7 @@ GLDebugDrawer::GLDebugDrawer()
 void	GLDebugDrawer::drawLine(const btVector3& from,const btVector3& to,const btVector3& fromColor, const btVector3& toColor)
 {
     ofSetColor( toColor.getX()*255.f, toColor.getY()*255.f, toColor.getZ()*255.f );
-    ofLine(from.x(), from.y(), from.z(), to.x(), to.y(), to.z() );
+    ofDrawLine(from.x(), from.y(), from.z(), to.x(), to.y(), to.z() );
 }
 
 void	GLDebugDrawer::drawLine(const btVector3& from,const btVector3& to,const btVector3& color)
@@ -39,7 +39,7 @@ void	GLDebugDrawer::drawTriangle(const btVector3& a,const btVector3& b,const btV
 //	if (m_debugMode > 0)
 	{
         ofSetColor( color.getX()*255.f, color.getY()*255.f, color.getZ()*255.f, alpha * 255.f);
-        ofTriangle( a.getX(), a.getY(), a.getZ(), b.getX(), b.getY(), b.getZ(), c.getX(), c.getY(), c.getZ() );
+        ofDrawTriangle( a.getX(), a.getY(), a.getZ(), b.getX(), b.getY(), b.getZ(), c.getX(), c.getY(), c.getZ() );
 	}
 }
 
@@ -65,7 +65,7 @@ void	GLDebugDrawer::drawContactPoint(const btVector3& pointOnB,const btVector3& 
 		btVector3 to=pointOnB+normalOnB*distance;
 		const btVector3&from = pointOnB;
 		ofSetColor( color.getX()*255.f, color.getY()*255.f, color.getZ()*255.f, 255.f);
-        ofLine(from.x(), from.y(), from.z(), to.x(), to.y(), to.z() );
+        ofDrawLine(from.x(), from.y(), from.z(), to.x(), to.y(), to.z() );
 	}
 }
 
