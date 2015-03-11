@@ -22,20 +22,20 @@ ofxBulletTriMeshShape::~ofxBulletTriMeshShape() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, ofVec3f a_loc, float a_mass ) {
+void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, ofVec3f a_loc, float a_mass, ofVec3f aAAbbMin, ofVec3f aAAbbMax ) {
     btTransform tr=ofGetBtTransformFromVec3f( a_loc );
     create( a_world, aMesh, tr, a_mass );
 }
 
 //--------------------------------------------------------------
-void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, ofVec3f a_loc, ofQuaternion a_rot, float a_mass ) {
+void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, ofVec3f a_loc, ofQuaternion a_rot, float a_mass, ofVec3f aAAbbMin, ofVec3f aAAbbMax ) {
     btTransform tr	= ofGetBtTransformFromVec3f( a_loc );
 	tr.setRotation( btQuaternion(btVector3(a_rot.x(), a_rot.y(), a_rot.z()), a_rot.w()) );
     create( a_world, aMesh, tr, a_mass );
 }
 
 //--------------------------------------------------------------
-void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, btTransform &a_bt_tr, float a_mass ) {
+void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, btTransform &a_bt_tr, float a_mass, ofVec3f aAAbbMin, ofVec3f aAAbbMax ) {
     if( aMesh.getMode() != OF_PRIMITIVE_TRIANGLES ) {
         ofLogWarning() << " ofxBulletTriMeshShape :: create : mesh must be using triangles, not creating!!" << endl;
         return;
@@ -84,7 +84,17 @@ void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aM
         bullet_indexVertexArrays = new btTriangleIndexVertexArray(totalTriangles, bullet_indices, indexStride,
                                                                   totalVerts, (btScalar*) &bullet_vertices[0].x(), vertStride);
         
-        _shape = new btBvhTriangleMeshShape( bullet_indexVertexArrays, true, true );
+        
+//        if you are having trouble with objects falling through, try passing in smaller or larger aabbMin and aabbMax
+//        to something closer to the size of your object //
+//        btVector3 aabbMin(-10000,-10000,-10000),aabbMax(10000,10000,10000);
+        if( aAAbbMin.length() > 0 && aAAbbMax.length() > 0 ) {
+            btVector3 aabbMin( aAAbbMin.x, aAAbbMin.y, aAAbbMin.z );
+            btVector3 aabbMax( aAAbbMax.x, aAAbbMax.y, aAAbbMax.z );
+            _shape  = new btBvhTriangleMeshShape(bullet_indexVertexArrays, true, aabbMin, aabbMax );
+        } else {
+            _shape  = new btBvhTriangleMeshShape(bullet_indexVertexArrays, true, true );
+        }
 	}
     
     ofxBulletBaseShape::create( a_world, _shape, a_bt_tr, a_mass );
@@ -107,18 +117,14 @@ void ofxBulletTriMeshShape::updateMesh( btDiscreteDynamicsWorld* a_world, ofMesh
     for( int i = 0; i < totalVerts; i++ ) {
         ofVec3f& v = tverts[i];
         bullet_vertices[i].setValue( v.x, v.y, v.z );
-        if( v.x < aabbMin.x() ) aabbMin.setX( v.x );
-        if( v.x > aabbMax.x() ) aabbMax.setX( v.x );
         
-        if( v.y < aabbMin.y() ) aabbMin.setY( v.y );
-        if( v.y > aabbMax.y() ) aabbMax.setY( v.y );
-        
-        if( v.z < aabbMin.z() ) aabbMin.setZ( v.z );
-        if( v.z > aabbMax.z() ) aabbMax.setZ( v.z );
+        aabbMin.setMin( bullet_vertices[i] );
+        aabbMax.setMax( bullet_vertices[i] );
     }
     
     btBvhTriangleMeshShape* triShape = (btBvhTriangleMeshShape*)_shape;
-    triShape->partialRefitTree( aabbMin, aabbMax );
+//    triShape->partialRefitTree( aabbMin, aabbMax );
+    triShape->refitTree( aabbMin, aabbMax );
     
     //clear all contact points involving mesh proxy. Note: this is a slow/unoptimized operation.
     a_world->getBroadphase()->getOverlappingPairCache()->cleanProxyFromPairs( getRigidBody()->getBroadphaseHandle(), a_world->getDispatcher());

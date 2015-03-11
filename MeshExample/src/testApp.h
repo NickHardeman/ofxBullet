@@ -26,6 +26,7 @@ public:
 	bool		bDrawDebug;
 	bool		bSpacebar;
     bool        bDrawFbos;
+    bool        bAnimated;
 	
 	ofEasyCam	camera;
     

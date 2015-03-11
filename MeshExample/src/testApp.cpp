@@ -70,7 +70,7 @@ void testApp::setup() {
     
     ofSetLineWidth( 1 );
 	
-    omesh = ofMesh::plane( 20, 20, 20, 20, OF_PRIMITIVE_TRIANGLES );
+    omesh = ofMesh::plane( 70, 70, 14, 14, OF_PRIMITIVE_TRIANGLES );
     ofQuaternion rquat;
     rquat.makeRotate( 90, 1, 0, 0);
     ofSeedRandom();
@@ -78,7 +78,7 @@ void testApp::setup() {
     vector< ofVec3f >& verts = omesh.getVertices();
     for( int i = 0; i < verts.size(); i++ ) {
         verts[i] = rquat * verts[i];
-        verts[i].y = ofSignedNoise( verts[i].x*0.05, verts[i].y*0.05 + verts[i].z*0.05, ofGetElapsedTimef() * 0.1 + rseed ) * 3;
+        verts[i].y = ofSignedNoise( verts[i].x*0.02, verts[i].y*0.02 + verts[i].z*0.02, ofGetElapsedTimef() * 0.1 + rseed ) * 3;
     }
     
     vector< ofVec2f >& tcoords = omesh.getTexCoords();
@@ -89,14 +89,15 @@ void testApp::setup() {
     mesh = omesh;
     
     bulletMesh = shared_ptr< ofxBulletTriMeshShape >( new ofxBulletTriMeshShape() );
-    bulletMesh->create( world.world, mesh, ofVec3f(0,0,0), 0.f );
+    bulletMesh->create( world.world, mesh, ofVec3f(0,0,0), 0.f, ofVec3f(-10000, -10000, -10000), ofVec3f(10000,10000,10000) );
     bulletMesh->add();
     bulletMesh->enableKinematic();
-//    bulletMesh->setActivationState( DISABLE_DEACTIVATION );
+    bulletMesh->setActivationState( DISABLE_DEACTIVATION );
     
     bDrawDebug  = false;
     bSpacebar   = false;
 	bDrawFbos   = false;
+    bAnimated   = false;
 }
 
 //--------------------------------------------------------------
@@ -105,7 +106,7 @@ void testApp::update() {
     if( bSpacebar ) {
         shared_ptr< ofxBulletSphere > sphere( new ofxBulletSphere() );
         float trad = fabs(sin( ofGetElapsedTimef() ) * 5);
-        sphere->create( world.world, ofVec3f( cos( ofGetElapsedTimef()*10.)*trad ,-6, sin(ofGetElapsedTimef()*10)*trad ), 1., 0.5 );
+        sphere->create( world.world, ofVec3f( cos( ofGetElapsedTimef()*10.)*trad ,-6, sin(ofGetElapsedTimef()*10)*trad ), 1., 0.75 );
         sphere->add();
         bulletSpheres.push_back( sphere );
         bSpacebar = false;
@@ -119,7 +120,18 @@ void testApp::update() {
         }
     }
     
-    world.update();
+    if(bAnimated) {
+        vector< ofVec3f >& verts = mesh.getVertices();
+        vector< ofVec3f >& overts = omesh.getVertices();
+        for( int i = 0; i < verts.size(); i++ ) {
+            verts[i].y = ofSignedNoise( verts[i].x*0.025, verts[i].y*0.025 + verts[i].z*0.025, ofGetElapsedTimef() * 0.75 ) * 3;
+        }
+        bulletMesh->updateMesh( world.world, mesh );
+    }
+    
+    world.update( ofGetLastFrameTime(), 12 );
+    
+    
 }
 
 //--------------------------------------------------------------
@@ -164,6 +176,7 @@ void testApp::draw() {
 	ss << "draw debug (d): " << ofToString(bDrawDebug, 0) << endl;
     ss << "draw textures (e): " << ofToString(bDrawFbos, 0) << endl;
     ss << "add sphere (spacebar): " << ofToString(bulletSpheres.size(), 0) << endl;
+    ss << "animated (a): " << ofToString(bAnimated, 0) << endl;
 	ofDrawBitmapString( ss.str().c_str(), 20, 20 );
 }
 
@@ -185,6 +198,10 @@ void testApp::keyPressed(int key) {
             bDrawFbos = !bDrawFbos;
         case 127:
             bulletSpheres.clear();
+            break;
+        case 'a':
+            bAnimated = !bAnimated;
+            break;
 		default:
 			break;
 	}

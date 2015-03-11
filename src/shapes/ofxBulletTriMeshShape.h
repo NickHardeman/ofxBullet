@@ -13,9 +13,12 @@ public:
     ofxBulletTriMeshShape();
     ~ofxBulletTriMeshShape();
     
-    void create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, ofVec3f a_loc, float a_mass );
-	void create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, ofVec3f a_loc, ofQuaternion a_rot, float a_mass );
-	void create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, btTransform &a_bt_tr, float a_mass );
+    void create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, ofVec3f a_loc, float a_mass,
+                ofVec3f aAAbbMin=ofVec3f(0,0,0), ofVec3f aAAbbMax=ofVec3f(0,0,0) );
+	void create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, ofVec3f a_loc, ofQuaternion a_rot, float a_mass,
+                ofVec3f aAAbbMin=ofVec3f(0,0,0), ofVec3f aAAbbMax=ofVec3f(0,0,0) );
+	void create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, btTransform &a_bt_tr, float a_mass,
+                ofVec3f aAAbbMin=ofVec3f(0,0,0), ofVec3f aAAbbMax=ofVec3f(0,0,0) );
     
     void updateMesh( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh );
     
