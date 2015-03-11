@@ -135,4 +135,17 @@ void ofxBulletCapsule::draw() {
 	restoreTramsformGL();
 }
 
+//--------------------------------------------------------------
+float ofxBulletCapsule::getRadius() {
+    return ((btCapsuleShape*)_rigidBody->getCollisionShape())->getRadius();
+}
+
+//--------------------------------------------------------------
+float ofxBulletCapsule::getHeight() {
+	return ((btCapsuleShape*)_rigidBody->getCollisionShape())->getHalfHeight() * 2.f;
+}
+
+
+
+
 

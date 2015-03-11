@@ -127,6 +127,11 @@ void ofxBulletWorldRigid::checkCollisions() {
 
 //--------------------------------------------------------------
 ofxBulletRaycastData ofxBulletWorldRigid::raycastTest(float a_x, float a_y, short int a_filterMask) {
+    
+    if(_camera == NULL) {
+		ofLog( OF_LOG_ERROR, "ofxBulletWorldRigid :: raycastTest : must set the camera first!!");
+		return ofxBulletRaycastData();
+	}
 	
 	ofVec3f castRay = _camera->screenToWorld( ofVec3f(a_x, a_y, 0) );
 	castRay = castRay - _camera->getPosition();
@@ -141,10 +146,6 @@ ofxBulletRaycastData ofxBulletWorldRigid::raycastTest(float a_x, float a_y, shor
 ofxBulletRaycastData ofxBulletWorldRigid::raycastTest( ofVec3f a_rayStart, ofVec3f a_rayEnd, short int a_filterMask) {
 	ofxBulletRaycastData data;
 	data.bHasHit = false;
-	if(_camera == NULL) {
-		ofLog( OF_LOG_ERROR, "ofxBulletWorldRigid :: raycastTest : must set the camera first!!");
-		return data;
-	}
 	
 	btVector3 rayStart( a_rayStart.x, a_rayStart.y, a_rayStart.z );
 	btVector3 rayEnd( a_rayEnd.x, a_rayEnd.y, a_rayEnd.z );
@@ -390,7 +391,16 @@ void ofxBulletWorldRigid::mouseReleased( ofMouseEventArgs &a ) {
 	removeMouseConstraint();
 }
 
-//--------------------------------------------------------------
-void ofxBulletWorldRigid::mouseScrolled( ofMouseEventArgs &a ) {
-    
-}
+
+
+
+
+
+
+
+
+
+
+
+
+

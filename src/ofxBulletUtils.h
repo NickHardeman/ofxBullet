@@ -74,6 +74,24 @@ static ofVec3f ofGetRotationFromRigidBody( btRigidBody* a_rb ) {
 	return ofVec3f( yaw, pitch, roll );
 }
 
+static btVector3 ofGetBtVector( ofVec3f aVec ) {
+    return btVector3( btScalar(aVec.x), btScalar(aVec.y), btScalar(aVec.z));
+}
+
+static btTransform ofGetBtTransform( ofVec3f aGlobalPos, ofQuaternion aQuat ) {
+    float angle; ofVec3f axis;
+    aQuat.getRotate( angle, axis );
+    btQuaternion btquat;
+    btquat = btQuaternion::getIdentity();
+    btquat.setRotation( ofGetBtVector( axis ), angle * DEG_TO_RAD );
+    
+    btTransform trans;
+    trans.setIdentity();
+    trans.setRotation( btquat );
+    trans.setOrigin( ofGetBtVector( aGlobalPos ) );
+    return trans;
+}
+
 // in degress //
 /*
  static void ofSetRotationRigidBody( btRigidBody* a_rb, float a_yaw, float a_pitch, float a_roll) {

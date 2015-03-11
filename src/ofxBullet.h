@@ -23,6 +23,7 @@
 #include "ofxBulletCustomShape.h"
 #include "ofxBulletConvexShape.h"
 #include "ofxBulletStaticPlane.h"
+#include "ofxBulletTriMeshShape.h"
 
 // dynamics //
 #include "ofxBulletJoint.h"

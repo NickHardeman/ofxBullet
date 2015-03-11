@@ -27,7 +27,8 @@ public:
 		OFX_BULLET_CONE_SHAPE = 4,
 		OFX_BULLET_CYLINDER_SHAPE = 5,
 		OFX_BULLET_CUSTOM_SHAPE = 6,
-        OFX_BULLET_CONVEX_SHAPE = 7
+        OFX_BULLET_CONVEX_SHAPE = 7,
+        OFX_BULLET_TRI_MESH_SHAPE
 	};
 	
 	virtual void create( btDiscreteDynamicsWorld* a_world, btCollisionShape* a_colShape, btTransform &a_bt_tr, float a_mass );

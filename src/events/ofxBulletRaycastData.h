@@ -16,6 +16,7 @@ public:
 	ofxBulletRaycastData() {
 		body		= NULL;
 		userData	= NULL;
+        bHasHit     = false;
 	}
 	~ofxBulletRaycastData() {};
 	

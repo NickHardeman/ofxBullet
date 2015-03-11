@@ -57,11 +57,10 @@ public:
 	void removeMouseConstraint();
 	void destroy();
 	
-	void mouseMoved( ofMouseEventArgs &a );
+	void mouseMoved( ofMouseEventArgs &a);
 	void mouseDragged( ofMouseEventArgs &a );
-	void mousePressed( ofMouseEventArgs &a );
-	void mouseReleased( ofMouseEventArgs &a );
-	void mouseScrolled( ofMouseEventArgs &a );
+	void mousePressed( ofMouseEventArgs &a);
+	void mouseReleased( ofMouseEventArgs &a);
 	
 	btBroadphaseInterface*					broadphase;
 	btDefaultCollisionConfiguration*		collisionConfig;

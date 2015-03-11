@@ -30,6 +30,9 @@ public:
 	
 	void	draw();
 	
+    float   getRadius();
+    float   getHeight();
+    
 protected:
 	btShapeHull* hull;
     ofMesh _cachedMesh;
