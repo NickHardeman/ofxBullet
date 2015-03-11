@@ -1,0 +1,231 @@
+#include "testApp.h"
+
+//--------------------------------------------------------------
+void testApp::setup() {
+	ofSetFrameRate(60);
+	ofSetVerticalSync(true);
+	ofBackground( 10, 10, 10);
+    ofDisableArbTex();
+	
+	camera.setPosition(ofVec3f(0, -4.f, -10.f));
+	camera.lookAt(ofVec3f(0, 0, 0), ofVec3f(0, -1, 0));
+    camera.setDistance( 10 );
+    camera.setNearClip( 0.1 );
+    camera.setFarClip( 300 );
+	
+	world.setup();
+	world.setCamera(&camera);
+    
+//    ofEnableSmoothing();
+//    ofEnableAntiAliasing();
+    
+    anisotropy = 4.;
+    
+    float fboDiv = 4.f;
+//    ofSetMinMagFilters( GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR_MIPMAP_LINEAR );
+    fbo.allocate( (float)ofGetWidth() / fboDiv, (float)ofGetWidth() / fboDiv, GL_RGB, 4 );
+    fbo.begin(); {
+        ofClear(0, 0, 0, 255 );
+        ofSetColor( 11,90,121, 255);
+        ofRect(0, 0, ofGetWidth(), ofGetHeight() );
+        ofSetColor(120, 140, 150, 255);
+        
+        int numIterations = 4;
+        float inc = (float)fbo.getWidth() / ((float)numIterations);
+        for( int i = 0; i < numIterations; i++ ) {
+            float tx = (float)i*inc + inc;
+            float ty = (float)i*inc + inc;
+            
+            ofSetColor(152,197,190, 255);
+            ofSetLineWidth( 1.5 );
+            if( i % 2 == 0 ) ofSetLineWidth( 0.5 );
+            
+            ofLine( tx, 0, tx, fbo.getHeight() );
+            ofLine( 0, ty, fbo.getWidth(), ty );
+        }
+        
+    } fbo.end();
+    
+    ofSetLineWidth( 1 );
+    
+    fbo.getTextureReference().bind();
+    glGenerateMipmap( fbo.getTextureReference().texData.textureTarget);
+    ofSetMinMagFilters( GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR_MIPMAP_LINEAR );
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisotropy);
+//    glSamplerParameterf( fbo.getTextureReference().texData.textureTarget, GL_TEXTURE_MAX_ANISOTROPY_EXT, 2 );
+    fbo.getTextureReference().unbind();
+    
+    
+    fboSphere.allocate( 256, 256, GL_RGB, 4 );
+    fboSphere.begin(); {
+        ofClear(0, 0, 0, 255 );
+        ofSetColor( 239,201,198 );
+        ofRect(0, 0, fboSphere.getWidth(), fboSphere.getHeight() );
+        ofSetColor(90, 90, 90, 255 );
+        ofSetLineWidth( 3 );
+        ofLine( 0, 0, fboSphere.getWidth(), fboSphere.getHeight() );
+        ofLine( 0, fboSphere.getHeight(), fboSphere.getWidth(), 0 );
+        
+    } fboSphere.end();
+    
+    ofSetLineWidth( 1 );
+	
+    omesh = ofMesh::plane( 20, 20, 20, 20, OF_PRIMITIVE_TRIANGLES );
+    ofQuaternion rquat;
+    rquat.makeRotate( 90, 1, 0, 0);
+    ofSeedRandom();
+    float rseed = ofRandom(0, 10000);
+    vector< ofVec3f >& verts = omesh.getVertices();
+    for( int i = 0; i < verts.size(); i++ ) {
+        verts[i] = rquat * verts[i];
+        verts[i].y = ofSignedNoise( verts[i].x*0.05, verts[i].y*0.05 + verts[i].z*0.05, ofGetElapsedTimef() * 0.1 + rseed ) * 3;
+    }
+    
+    vector< ofVec2f >& tcoords = omesh.getTexCoords();
+    for( int i = 0; i < tcoords.size(); i++ ) {
+        tcoords[i].x *= 4.f;
+        tcoords[i].y *= 4.f;
+    }
+    mesh = omesh;
+    
+    bulletMesh = shared_ptr< ofxBulletTriMeshShape >( new ofxBulletTriMeshShape() );
+    bulletMesh->create( world.world, mesh, ofVec3f(0,0,0), 0.f );
+    bulletMesh->add();
+    bulletMesh->enableKinematic();
+//    bulletMesh->setActivationState( DISABLE_DEACTIVATION );
+    
+    bDrawDebug  = false;
+    bSpacebar   = false;
+	bDrawFbos   = false;
+}
+
+//--------------------------------------------------------------
+void testApp::update() {
+    
+    if( bSpacebar ) {
+        shared_ptr< ofxBulletSphere > sphere( new ofxBulletSphere() );
+        float trad = fabs(sin( ofGetElapsedTimef() ) * 5);
+        sphere->create( world.world, ofVec3f( cos( ofGetElapsedTimef()*10.)*trad ,-6, sin(ofGetElapsedTimef()*10)*trad ), 1., 0.5 );
+        sphere->add();
+        bulletSpheres.push_back( sphere );
+        bSpacebar = false;
+    }
+    
+    for( int i = 0; i < bulletSpheres.size(); i++ ) {
+        ofVec3f spos = bulletSpheres[i]->getPosition();
+        if( spos.y > 5 ) {
+            bulletSpheres.erase( bulletSpheres.begin() + i );
+            break;
+        }
+    }
+    
+    world.update();
+}
+
+//--------------------------------------------------------------
+void testApp::draw() {
+	glEnable( GL_DEPTH_TEST );
+	camera.begin();
+	
+	ofSetLineWidth(1.f);
+	if(bDrawDebug) world.drawDebug();
+	else {
+        ofSetColor( 255, 255, 255, 255 );
+        fbo.getTextureReference().bind();
+        glSamplerParameterf( fbo.getTextureReference().texData.textureTarget, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisotropy );
+        ofSetTextureWrap( GL_REPEAT, GL_REPEAT );
+        mesh.draw();
+        fbo.getTextureReference().unbind();
+        
+        fboSphere.getTextureReference().bind();
+        for( int i = 0; i < bulletSpheres.size(); i++ ) {
+            bulletSpheres[i]->draw();
+        }
+        fboSphere.getTextureReference().unbind();
+    }
+	
+    
+    if( bDrawDebug ) {
+        ofDrawAxis(0.5);
+    }
+	
+	camera.end();
+	glDisable(GL_DEPTH_TEST);
+    
+    ofSetColor( 255 );
+    if( bDrawFbos ) {
+        fbo.draw( ofGetWidth()-20-fbo.getWidth(), 20 );
+        fboSphere.draw( ofGetWidth()-20-fboSphere.getWidth(), 40+fbo.getHeight() );
+    }
+	
+	ofSetColor(255, 255, 255);
+	stringstream ss;
+	ss << "framerate: " << ofToString(ofGetFrameRate(),0) << endl;
+	ss << "draw debug (d): " << ofToString(bDrawDebug, 0) << endl;
+    ss << "draw textures (e): " << ofToString(bDrawFbos, 0) << endl;
+    ss << "add sphere (spacebar): " << ofToString(bulletSpheres.size(), 0) << endl;
+	ofDrawBitmapString( ss.str().c_str(), 20, 20 );
+}
+
+//--------------------------------------------------------------
+void testApp::exit() {
+    
+}
+
+//--------------------------------------------------------------
+void testApp::keyPressed(int key) {
+	switch (key) {
+		case ' ':
+			bSpacebar = true;
+			break;
+		case 'd':
+			bDrawDebug = !bDrawDebug;
+			break;
+        case 'e':
+            bDrawFbos = !bDrawFbos;
+        case 127:
+            bulletSpheres.clear();
+		default:
+			break;
+	}
+}
+
+//--------------------------------------------------------------
+void testApp::keyReleased(int key) {
+	
+}
+
+//--------------------------------------------------------------
+void testApp::mouseMoved(int x, int y) {
+	
+}
+
+//--------------------------------------------------------------
+void testApp::mouseDragged(int x, int y, int button) {
+	
+}
+
+//--------------------------------------------------------------
+void testApp::mousePressed(int x, int y, int button) {
+	
+}
+
+//--------------------------------------------------------------
+void testApp::mouseReleased(int x, int y, int button){
+	
+}
+
+//--------------------------------------------------------------
+void testApp::windowResized(int w, int h) {
+	
+}
+
+//--------------------------------------------------------------
+void testApp::gotMessage(ofMessage msg) {
+	
+}
+
+//--------------------------------------------------------------
+void testApp::dragEvent(ofDragInfo dragInfo) { 
+	
+}
