@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E6DAF561AB3E1C900746091 /* ofxBulletTriMeshShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E6DAF541AB3E1C900746091 /* ofxBulletTriMeshShape.cpp */; };
 		2E78C20D17D8D0A40020A15A /* ofxBulletStaticPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E78C20B17D8D0A40020A15A /* ofxBulletStaticPlane.cpp */; };
 		2EEF326317BB2A74003CFA1C /* ofxBulletJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EEF317F17BB2A73003CFA1C /* ofxBulletJoint.cpp */; };
 		2EEF326417BB2A74003CFA1C /* ofxBulletWorldRigid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EEF318517BB2A73003CFA1C /* ofxBulletWorldRigid.cpp */; };
@@ -18,13 +19,7 @@
 		2EEF326A17BB2A74003CFA1C /* ofxBulletCustomShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EEF319317BB2A73003CFA1C /* ofxBulletCustomShape.cpp */; };
 		2EEF326B17BB2A74003CFA1C /* ofxBulletCylinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EEF319517BB2A73003CFA1C /* ofxBulletCylinder.cpp */; };
 		2EEF326C17BB2A74003CFA1C /* ofxBulletSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EEF319717BB2A73003CFA1C /* ofxBulletSphere.cpp */; };
-		2EFCD33217BB36C400C9A987 /* libassimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFCD31917BB36C400C9A987 /* libassimp.a */; };
-		2EFCD33317BB36C400C9A987 /* libassimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFCD31B17BB36C400C9A987 /* libassimp.a */; };
-		2EFCD33417BB36C400C9A987 /* assimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFCD31D17BB36C400C9A987 /* assimp.a */; };
-		2EFCD33517BB36C400C9A987 /* libassimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFCD31F17BB36C400C9A987 /* libassimp.a */; };
-		2EFCD33617BB36C500C9A987 /* libassimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFCD32117BB36C400C9A987 /* libassimp.a */; };
 		2EFCD33717BB36C500C9A987 /* assimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFCD32317BB36C400C9A987 /* assimp.a */; };
-		2EFCD33817BB36C500C9A987 /* assimp.lib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EFCD32517BB36C400C9A987 /* assimp.lib */; };
 		2EFCD33917BB36C500C9A987 /* ofxAssimpAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EFCD32917BB36C400C9A987 /* ofxAssimpAnimation.cpp */; };
 		2EFCD33A17BB36C500C9A987 /* ofxAssimpMeshHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EFCD32B17BB36C400C9A987 /* ofxAssimpMeshHelper.cpp */; };
 		2EFCD33B17BB36C500C9A987 /* ofxAssimpModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EFCD32D17BB36C400C9A987 /* ofxAssimpModelLoader.cpp */; };
@@ -83,6 +78,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2E6DAF541AB3E1C900746091 /* ofxBulletTriMeshShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletTriMeshShape.cpp; sourceTree = "<group>"; };
+		2E6DAF551AB3E1C900746091 /* ofxBulletTriMeshShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletTriMeshShape.h; sourceTree = "<group>"; };
 		2E78C20B17D8D0A40020A15A /* ofxBulletStaticPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletStaticPlane.cpp; sourceTree = "<group>"; };
 		2E78C20C17D8D0A40020A15A /* ofxBulletStaticPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletStaticPlane.h; sourceTree = "<group>"; };
 		2EEF317B17BB2A73003CFA1C /* ofxBulletCollisionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCollisionData.h; sourceTree = "<group>"; };
@@ -148,14 +145,7 @@
 		2EFCD31317BB36C400C9A987 /* LogStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogStream.h; sourceTree = "<group>"; };
 		2EFCD31417BB36C400C9A987 /* NullLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullLogger.h; sourceTree = "<group>"; };
 		2EFCD31517BB36C400C9A987 /* ProgressHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHandler.h; sourceTree = "<group>"; };
-		2EFCD31917BB36C400C9A987 /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libassimp.a; sourceTree = "<group>"; };
-		2EFCD31B17BB36C400C9A987 /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libassimp.a; sourceTree = "<group>"; };
-		2EFCD31D17BB36C400C9A987 /* assimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = assimp.a; sourceTree = "<group>"; };
-		2EFCD31F17BB36C400C9A987 /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libassimp.a; sourceTree = "<group>"; };
-		2EFCD32117BB36C400C9A987 /* libassimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libassimp.a; sourceTree = "<group>"; };
 		2EFCD32317BB36C400C9A987 /* assimp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = assimp.a; sourceTree = "<group>"; };
-		2EFCD32517BB36C400C9A987 /* assimp.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = assimp.lib; sourceTree = "<group>"; };
-		2EFCD32717BB36C400C9A987 /* libassimp.dll */ = {isa = PBXFileReference; lastKnownFileType = file; path = libassimp.dll; sourceTree = "<group>"; };
 		2EFCD32917BB36C400C9A987 /* ofxAssimpAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAssimpAnimation.cpp; sourceTree = "<group>"; };
 		2EFCD32A17BB36C400C9A987 /* ofxAssimpAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxAssimpAnimation.h; sourceTree = "<group>"; };
 		2EFCD32B17BB36C400C9A987 /* ofxAssimpMeshHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxAssimpMeshHelper.cpp; sourceTree = "<group>"; };
@@ -215,13 +205,7 @@
 				E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */,
 				E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */,
 				E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */,
-				2EFCD33217BB36C400C9A987 /* libassimp.a in Frameworks */,
-				2EFCD33317BB36C400C9A987 /* libassimp.a in Frameworks */,
-				2EFCD33417BB36C400C9A987 /* assimp.a in Frameworks */,
-				2EFCD33517BB36C400C9A987 /* libassimp.a in Frameworks */,
-				2EFCD33617BB36C500C9A987 /* libassimp.a in Frameworks */,
 				2EFCD33717BB36C500C9A987 /* assimp.a in Frameworks */,
-				2EFCD33817BB36C500C9A987 /* assimp.lib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +269,8 @@
 		2EEF318A17BB2A73003CFA1C /* shapes */ = {
 			isa = PBXGroup;
 			children = (
+				2E6DAF541AB3E1C900746091 /* ofxBulletTriMeshShape.cpp */,
+				2E6DAF551AB3E1C900746091 /* ofxBulletTriMeshShape.h */,
 				2E78C20B17D8D0A40020A15A /* ofxBulletStaticPlane.cpp */,
 				2E78C20C17D8D0A40020A15A /* ofxBulletStaticPlane.h */,
 				2EFCD34817BB3ED900C9A987 /* ofxBulletConvexShape.cpp */,
@@ -388,64 +374,9 @@
 		2EFCD31617BB36C400C9A987 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				2EFCD31717BB36C400C9A987 /* android */,
-				2EFCD31C17BB36C400C9A987 /* ios */,
-				2EFCD31E17BB36C400C9A987 /* linux */,
-				2EFCD32017BB36C400C9A987 /* linux64 */,
 				2EFCD32217BB36C400C9A987 /* osx */,
-				2EFCD32417BB36C400C9A987 /* vs */,
-				2EFCD32617BB36C400C9A987 /* win_cb */,
 			);
 			path = lib;
-			sourceTree = "<group>";
-		};
-		2EFCD31717BB36C400C9A987 /* android */ = {
-			isa = PBXGroup;
-			children = (
-				2EFCD31817BB36C400C9A987 /* armeabi */,
-				2EFCD31A17BB36C400C9A987 /* armeabi-v7a */,
-			);
-			path = android;
-			sourceTree = "<group>";
-		};
-		2EFCD31817BB36C400C9A987 /* armeabi */ = {
-			isa = PBXGroup;
-			children = (
-				2EFCD31917BB36C400C9A987 /* libassimp.a */,
-			);
-			path = armeabi;
-			sourceTree = "<group>";
-		};
-		2EFCD31A17BB36C400C9A987 /* armeabi-v7a */ = {
-			isa = PBXGroup;
-			children = (
-				2EFCD31B17BB36C400C9A987 /* libassimp.a */,
-			);
-			path = "armeabi-v7a";
-			sourceTree = "<group>";
-		};
-		2EFCD31C17BB36C400C9A987 /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				2EFCD31D17BB36C400C9A987 /* assimp.a */,
-			);
-			path = ios;
-			sourceTree = "<group>";
-		};
-		2EFCD31E17BB36C400C9A987 /* linux */ = {
-			isa = PBXGroup;
-			children = (
-				2EFCD31F17BB36C400C9A987 /* libassimp.a */,
-			);
-			path = linux;
-			sourceTree = "<group>";
-		};
-		2EFCD32017BB36C400C9A987 /* linux64 */ = {
-			isa = PBXGroup;
-			children = (
-				2EFCD32117BB36C400C9A987 /* libassimp.a */,
-			);
-			path = linux64;
 			sourceTree = "<group>";
 		};
 		2EFCD32217BB36C400C9A987 /* osx */ = {
@@ -454,22 +385,6 @@
 				2EFCD32317BB36C400C9A987 /* assimp.a */,
 			);
 			path = osx;
-			sourceTree = "<group>";
-		};
-		2EFCD32417BB36C400C9A987 /* vs */ = {
-			isa = PBXGroup;
-			children = (
-				2EFCD32517BB36C400C9A987 /* assimp.lib */,
-			);
-			path = vs;
-			sourceTree = "<group>";
-		};
-		2EFCD32617BB36C400C9A987 /* win_cb */ = {
-			isa = PBXGroup;
-			children = (
-				2EFCD32717BB36C400C9A987 /* libassimp.dll */,
-			);
-			path = win_cb;
 			sourceTree = "<group>";
 		};
 		2EFCD32817BB36C400C9A987 /* src */ = {
@@ -670,6 +585,7 @@
 				2EEF326517BB2A74003CFA1C /* GLDebugDrawer.cpp in Sources */,
 				2EEF326617BB2A74003CFA1C /* ofxBulletBaseShape.cpp in Sources */,
 				2EEF326717BB2A74003CFA1C /* ofxBulletBox.cpp in Sources */,
+				2E6DAF561AB3E1C900746091 /* ofxBulletTriMeshShape.cpp in Sources */,
 				2EEF326817BB2A74003CFA1C /* ofxBulletCapsule.cpp in Sources */,
 				2EEF326917BB2A74003CFA1C /* ofxBulletCone.cpp in Sources */,
 				2EEF326A17BB2A74003CFA1C /* ofxBulletCustomShape.cpp in Sources */,

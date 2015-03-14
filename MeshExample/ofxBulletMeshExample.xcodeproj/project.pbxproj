@@ -119,7 +119,7 @@
 		E45BE9770E8CC7DD009D7055 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		E45BE9790E8CC7DD009D7055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
-		E4B69B5B0A3A1756003C02F2 /* ofxBulletMeshDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ofxBulletMeshDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69B5B0A3A1756003C02F2 /* ofxBulletMeshExampleDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ofxBulletMeshExampleDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = testApp.cpp; path = src/testApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = testApp.h; path = src/testApp.h; sourceTree = SOURCE_ROOT; };
@@ -309,7 +309,7 @@
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
 				E45BE5980E8CC70C009D7055 /* frameworks */,
-				E4B69B5B0A3A1756003C02F2 /* ofxBulletMeshDebug.app */,
+				E4B69B5B0A3A1756003C02F2 /* ofxBulletMeshExampleDebug.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -351,7 +351,7 @@
 			);
 			name = ofxBulletMeshExample;
 			productName = myOFApp;
-			productReference = E4B69B5B0A3A1756003C02F2 /* ofxBulletMeshDebug.app */;
+			productReference = E4B69B5B0A3A1756003C02F2 /* ofxBulletMeshExampleDebug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -535,16 +535,8 @@
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/NickHardeman/Documents/ProjectsDev/AnimusApartus/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.1/lib/ios/arm7,
-					/Users/NickHardeman/Documents/ProjectsDev/AnimusApartus/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.1/lib/ios/simulator,
-					/Users/NickHardeman/Documents/ProjectsDev/AnimusApartus/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.1/lib/osx/fat,
-					/Users/NickHardeman/Documents/ProjectsDev/AnimusApartus/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.1/lib/osx/i386,
-					/Users/NickHardeman/Documents/ProjectsDev/AnimusApartus/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.1/lib/osx/x86_64,
-					/Users/NickHardeman/Documents/ProjectsDev/AnimusApartus/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.1/lib/vs,
-				);
 				PRODUCT_NAME = ofxBulletMeshExampleDebug;
+				SDKROOT = macosx10.8;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -566,16 +558,8 @@
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/NickHardeman/Documents/ProjectsDev/AnimusApartus/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.1/lib/ios/arm7,
-					/Users/NickHardeman/Documents/ProjectsDev/AnimusApartus/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.1/lib/ios/simulator,
-					/Users/NickHardeman/Documents/ProjectsDev/AnimusApartus/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.1/lib/osx/fat,
-					/Users/NickHardeman/Documents/ProjectsDev/AnimusApartus/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.1/lib/osx/i386,
-					/Users/NickHardeman/Documents/ProjectsDev/AnimusApartus/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.1/lib/osx/x86_64,
-					/Users/NickHardeman/Documents/ProjectsDev/AnimusApartus/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.1/lib/vs,
-				);
 				PRODUCT_NAME = ofxBulletMeshExample;
+				SDKROOT = macosx10.8;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

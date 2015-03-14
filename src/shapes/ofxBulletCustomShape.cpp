@@ -46,7 +46,7 @@ void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, btTransform
 	_world = a_world;
 	_mass = a_mass;
 	if(!_bInited) {
-		_shape = new btCompoundShape(false);
+		_shape = new btCompoundShape(true);
 		_centroid.set(0, 0, 0);
 	}
 	_startTrans		= a_bt_tr;
