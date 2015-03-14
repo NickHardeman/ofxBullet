@@ -14,8 +14,8 @@ OpenFrameworks - http://www.openframeworks.cc <br/>
 Bullet Physics - http://bulletphysics.org/wordpress/ <br/>
 
 Current Supported Versions:
-OpenFrameworks 008 - https://github.com/openframeworks/openFrameworks <br/>
-Bullet Physics 2.81-rev2613 - http://code.google.com/p/bullet/downloads/list <br/>
+OpenFrameworks 0.08x - https://github.com/openframeworks/openFrameworks <br/>
+Bullet Physics bullet-2.82-r2704 - http://code.google.com/p/bullet/downloads/list <br/>
 
 <h4>Previous Versions</h4>
 ofxBullet v2.0 (supports OF 007x and Linux. Uses bullet 2.81) - https://github.com/NickHardeman/ofxBullet/releases/tag/v2.0 <br/>
