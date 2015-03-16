@@ -1,4 +1,4 @@
-<h1>ofxBullet v2.0</h1>
+<h1>ofxBullet v2.1</h1>
 An OpenFrameworks add-on for Bullet Physics
 
 ![ofxBullet](http://farm7.staticflickr.com/6146/5975738528_39dd3a8022_b.jpg)
