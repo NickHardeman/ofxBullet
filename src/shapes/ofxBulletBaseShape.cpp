@@ -390,7 +390,7 @@ void ofxBulletBaseShape::applyTorque( const btVector3& a_torque ) {
 
 //--------------------------------------------------------------
 void ofxBulletBaseShape::transformGL() {
-    btScalar	m[16];
+    btScalar	ATTRIBUTE_ALIGNED16(m[16]);
     ofGetOpenGLMatrixFromRigidBody( getRigidBody(), m );
     ofPushMatrix();
     ofMultMatrix( ofMatrix4x4(m) );
