@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2E648EDC19E8093800498475 /* ofxBulletTriMeshShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E648EDA19E8093800498475 /* ofxBulletTriMeshShape.cpp */; };
-		2E80703519DE4E3A00E1EF63 /* ofxBulletJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E806EB519DE4E3A00E1EF63 /* ofxBulletJoint.cpp */; };
-		2E80703619DE4E3A00E1EF63 /* ofxBulletWorldRigid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E806EBB19DE4E3A00E1EF63 /* ofxBulletWorldRigid.cpp */; };
-		2E80703719DE4E3A00E1EF63 /* GLDebugDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E806EBE19DE4E3A00E1EF63 /* GLDebugDrawer.cpp */; };
-		2E80703819DE4E3A00E1EF63 /* ofxBulletBaseShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E806EC119DE4E3A00E1EF63 /* ofxBulletBaseShape.cpp */; };
-		2E80703919DE4E3A00E1EF63 /* ofxBulletBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E806EC319DE4E3A00E1EF63 /* ofxBulletBox.cpp */; };
-		2E80703A19DE4E3A00E1EF63 /* ofxBulletCapsule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E806EC519DE4E3A00E1EF63 /* ofxBulletCapsule.cpp */; };
-		2E80703B19DE4E3A00E1EF63 /* ofxBulletCone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E806EC719DE4E3A00E1EF63 /* ofxBulletCone.cpp */; };
-		2E80703C19DE4E3A00E1EF63 /* ofxBulletConvexShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E806EC919DE4E3A00E1EF63 /* ofxBulletConvexShape.cpp */; };
-		2E80703D19DE4E3A00E1EF63 /* ofxBulletCustomShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E806ECB19DE4E3A00E1EF63 /* ofxBulletCustomShape.cpp */; };
-		2E80703E19DE4E3A00E1EF63 /* ofxBulletCylinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E806ECD19DE4E3A00E1EF63 /* ofxBulletCylinder.cpp */; };
-		2E80703F19DE4E3A00E1EF63 /* ofxBulletSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E806ECF19DE4E3A00E1EF63 /* ofxBulletSphere.cpp */; };
-		2E80704019DE4E3A00E1EF63 /* ofxBulletStaticPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E806ED119DE4E3A00E1EF63 /* ofxBulletStaticPlane.cpp */; };
+		2E1119B61ABCC33600C51AE9 /* ofxBulletJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1116A81ABCC33500C51AE9 /* ofxBulletJoint.cpp */; };
+		2E1119B71ABCC33600C51AE9 /* ofxBulletWorldRigid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1116AE1ABCC33500C51AE9 /* ofxBulletWorldRigid.cpp */; };
+		2E1119B81ABCC33600C51AE9 /* GLDebugDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1116B11ABCC33500C51AE9 /* GLDebugDrawer.cpp */; };
+		2E1119B91ABCC33600C51AE9 /* ofxBulletBaseShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1116B41ABCC33500C51AE9 /* ofxBulletBaseShape.cpp */; };
+		2E1119BA1ABCC33600C51AE9 /* ofxBulletBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1116B61ABCC33500C51AE9 /* ofxBulletBox.cpp */; };
+		2E1119BB1ABCC33600C51AE9 /* ofxBulletCapsule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1116B81ABCC33500C51AE9 /* ofxBulletCapsule.cpp */; };
+		2E1119BC1ABCC33600C51AE9 /* ofxBulletCone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1116BA1ABCC33500C51AE9 /* ofxBulletCone.cpp */; };
+		2E1119BD1ABCC33600C51AE9 /* ofxBulletConvexShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1116BC1ABCC33500C51AE9 /* ofxBulletConvexShape.cpp */; };
+		2E1119BE1ABCC33600C51AE9 /* ofxBulletCustomShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1116BE1ABCC33500C51AE9 /* ofxBulletCustomShape.cpp */; };
+		2E1119BF1ABCC33600C51AE9 /* ofxBulletCylinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1116C01ABCC33500C51AE9 /* ofxBulletCylinder.cpp */; };
+		2E1119C01ABCC33600C51AE9 /* ofxBulletSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1116C21ABCC33500C51AE9 /* ofxBulletSphere.cpp */; };
+		2E1119C11ABCC33600C51AE9 /* ofxBulletStaticPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1116C41ABCC33500C51AE9 /* ofxBulletStaticPlane.cpp */; };
+		2E1119C21ABCC33600C51AE9 /* ofxBulletTriMeshShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E1116C61ABCC33500C51AE9 /* ofxBulletTriMeshShape.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -73,41 +73,40 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2E648EDA19E8093800498475 /* ofxBulletTriMeshShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletTriMeshShape.cpp; sourceTree = "<group>"; };
-		2E648EDB19E8093800498475 /* ofxBulletTriMeshShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletTriMeshShape.h; sourceTree = "<group>"; };
-		2E806E9919DE4E3900E1EF63 /* ofxaddons_thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ofxaddons_thumbnail.png; sourceTree = "<group>"; };
-		2E806E9A19DE4E3900E1EF63 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		2E806EB119DE4E3A00E1EF63 /* ofxBulletCollisionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCollisionData.h; sourceTree = "<group>"; };
-		2E806EB219DE4E3A00E1EF63 /* ofxBulletMousePickEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletMousePickEvent.h; sourceTree = "<group>"; };
-		2E806EB319DE4E3A00E1EF63 /* ofxBulletRaycastData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletRaycastData.h; sourceTree = "<group>"; };
-		2E806EB519DE4E3A00E1EF63 /* ofxBulletJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletJoint.cpp; sourceTree = "<group>"; };
-		2E806EB619DE4E3A00E1EF63 /* ofxBulletJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletJoint.h; sourceTree = "<group>"; };
-		2E806EB719DE4E3A00E1EF63 /* ofxBullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBullet.h; sourceTree = "<group>"; };
-		2E806EB819DE4E3A00E1EF63 /* ofxBulletConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletConstants.h; sourceTree = "<group>"; };
-		2E806EB919DE4E3A00E1EF63 /* ofxBulletUserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletUserData.h; sourceTree = "<group>"; };
-		2E806EBA19DE4E3A00E1EF63 /* ofxBulletUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletUtils.h; sourceTree = "<group>"; };
-		2E806EBB19DE4E3A00E1EF63 /* ofxBulletWorldRigid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletWorldRigid.cpp; sourceTree = "<group>"; };
-		2E806EBC19DE4E3A00E1EF63 /* ofxBulletWorldRigid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletWorldRigid.h; sourceTree = "<group>"; };
-		2E806EBE19DE4E3A00E1EF63 /* GLDebugDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLDebugDrawer.cpp; sourceTree = "<group>"; };
-		2E806EBF19DE4E3A00E1EF63 /* GLDebugDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLDebugDrawer.h; sourceTree = "<group>"; };
-		2E806EC119DE4E3A00E1EF63 /* ofxBulletBaseShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletBaseShape.cpp; sourceTree = "<group>"; };
-		2E806EC219DE4E3A00E1EF63 /* ofxBulletBaseShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletBaseShape.h; sourceTree = "<group>"; };
-		2E806EC319DE4E3A00E1EF63 /* ofxBulletBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletBox.cpp; sourceTree = "<group>"; };
-		2E806EC419DE4E3A00E1EF63 /* ofxBulletBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletBox.h; sourceTree = "<group>"; };
-		2E806EC519DE4E3A00E1EF63 /* ofxBulletCapsule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCapsule.cpp; sourceTree = "<group>"; };
-		2E806EC619DE4E3A00E1EF63 /* ofxBulletCapsule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCapsule.h; sourceTree = "<group>"; };
-		2E806EC719DE4E3A00E1EF63 /* ofxBulletCone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCone.cpp; sourceTree = "<group>"; };
-		2E806EC819DE4E3A00E1EF63 /* ofxBulletCone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCone.h; sourceTree = "<group>"; };
-		2E806EC919DE4E3A00E1EF63 /* ofxBulletConvexShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletConvexShape.cpp; sourceTree = "<group>"; };
-		2E806ECA19DE4E3A00E1EF63 /* ofxBulletConvexShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletConvexShape.h; sourceTree = "<group>"; };
-		2E806ECB19DE4E3A00E1EF63 /* ofxBulletCustomShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCustomShape.cpp; sourceTree = "<group>"; };
-		2E806ECC19DE4E3A00E1EF63 /* ofxBulletCustomShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCustomShape.h; sourceTree = "<group>"; };
-		2E806ECD19DE4E3A00E1EF63 /* ofxBulletCylinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCylinder.cpp; sourceTree = "<group>"; };
-		2E806ECE19DE4E3A00E1EF63 /* ofxBulletCylinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCylinder.h; sourceTree = "<group>"; };
-		2E806ECF19DE4E3A00E1EF63 /* ofxBulletSphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletSphere.cpp; sourceTree = "<group>"; };
-		2E806ED019DE4E3A00E1EF63 /* ofxBulletSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletSphere.h; sourceTree = "<group>"; };
-		2E806ED119DE4E3A00E1EF63 /* ofxBulletStaticPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletStaticPlane.cpp; sourceTree = "<group>"; };
-		2E806ED219DE4E3A00E1EF63 /* ofxBulletStaticPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletStaticPlane.h; sourceTree = "<group>"; };
+		2E1116811ABCC33500C51AE9 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		2E1116A41ABCC33500C51AE9 /* ofxBulletCollisionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCollisionData.h; sourceTree = "<group>"; };
+		2E1116A51ABCC33500C51AE9 /* ofxBulletMousePickEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletMousePickEvent.h; sourceTree = "<group>"; };
+		2E1116A61ABCC33500C51AE9 /* ofxBulletRaycastData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletRaycastData.h; sourceTree = "<group>"; };
+		2E1116A81ABCC33500C51AE9 /* ofxBulletJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletJoint.cpp; sourceTree = "<group>"; };
+		2E1116A91ABCC33500C51AE9 /* ofxBulletJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletJoint.h; sourceTree = "<group>"; };
+		2E1116AA1ABCC33500C51AE9 /* ofxBullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBullet.h; sourceTree = "<group>"; };
+		2E1116AB1ABCC33500C51AE9 /* ofxBulletConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletConstants.h; sourceTree = "<group>"; };
+		2E1116AC1ABCC33500C51AE9 /* ofxBulletUserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletUserData.h; sourceTree = "<group>"; };
+		2E1116AD1ABCC33500C51AE9 /* ofxBulletUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletUtils.h; sourceTree = "<group>"; };
+		2E1116AE1ABCC33500C51AE9 /* ofxBulletWorldRigid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletWorldRigid.cpp; sourceTree = "<group>"; };
+		2E1116AF1ABCC33500C51AE9 /* ofxBulletWorldRigid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletWorldRigid.h; sourceTree = "<group>"; };
+		2E1116B11ABCC33500C51AE9 /* GLDebugDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLDebugDrawer.cpp; sourceTree = "<group>"; };
+		2E1116B21ABCC33500C51AE9 /* GLDebugDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLDebugDrawer.h; sourceTree = "<group>"; };
+		2E1116B41ABCC33500C51AE9 /* ofxBulletBaseShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletBaseShape.cpp; sourceTree = "<group>"; };
+		2E1116B51ABCC33500C51AE9 /* ofxBulletBaseShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletBaseShape.h; sourceTree = "<group>"; };
+		2E1116B61ABCC33500C51AE9 /* ofxBulletBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletBox.cpp; sourceTree = "<group>"; };
+		2E1116B71ABCC33500C51AE9 /* ofxBulletBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletBox.h; sourceTree = "<group>"; };
+		2E1116B81ABCC33500C51AE9 /* ofxBulletCapsule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCapsule.cpp; sourceTree = "<group>"; };
+		2E1116B91ABCC33500C51AE9 /* ofxBulletCapsule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCapsule.h; sourceTree = "<group>"; };
+		2E1116BA1ABCC33500C51AE9 /* ofxBulletCone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCone.cpp; sourceTree = "<group>"; };
+		2E1116BB1ABCC33500C51AE9 /* ofxBulletCone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCone.h; sourceTree = "<group>"; };
+		2E1116BC1ABCC33500C51AE9 /* ofxBulletConvexShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletConvexShape.cpp; sourceTree = "<group>"; };
+		2E1116BD1ABCC33500C51AE9 /* ofxBulletConvexShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletConvexShape.h; sourceTree = "<group>"; };
+		2E1116BE1ABCC33500C51AE9 /* ofxBulletCustomShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCustomShape.cpp; sourceTree = "<group>"; };
+		2E1116BF1ABCC33500C51AE9 /* ofxBulletCustomShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCustomShape.h; sourceTree = "<group>"; };
+		2E1116C01ABCC33500C51AE9 /* ofxBulletCylinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCylinder.cpp; sourceTree = "<group>"; };
+		2E1116C11ABCC33500C51AE9 /* ofxBulletCylinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCylinder.h; sourceTree = "<group>"; };
+		2E1116C21ABCC33500C51AE9 /* ofxBulletSphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletSphere.cpp; sourceTree = "<group>"; };
+		2E1116C31ABCC33500C51AE9 /* ofxBulletSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletSphere.h; sourceTree = "<group>"; };
+		2E1116C41ABCC33500C51AE9 /* ofxBulletStaticPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletStaticPlane.cpp; sourceTree = "<group>"; };
+		2E1116C51ABCC33500C51AE9 /* ofxBulletStaticPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletStaticPlane.h; sourceTree = "<group>"; };
+		2E1116C61ABCC33500C51AE9 /* ofxBulletTriMeshShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletTriMeshShape.cpp; sourceTree = "<group>"; };
+		2E1116C71ABCC33500C51AE9 /* ofxBulletTriMeshShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletTriMeshShape.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -162,85 +161,84 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2E806A6E19DE4E3700E1EF63 /* ofxBullet */ = {
+		2E110FBF1ABCC33100C51AE9 /* ofxBullet */ = {
 			isa = PBXGroup;
 			children = (
-				2E806E9919DE4E3900E1EF63 /* ofxaddons_thumbnail.png */,
-				2E806E9A19DE4E3900E1EF63 /* README.md */,
-				2E806EAF19DE4E3A00E1EF63 /* src */,
+				2E1116811ABCC33500C51AE9 /* README.md */,
+				2E1116A21ABCC33500C51AE9 /* src */,
 			);
 			name = ofxBullet;
-			path = ../../../addons/ofxBullet;
+			path = ..;
 			sourceTree = "<group>";
 		};
-		2E806EAF19DE4E3A00E1EF63 /* src */ = {
+		2E1116A21ABCC33500C51AE9 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				2E806EB019DE4E3A00E1EF63 /* events */,
-				2E806EB419DE4E3A00E1EF63 /* joints */,
-				2E806EB719DE4E3A00E1EF63 /* ofxBullet.h */,
-				2E806EB819DE4E3A00E1EF63 /* ofxBulletConstants.h */,
-				2E806EB919DE4E3A00E1EF63 /* ofxBulletUserData.h */,
-				2E806EBA19DE4E3A00E1EF63 /* ofxBulletUtils.h */,
-				2E806EBB19DE4E3A00E1EF63 /* ofxBulletWorldRigid.cpp */,
-				2E806EBC19DE4E3A00E1EF63 /* ofxBulletWorldRigid.h */,
-				2E806EBD19DE4E3A00E1EF63 /* render */,
-				2E806EC019DE4E3A00E1EF63 /* shapes */,
+				2E1116A31ABCC33500C51AE9 /* events */,
+				2E1116A71ABCC33500C51AE9 /* joints */,
+				2E1116AA1ABCC33500C51AE9 /* ofxBullet.h */,
+				2E1116AB1ABCC33500C51AE9 /* ofxBulletConstants.h */,
+				2E1116AC1ABCC33500C51AE9 /* ofxBulletUserData.h */,
+				2E1116AD1ABCC33500C51AE9 /* ofxBulletUtils.h */,
+				2E1116AE1ABCC33500C51AE9 /* ofxBulletWorldRigid.cpp */,
+				2E1116AF1ABCC33500C51AE9 /* ofxBulletWorldRigid.h */,
+				2E1116B01ABCC33500C51AE9 /* render */,
+				2E1116B31ABCC33500C51AE9 /* shapes */,
 			);
 			path = src;
 			sourceTree = "<group>";
 		};
-		2E806EB019DE4E3A00E1EF63 /* events */ = {
+		2E1116A31ABCC33500C51AE9 /* events */ = {
 			isa = PBXGroup;
 			children = (
-				2E806EB119DE4E3A00E1EF63 /* ofxBulletCollisionData.h */,
-				2E806EB219DE4E3A00E1EF63 /* ofxBulletMousePickEvent.h */,
-				2E806EB319DE4E3A00E1EF63 /* ofxBulletRaycastData.h */,
+				2E1116A41ABCC33500C51AE9 /* ofxBulletCollisionData.h */,
+				2E1116A51ABCC33500C51AE9 /* ofxBulletMousePickEvent.h */,
+				2E1116A61ABCC33500C51AE9 /* ofxBulletRaycastData.h */,
 			);
 			path = events;
 			sourceTree = "<group>";
 		};
-		2E806EB419DE4E3A00E1EF63 /* joints */ = {
+		2E1116A71ABCC33500C51AE9 /* joints */ = {
 			isa = PBXGroup;
 			children = (
-				2E806EB519DE4E3A00E1EF63 /* ofxBulletJoint.cpp */,
-				2E806EB619DE4E3A00E1EF63 /* ofxBulletJoint.h */,
+				2E1116A81ABCC33500C51AE9 /* ofxBulletJoint.cpp */,
+				2E1116A91ABCC33500C51AE9 /* ofxBulletJoint.h */,
 			);
 			path = joints;
 			sourceTree = "<group>";
 		};
-		2E806EBD19DE4E3A00E1EF63 /* render */ = {
+		2E1116B01ABCC33500C51AE9 /* render */ = {
 			isa = PBXGroup;
 			children = (
-				2E806EBE19DE4E3A00E1EF63 /* GLDebugDrawer.cpp */,
-				2E806EBF19DE4E3A00E1EF63 /* GLDebugDrawer.h */,
+				2E1116B11ABCC33500C51AE9 /* GLDebugDrawer.cpp */,
+				2E1116B21ABCC33500C51AE9 /* GLDebugDrawer.h */,
 			);
 			path = render;
 			sourceTree = "<group>";
 		};
-		2E806EC019DE4E3A00E1EF63 /* shapes */ = {
+		2E1116B31ABCC33500C51AE9 /* shapes */ = {
 			isa = PBXGroup;
 			children = (
-				2E806EC119DE4E3A00E1EF63 /* ofxBulletBaseShape.cpp */,
-				2E806EC219DE4E3A00E1EF63 /* ofxBulletBaseShape.h */,
-				2E806EC319DE4E3A00E1EF63 /* ofxBulletBox.cpp */,
-				2E806EC419DE4E3A00E1EF63 /* ofxBulletBox.h */,
-				2E806EC519DE4E3A00E1EF63 /* ofxBulletCapsule.cpp */,
-				2E806EC619DE4E3A00E1EF63 /* ofxBulletCapsule.h */,
-				2E806EC719DE4E3A00E1EF63 /* ofxBulletCone.cpp */,
-				2E806EC819DE4E3A00E1EF63 /* ofxBulletCone.h */,
-				2E806EC919DE4E3A00E1EF63 /* ofxBulletConvexShape.cpp */,
-				2E806ECA19DE4E3A00E1EF63 /* ofxBulletConvexShape.h */,
-				2E806ECB19DE4E3A00E1EF63 /* ofxBulletCustomShape.cpp */,
-				2E806ECC19DE4E3A00E1EF63 /* ofxBulletCustomShape.h */,
-				2E806ECD19DE4E3A00E1EF63 /* ofxBulletCylinder.cpp */,
-				2E806ECE19DE4E3A00E1EF63 /* ofxBulletCylinder.h */,
-				2E806ECF19DE4E3A00E1EF63 /* ofxBulletSphere.cpp */,
-				2E806ED019DE4E3A00E1EF63 /* ofxBulletSphere.h */,
-				2E806ED119DE4E3A00E1EF63 /* ofxBulletStaticPlane.cpp */,
-				2E806ED219DE4E3A00E1EF63 /* ofxBulletStaticPlane.h */,
-				2E648EDA19E8093800498475 /* ofxBulletTriMeshShape.cpp */,
-				2E648EDB19E8093800498475 /* ofxBulletTriMeshShape.h */,
+				2E1116B41ABCC33500C51AE9 /* ofxBulletBaseShape.cpp */,
+				2E1116B51ABCC33500C51AE9 /* ofxBulletBaseShape.h */,
+				2E1116B61ABCC33500C51AE9 /* ofxBulletBox.cpp */,
+				2E1116B71ABCC33500C51AE9 /* ofxBulletBox.h */,
+				2E1116B81ABCC33500C51AE9 /* ofxBulletCapsule.cpp */,
+				2E1116B91ABCC33500C51AE9 /* ofxBulletCapsule.h */,
+				2E1116BA1ABCC33500C51AE9 /* ofxBulletCone.cpp */,
+				2E1116BB1ABCC33500C51AE9 /* ofxBulletCone.h */,
+				2E1116BC1ABCC33500C51AE9 /* ofxBulletConvexShape.cpp */,
+				2E1116BD1ABCC33500C51AE9 /* ofxBulletConvexShape.h */,
+				2E1116BE1ABCC33500C51AE9 /* ofxBulletCustomShape.cpp */,
+				2E1116BF1ABCC33500C51AE9 /* ofxBulletCustomShape.h */,
+				2E1116C01ABCC33500C51AE9 /* ofxBulletCylinder.cpp */,
+				2E1116C11ABCC33500C51AE9 /* ofxBulletCylinder.h */,
+				2E1116C21ABCC33500C51AE9 /* ofxBulletSphere.cpp */,
+				2E1116C31ABCC33500C51AE9 /* ofxBulletSphere.h */,
+				2E1116C41ABCC33500C51AE9 /* ofxBulletStaticPlane.cpp */,
+				2E1116C51ABCC33500C51AE9 /* ofxBulletStaticPlane.h */,
+				2E1116C61ABCC33500C51AE9 /* ofxBulletTriMeshShape.cpp */,
+				2E1116C71ABCC33500C51AE9 /* ofxBulletTriMeshShape.h */,
 			);
 			path = shapes;
 			sourceTree = "<group>";
@@ -248,7 +246,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				2E806A6E19DE4E3700E1EF63 /* ofxBullet */,
+				2E110FBF1ABCC33100C51AE9 /* ofxBullet */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -419,20 +417,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E80703819DE4E3A00E1EF63 /* ofxBulletBaseShape.cpp in Sources */,
-				2E80703519DE4E3A00E1EF63 /* ofxBulletJoint.cpp in Sources */,
-				2E80703F19DE4E3A00E1EF63 /* ofxBulletSphere.cpp in Sources */,
-				2E80703E19DE4E3A00E1EF63 /* ofxBulletCylinder.cpp in Sources */,
-				2E80704019DE4E3A00E1EF63 /* ofxBulletStaticPlane.cpp in Sources */,
-				2E80703619DE4E3A00E1EF63 /* ofxBulletWorldRigid.cpp in Sources */,
-				2E80703A19DE4E3A00E1EF63 /* ofxBulletCapsule.cpp in Sources */,
-				2E80703D19DE4E3A00E1EF63 /* ofxBulletCustomShape.cpp in Sources */,
-				2E80703C19DE4E3A00E1EF63 /* ofxBulletConvexShape.cpp in Sources */,
-				2E80703919DE4E3A00E1EF63 /* ofxBulletBox.cpp in Sources */,
-				2E80703B19DE4E3A00E1EF63 /* ofxBulletCone.cpp in Sources */,
-				2E80703719DE4E3A00E1EF63 /* GLDebugDrawer.cpp in Sources */,
+				2E1119BA1ABCC33600C51AE9 /* ofxBulletBox.cpp in Sources */,
+				2E1119BB1ABCC33600C51AE9 /* ofxBulletCapsule.cpp in Sources */,
+				2E1119BD1ABCC33600C51AE9 /* ofxBulletConvexShape.cpp in Sources */,
+				2E1119C01ABCC33600C51AE9 /* ofxBulletSphere.cpp in Sources */,
+				2E1119B91ABCC33600C51AE9 /* ofxBulletBaseShape.cpp in Sources */,
+				2E1119C21ABCC33600C51AE9 /* ofxBulletTriMeshShape.cpp in Sources */,
+				2E1119BC1ABCC33600C51AE9 /* ofxBulletCone.cpp in Sources */,
+				2E1119BF1ABCC33600C51AE9 /* ofxBulletCylinder.cpp in Sources */,
+				2E1119B71ABCC33600C51AE9 /* ofxBulletWorldRigid.cpp in Sources */,
+				2E1119B61ABCC33600C51AE9 /* ofxBulletJoint.cpp in Sources */,
+				2E1119C11ABCC33600C51AE9 /* ofxBulletStaticPlane.cpp in Sources */,
+				2E1119B81ABCC33600C51AE9 /* GLDebugDrawer.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
-				2E648EDC19E8093800498475 /* ofxBulletTriMeshShape.cpp in Sources */,
+				2E1119BE1ABCC33600C51AE9 /* ofxBulletCustomShape.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -535,6 +533,14 @@
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/OpenFrameworks/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.2/lib/ios/arm7",
+					"$(SYSTEM_APPS_DIR)/OpenFrameworks/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.2/lib/ios/i386",
+					"$(SYSTEM_APPS_DIR)/OpenFrameworks/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.2/lib/osx/fat",
+					"$(SYSTEM_APPS_DIR)/OpenFrameworks/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.2/lib/osx/i386",
+					"$(SYSTEM_APPS_DIR)/OpenFrameworks/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.2/lib/osx/x86_64",
+				);
 				PRODUCT_NAME = ofxBulletMeshExampleDebug;
 				SDKROOT = macosx10.8;
 				WRAPPER_EXTENSION = app;
@@ -558,6 +564,14 @@
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/OpenFrameworks/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.2/lib/ios/arm7",
+					"$(SYSTEM_APPS_DIR)/OpenFrameworks/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.2/lib/ios/i386",
+					"$(SYSTEM_APPS_DIR)/OpenFrameworks/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.2/lib/osx/fat",
+					"$(SYSTEM_APPS_DIR)/OpenFrameworks/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.2/lib/osx/i386",
+					"$(SYSTEM_APPS_DIR)/OpenFrameworks/of_v0.8.4_osx_release/addons/ofxBullet/libs/bullet2.8.2/lib/osx/x86_64",
+				);
 				PRODUCT_NAME = ofxBulletMeshExample;
 				SDKROOT = macosx10.8;
 				WRAPPER_EXTENSION = app;

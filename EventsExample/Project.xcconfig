@@ -5,15 +5,16 @@ OF_PATH = ../../..
 //THIS HAS ALL THE HEADER AND LIBS FOR OF CORE
 #include "../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig"
 
-HEADER_BULLET = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/include/**"
+BULLET_LIB_PATH = $(OF_PATH)/addons/ofxBullet/libs/bullet2.8.2
 
-LIB_BULLET_COLLISION_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/i386/libBulletCollision.a"
-LIB_BULLET_DYNAMICS_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/i386/libBulletDynamics.a"
-LIB_BULLET_MATH_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/i386/libLinearMath.a"
-LIB_BULLET_MINI_CL_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/i386/libMiniCL.a"
-LIB_BULLET_SOFT_BODY_RELEASE = "$(OF_PATH)/addons/ofxBullet/libs/bullet2.8.1/lib/osx/i386/libBulletSoftBody.a"
+HEADER_BULLET = "$(BULLET_LIB_PATH)/include/**"
 
-LIB_BULLET_ALL_RELEASE = $(LIB_BULLET_COLLISION_RELEASE) $(LIB_BULLET_DYNAMICS_RELEASE) $(LIB_BULLET_MATH_RELEASE) $(LIB_BULLET_MINI_CL_RELEASE) $(LIB_BULLET_SOFT_BODY_RELEASE)
+LIB_BULLET_COLLISION_RELEASE = "$(BULLET_LIB_PATH)/lib/osx/i386/libBulletCollision.a"
+LIB_BULLET_DYNAMICS_RELEASE = "$(BULLET_LIB_PATH)/lib/osx/i386/libBulletDynamics.a"
+LIB_BULLET_MATH_RELEASE = "$(BULLET_LIB_PATH)/lib/osx/i386/libLinearMath.a"
+LIB_BULLET_SOFT_BODY_RELEASE = "$(BULLET_LIB_PATH)/lib/osx/i386/libBulletSoftBody.a"
+
+LIB_BULLET_ALL_RELEASE = $(LIB_BULLET_COLLISION_RELEASE) $(LIB_BULLET_DYNAMICS_RELEASE) $(LIB_BULLET_MATH_RELEASE) $(LIB_BULLET_SOFT_BODY_RELEASE)
 
 OTHER_LDFLAGS = $(OF_CORE_LIBS) $(LIB_BULLET_ALL_RELEASE)
 HEADER_SEARCH_PATHS = $(OF_CORE_HEADERS) 
