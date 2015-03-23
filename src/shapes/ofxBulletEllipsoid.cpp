@@ -1,38 +1,38 @@
 //
-//  ofxBulletPatch.cpp
+//  ofxBulletEllipsoid.cpp
 //  ofxBullet
 //
 //  Created by Elias Zananiri on 2015-03-23.
 //
 //
 
-#include "ofxBulletPatch.h"
+#include "ofxBulletEllipsoid.h"
 #include "BulletSoftBody/btSoftBodyHelpers.h"
 
 //--------------------------------------------------------------
-ofxBulletPatch::ofxBulletPatch() : ofxBulletSoftBody() {
+ofxBulletEllipsoid::ofxBulletEllipsoid() : ofxBulletSoftBody() {
     _lastUpdateFrame = 0;
     
     _cachedMesh.setMode(OF_PRIMITIVE_TRIANGLES);
 }
 
 //--------------------------------------------------------------
-void ofxBulletPatch::create(ofxBulletWorldSoft* a_world, const ofVec3f& a_p0, const ofVec3f& a_p1, const ofVec3f& a_p2, const ofVec3f& a_p3, int a_resx, int a_resy) {
+void ofxBulletEllipsoid::create(ofxBulletWorldSoft* a_world, const ofVec3f& a_center, const ofVec3f& a_radius, int a_res) {
     if(a_world == NULL) {
-        ofLogError("ofxBulletPatch") << "create(): a_world param is NULL";
+        ofLogError("ofxBulletEllipsoid") << "create(): a_world param is NULL";
         return;
     }
 
 	_world = a_world;
     
-    _softBody = btSoftBodyHelpers::CreatePatch(_world->getInfo(), btVector3(a_p0.x, a_p0.y, a_p0.z), btVector3(a_p1.x, a_p1.y, a_p1.z), btVector3(a_p2.x, a_p2.y, a_p2.z), btVector3(a_p3.x, a_p3.y, a_p3.z), a_resx, a_resy, 0, true);
+    _softBody = btSoftBodyHelpers::CreateEllipsoid(_world->getInfo(), btVector3(a_center.x, a_center.y, a_center.z), btVector3(a_radius.x, a_radius.y, a_radius.z), a_res);
     setCreated(_softBody);
         
-    _type = OFX_BULLET_SOFT_PATCH;
+    _type = OFX_BULLET_SOFT_ELLIPSOID;
 }
 
 //--------------------------------------------------------------
-void ofxBulletPatch::update() {
+void ofxBulletEllipsoid::update() {
     if (_lastUpdateFrame == ofGetFrameNum()) return;
     
     // Build the mesh.
@@ -52,9 +52,9 @@ void ofxBulletPatch::update() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletPatch::draw() {
+void ofxBulletEllipsoid::draw() {
     if(!checkCreate()) {
-        ofLogWarning("ofxBulletPatch") << "draw() : must call create() first and add() after";
+        ofLogWarning("ofxBulletEllipsoid") << "draw() : must call create() first and add() after";
         return;
     }
     update();

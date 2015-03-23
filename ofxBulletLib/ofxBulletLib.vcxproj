@@ -37,6 +37,7 @@
     <ClInclude Include="..\src\shapes\ofxBulletConvexShape.h" />
     <ClInclude Include="..\src\shapes\ofxBulletCustomShape.h" />
     <ClInclude Include="..\src\shapes\ofxBulletCylinder.h" />
+    <ClInclude Include="..\src\shapes\ofxBulletEllipsoid.h" />
     <ClInclude Include="..\src\shapes\ofxBulletPatch.h" />
     <ClInclude Include="..\src\shapes\ofxBulletRigidBody.h" />
     <ClInclude Include="..\src\shapes\ofxBulletRope.h" />
@@ -56,6 +57,7 @@
     <ClCompile Include="..\src\shapes\ofxBulletConvexShape.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletCustomShape.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletCylinder.cpp" />
+    <ClCompile Include="..\src\shapes\ofxBulletEllipsoid.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletPatch.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletRigidBody.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletRope.cpp" />

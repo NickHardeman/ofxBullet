@@ -23,7 +23,6 @@ void ofApp::setup() {
 	ground->setProperties(.25, .95);
 	ground->add();
 	
-	
 	colors[0] = ofColor(15,197,138);
 	colors[1] = ofColor(220, 0, 220);
 	colors[2] = ofColor(220, 180, 60);
@@ -43,8 +42,6 @@ void ofApp::setup() {
 	
 	rope = new ofxBulletRope();
 	rope->create(&world, ofVec3f(0, 2, 0), ofVec3f(0, 5.5, 0));
-//        r->createEllipsoid( &world, ofVec3f(0, 8, 0), ofVec3f(1.5, 1.5, 1.5), 3);
-//        r->createPatch( &world, ofVec3f(-2, 2, -2), ofVec3f(-2, 2, 2), ofVec3f(2, 2, 2), ofVec3f(2, 2, -2));
 	rope->add();
 	rope->setMass(1);
 	rope->setStiffness(1, 1, 1);
@@ -57,6 +54,7 @@ void ofApp::setup() {
     
 	bDrawDebug	= false;
 	bSpacebar	= false;
+	bAddEllipsoid = false;
 	bShapesNeedErase = false;
 	
 	ofHideCursor();
@@ -66,6 +64,15 @@ void ofApp::setup() {
 void ofApp::update() {
 	world.update();
 	ofSetWindowTitle(ofToString(ofGetFrameRate(), 0));
+
+	if (bAddEllipsoid) {
+		ofxBulletEllipsoid *e = new ofxBulletEllipsoid();
+		e->create(&world, ofVec3f(ofRandom(-20, 20), -5, ofRandom(-20, 20)), ofVec3f(ofRandom(0.5, 1), ofRandom(0.5, 1), ofRandom(0.5, 1)));
+		e->add();
+		ellipsoids.push_back(e);
+
+		bAddEllipsoid = false;
+	}
 	
 	mousePos = camera.screenToWorld( ofVec3f((float)ofGetMouseX(), (float)ofGetMouseY(), 0) );
 	joints[0]->updatePivotPos( mousePos, 2.f );
@@ -108,6 +115,9 @@ void ofApp::draw() {
     
 	rope->draw();
 	patch->draw();
+	for(int i = 0; i < ellipsoids.size(); i++) {
+		ellipsoids[i]->draw();
+	}
 	
 	ofSetColor(255, 0, 255);
 	for(int i = 0; i < shapes.size(); i++) {
@@ -130,7 +140,8 @@ void ofApp::draw() {
 	ss << "num shapes: " << (shapes.size()) << endl;
 	ss << "draw debug (d): " << ofToString(bDrawDebug, 0) << endl;
 	ss << "break joints with spacebar: " << bSpacebar << endl;
-	ss << "append node (n)" << endl;
+	ss << "append node to rope (n)" << endl;
+	ss << "drop an ellipsoid (e)" << endl;
 	ofDrawBitmapString(ss.str().c_str(), 10, 10);
 }
 
@@ -146,6 +157,9 @@ void ofApp::keyPressed(int key) {
         case 'n':
             rope->appendNode();
             break;
+		case 'e':
+			bAddEllipsoid = true;
+			break;
 		default:
 			break;
 	}

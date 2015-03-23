@@ -32,6 +32,7 @@ public:
 
 		OFX_BULLET_SOFT_ROPE = 20,
         OFX_BULLET_SOFT_PATCH = 21,
+        OFX_BULLET_SOFT_ELLIPSOID = 22
 	};
 	
 	virtual void remove();

@@ -21,6 +21,5 @@ public:
 
 protected:
     int _lastUpdateFrame;
-    float _linkLength;
     ofMesh _cachedMesh;
 };

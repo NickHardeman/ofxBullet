@@ -26,6 +26,7 @@
 #include "ofxBulletStaticPlane.h"
 #include "ofxBulletTriMeshShape.h"
 
+#include "ofxBulletEllipsoid.h"
 #include "ofxBulletPatch.h"
 #include "ofxBulletRope.h"
 

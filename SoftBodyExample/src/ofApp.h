@@ -22,9 +22,11 @@ public:
 	
 	ofxBulletWorldSoft			world;
 	ofxBulletBox*				ground;
+
     ofxBulletRope*				rope;
 	ofxBulletPatch*				patch;
-	
+	vector<ofxBulletEllipsoid*> ellipsoids;
+
 	vector<ofxBulletRigidBody*> shapes;
 	vector<ofxBulletJoint*>		joints;
 	vector<ofColor>				shapeColors;
@@ -32,6 +34,7 @@ public:
 	
 	bool						bDrawDebug;
 	bool						bSpacebar;
+	bool						bAddEllipsoid;
 	bool						bShapesNeedErase;
 	
 	float						jointLength;
