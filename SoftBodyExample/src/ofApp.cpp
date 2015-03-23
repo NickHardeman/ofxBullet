@@ -114,7 +114,11 @@ void ofApp::draw() {
 	ground->draw();
     
 	rope->draw();
+    
+    ofSetColor(255, 255, 255);
 	patch->draw();
+    
+    ofSetColor(0, 255, 0);
 	for(int i = 0; i < ellipsoids.size(); i++) {
 		ellipsoids[i]->draw();
 	}
