@@ -4,13 +4,8 @@ An OpenFrameworks add-on for Bullet Physics
 ![ofxBullet](http://farm7.staticflickr.com/6146/5975738528_39dd3a8022_b.jpg)
 ![ofxBullet Meshes](https://farm8.staticflickr.com/7585/16164216144_7ec2c2ba37_b.jpg)
 
-Currently bullet libs are compiled for OSX and iOS and is tested with OF 0.8x <br/>
-Help with integration for windows and linux is much appreciated. <br/>
-
-Previous version - ofxBullet 2.0 supports OSX, iOS, Windows and Linux <br/>
-Linux compatibility thanks to Benjamin Knofe aka @benben <br/>
-VS2012 compatibility thanks to Kentaro Yama aka @kentaroid<br/>
-<i>To compile libs for PC, view here: http://code.google.com/p/bullet/downloads/list </i> <br/>
+Currently bullet libs are compiled for OSX, iOS and VS2012 and is tested with OF 0.8x <br/>
+Help with integration for CodeBlocks and linux is much appreciated. <br/>
 
 OpenFrameworks - http://www.openframeworks.cc <br/>
 Bullet Physics - http://bulletphysics.org/wordpress/ <br/>
@@ -18,6 +13,10 @@ Bullet Physics - http://bulletphysics.org/wordpress/ <br/>
 Current Supported Versions:
 OpenFrameworks 0.8x - https://github.com/openframeworks/openFrameworks <br/>
 Bullet Physics bullet-2.82-r2704 - http://code.google.com/p/bullet/downloads/list <br/>
+
+Linux compatibility thanks to Benjamin Knofe aka @benben <br/>
+VS2012 compatibility thanks to Kentaro Yama aka @kentaroid and Elie Zananiri aka @prisonerjohn<br/>
+<i>To compile libs for PC, view here: http://code.google.com/p/bullet/downloads/list </i> <br/>
 
 <h4>Previous Versions</h4>
 ofxBullet v2.0 (supports OF 007x. OSX, Windows, iOS and Linux. Uses bullet 2.81) - https://github.com/NickHardeman/ofxBullet/releases/tag/v2.0 <br/>

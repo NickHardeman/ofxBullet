@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\addons\ofxBullet\src;..\..\..\addons\ofxBullet\src\events;..\..\..\addons\ofxBullet\src\joints;..\..\..\addons\ofxBullet\src\render;..\..\..\addons\ofxBullet\src\shapes;..\..\..\addons\ofxBullet\libs\bullet2.8.2\include;..\..\..\addons\ofxBullet\libs\bullet2.8.2\include\BulletCollision;..\..\..\addons\ofxBullet\libs\bullet2.8.2\include\BulletCollision\BroadphaseCollision;..\..\..\addons\ofxBullet\libs\bullet2.8.2\include\BulletCollision\CollisionDispatch;..\..\..\addons\ofxBullet\libs\bullet2.8.2\include\BulletCollision\CollisionShapes;..\..\..\addons\ofxBullet\libs\bullet2.8.2\include\BulletCollision\Gimpact;..\..\..\addons\ofxBullet\libs\bullet2.8.2\include\BulletCollision\NarrowPhaseCollision;..\..\..\addons\ofxBullet\libs\bullet2.8.2\include\BulletDynamics;..\..\..\addons\ofxBullet\libs\bullet2.8.2\include\BulletDynamics\Character;..\..\..\addons\ofxBullet\libs\bullet2.8.2\include\BulletDynamics\ConstraintSolver;..\..\..\addons\ofxBullet\libs\bullet2.8.2\include\BulletDynamics\Dynamics;..\..\..\addons\ofxBullet\libs\bullet2.8.2\include\BulletDynamics\Vehicle;..\..\..\addons\ofxBullet\libs\bullet2.8.2\include\BulletSoftBody;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>..\..\..\addons\ofxBullet\libs\bullet2.8.2\lib\win\vs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>BulletCollisiond.lib;BulletDynamicsd.lib;BulletSoftBodyd.lib;LinearMathd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Lib />
+    <Lib />
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>
