@@ -43,6 +43,24 @@
     <ClCompile Include="..\..\..\addons\ofxBullet\src\joints\ofxBulletJoint.cpp">
       <Filter>addons\ofxBullet\src\joints</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ofxBulletWorldSoft.cpp">
+      <Filter>addons\ofxBullet\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletEllipsoid.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletPatch.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletRope.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletSoftBody.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletRigidBody.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -130,6 +148,24 @@
     </ClInclude>
     <ClInclude Include="..\..\..\addons\ofxBullet\src\events\ofxBulletCollisionData.h">
       <Filter>addons\ofxBullet\src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxBulletWorldSoft.h">
+      <Filter>addons\ofxBullet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletEllipsoid.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletPatch.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletRope.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletSoftBody.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletRigidBody.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
