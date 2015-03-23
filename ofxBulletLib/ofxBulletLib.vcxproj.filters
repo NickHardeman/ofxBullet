@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ofxBullet">
+      <UniqueIdentifier>{8b7a9cd6-15ff-40ce-bbcb-62f7460f7724}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ofxBullet\src">
+      <UniqueIdentifier>{0afabdd8-78ad-44d4-91e3-ac03c38f54a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ofxBullet\src\events">
+      <UniqueIdentifier>{a6e8e604-3944-47fd-bbb5-44e17776bb67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ofxBullet\src\joints">
+      <UniqueIdentifier>{5fd48ece-2811-47c4-91cf-4a7a65a65dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ofxBullet\src\render">
+      <UniqueIdentifier>{8d2a0225-1215-4fe7-b6dc-84a89b397751}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ofxBullet\src\shapes">
+      <UniqueIdentifier>{33f34d37-d253-4b54-bef7-2ae46bcbbec3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\events\ofxBulletCollisionData.h">
+      <Filter>ofxBullet\src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\events\ofxBulletMousePickEvent.h">
+      <Filter>ofxBullet\src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\events\ofxBulletRaycastData.h">
+      <Filter>ofxBullet\src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\joints\ofxBulletJoint.h">
+      <Filter>ofxBullet\src\joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\render\GLDebugDrawer.h">
+      <Filter>ofxBullet\src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletBaseShape.h">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletBox.h">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletCapsule.h">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletCone.h">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletConvexShape.h">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletCustomShape.h">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletCylinder.h">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletSphere.h">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletStaticPlane.h">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxBulletConstants.h">
+      <Filter>ofxBullet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxBulletUserData.h">
+      <Filter>ofxBullet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxBulletUtils.h">
+      <Filter>ofxBullet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxBulletWorldRigid.h">
+      <Filter>ofxBullet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ofxBullet.h">
+      <Filter>ofxBullet\src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\joints\ofxBulletJoint.cpp">
+      <Filter>ofxBullet\src\joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\render\GLDebugDrawer.cpp">
+      <Filter>ofxBullet\src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletBaseShape.cpp">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletBox.cpp">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletCapsule.cpp">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletCone.cpp">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletConvexShape.cpp">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletCustomShape.cpp">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletCylinder.cpp">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletSphere.cpp">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletStaticPlane.cpp">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxBulletWorldRigid.cpp">
+      <Filter>ofxBullet\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
