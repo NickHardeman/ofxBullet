@@ -132,7 +132,7 @@ void ofxBulletCapsule::draw() {
         _cachedMesh.draw();
     }
     
-	restoreTramsformGL();
+	restoreTransformGL();
 }
 
 //--------------------------------------------------------------

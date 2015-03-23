@@ -392,7 +392,7 @@ void ofxBulletBaseShape::transformGL() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletBaseShape::restoreTramsformGL() {
+void ofxBulletBaseShape::restoreTransformGL() {
     ofPopMatrix();
 }
 

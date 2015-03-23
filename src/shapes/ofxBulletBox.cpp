@@ -76,7 +76,7 @@ void ofxBulletBox::draw() {
     transformGL();
 	ofVec3f size = getSize();
     ofDrawBox(0, 0, 0, size.x, size.y, size.z);
-	restoreTramsformGL();
+	restoreTransformGL();
 }
  
 //--------------------------------------------------------------

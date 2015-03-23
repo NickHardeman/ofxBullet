@@ -108,7 +108,7 @@ public:
 	virtual void draw() {};
     
     virtual void transformGL();
-    virtual void restoreTramsformGL();
+    virtual void restoreTransformGL();
 	
 protected:
     // initially use call this function in shape constructors so we know that the data was created

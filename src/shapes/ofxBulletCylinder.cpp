@@ -88,7 +88,7 @@ void ofxBulletCylinder::draw() {
 	
 	transformGL();
     ofDrawCylinder( 0, 0, 0, getRadius(), getHeight() );
-    restoreTramsformGL();
+    restoreTransformGL();
 }
 
 

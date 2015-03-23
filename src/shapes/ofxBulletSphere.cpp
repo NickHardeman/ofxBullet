@@ -74,7 +74,7 @@ void ofxBulletSphere::draw() {
 	}
 	transformGL();
     ofDrawSphere( 0, 0, 0, getRadius() );
-    restoreTramsformGL();
+    restoreTransformGL();
 }
 
 //--------------------------------------------------------------

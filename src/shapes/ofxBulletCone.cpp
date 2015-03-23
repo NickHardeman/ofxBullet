@@ -92,7 +92,7 @@ void ofxBulletCone::draw() {
     ofRotate(180, 1, 0, 0);
     ofDrawCone( 0, 0, 0, getRadius(), getHeight() );
     ofPopMatrix();
-    restoreTramsformGL();
+    restoreTransformGL();
 }
 
 
