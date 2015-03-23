@@ -44,6 +44,7 @@
     <ClInclude Include="..\src\shapes\ofxBulletSoftBody.h" />
     <ClInclude Include="..\src\shapes\ofxBulletSphere.h" />
     <ClInclude Include="..\src\shapes\ofxBulletStaticPlane.h" />
+    <ClInclude Include="..\src\shapes\ofxBulletTriMeshShape.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\joints\ofxBulletJoint.cpp" />
@@ -64,6 +65,7 @@
     <ClCompile Include="..\src\shapes\ofxBulletSoftBody.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletSphere.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletStaticPlane.cpp" />
+    <ClCompile Include="..\src\shapes\ofxBulletTriMeshShape.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{641DB976-E775-4D72-86EB-897E2C4A0EEE}</ProjectGuid>

@@ -61,6 +61,9 @@
     <ClCompile Include="..\src\shapes\ofxBulletRigidBody.cpp">
       <Filter>addons\ofxBullet\src\shapes</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletTriMeshShape.cpp">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -165,6 +168,9 @@
       <Filter>addons\ofxBullet\src\shapes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\shapes\ofxBulletRigidBody.h">
+      <Filter>addons\ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletTriMeshShape.h">
       <Filter>addons\ofxBullet\src\shapes</Filter>
     </ClInclude>
   </ItemGroup>

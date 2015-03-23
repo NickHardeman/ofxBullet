@@ -96,6 +96,9 @@
     <ClInclude Include="..\src\shapes\ofxBulletEllipsoid.h">
       <Filter>ofxBullet\src\shapes</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletTriMeshShape.h">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\joints\ofxBulletJoint.cpp">
@@ -150,6 +153,9 @@
       <Filter>ofxBullet\src\shapes</Filter>
     </ClCompile>
     <ClCompile Include="..\src\shapes\ofxBulletEllipsoid.cpp">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletTriMeshShape.cpp">
       <Filter>ofxBullet\src\shapes</Filter>
     </ClCompile>
   </ItemGroup>

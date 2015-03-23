@@ -109,6 +109,7 @@
     <ClCompile Include="..\src\shapes\ofxBulletRigidBody.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletRope.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletSoftBody.cpp" />
+    <ClCompile Include="..\src\shapes\ofxBulletTriMeshShape.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\testApp.cpp" />
   </ItemGroup>
@@ -138,6 +139,7 @@
     <ClInclude Include="..\src\shapes\ofxBulletRigidBody.h" />
     <ClInclude Include="..\src\shapes\ofxBulletRope.h" />
     <ClInclude Include="..\src\shapes\ofxBulletSoftBody.h" />
+    <ClInclude Include="..\src\shapes\ofxBulletTriMeshShape.h" />
     <ClInclude Include="src\testApp.h" />
   </ItemGroup>
   <ItemGroup>
