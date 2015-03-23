@@ -28,7 +28,9 @@ public:
 		OFX_BULLET_CYLINDER_SHAPE = 5,
 		OFX_BULLET_CUSTOM_SHAPE = 6,
         OFX_BULLET_CONVEX_SHAPE = 7,
-        OFX_BULLET_TRI_MESH_SHAPE
+        OFX_BULLET_TRI_MESH_SHAPE = 8,
+
+		OFX_BULLET_SOFT_ROPE = 20,
 	};
 	
 	virtual void remove();

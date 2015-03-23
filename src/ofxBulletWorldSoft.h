@@ -1,6 +1,6 @@
 //
 //  ofxBulletWorldSoft.h
-//  ofxBulletSimpleExample
+//  ofxBullet
 //
 //  Created by Elias Zananiri on 2014-11-12.
 //
@@ -20,6 +20,7 @@ public:
     virtual void setGravity( ofVec3f a_g );
 
     btSoftRigidDynamicsWorld* getWorld();
+    btSoftBodyWorldInfo& getInfo();
 
 protected:
     virtual btBroadphaseInterface* createBroadphase();

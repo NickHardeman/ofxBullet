@@ -1,6 +1,6 @@
 //
 //  ofxBulletWorldSoft.cpp
-//  ofxBulletSimpleExample
+//  ofxBullet
 //
 //  Created by Elias Zananiri on 2014-11-12.
 //
@@ -42,6 +42,11 @@ btDiscreteDynamicsWorld* ofxBulletWorldSoft::createWorld() {
 //--------------------------------------------------------------
 btSoftRigidDynamicsWorld* ofxBulletWorldSoft::getWorld() {
     return (btSoftRigidDynamicsWorld*)world;
+}
+
+//--------------------------------------------------------------
+btSoftBodyWorldInfo& ofxBulletWorldSoft::getInfo() {
+    return softBodyWorldInfo;
 }
 
 //--------------------------------------------------------------
