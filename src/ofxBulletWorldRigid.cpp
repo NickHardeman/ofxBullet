@@ -391,16 +391,7 @@ void ofxBulletWorldRigid::mouseReleased( ofMouseEventArgs &a ) {
 	removeMouseConstraint();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+//--------------------------------------------------------------
+void ofxBulletWorldRigid::mouseScrolled( ofMouseEventArgs &a ) {
+    
+}
