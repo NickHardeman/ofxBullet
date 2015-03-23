@@ -21,9 +21,12 @@ static btTransform ofGetBtTransformFromVec3f( ofVec3f a_v ) {
 static btRigidBody* ofGetBtRigidBodyFromCollisionShape(btCollisionShape* a_cs, btTransform &a_tr, float a_mass) {
 	btDefaultMotionState* motionState	= new btDefaultMotionState( a_tr );
 	btScalar mass	= btScalar( a_mass );
+
 	btVector3 fallInertia(0., 0., 0.);
-	a_cs->calculateLocalInertia( mass, fallInertia );
-	
+	if ( !a_cs->isConcave() ) {
+		a_cs->calculateLocalInertia( mass, fallInertia );
+	}
+
 	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI( mass, motionState, a_cs, fallInertia );
 	return new btRigidBody( fallRigidBodyCI );
 }
