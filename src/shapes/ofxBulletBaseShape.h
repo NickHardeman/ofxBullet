@@ -31,6 +31,7 @@ public:
         OFX_BULLET_TRI_MESH_SHAPE = 8,
 
 		OFX_BULLET_SOFT_ROPE = 20,
+        OFX_BULLET_SOFT_PATCH = 21,
 	};
 	
 	virtual void remove();

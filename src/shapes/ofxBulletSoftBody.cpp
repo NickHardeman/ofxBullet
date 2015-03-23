@@ -73,6 +73,11 @@ size_t ofxBulletSoftBody::getNumNodes() const {
 }
 
 //--------------------------------------------------------------
+size_t ofxBulletSoftBody::getNumFaces() const {
+    return _softBody->m_faces.size();
+}
+
+//--------------------------------------------------------------
 ofVec3f ofxBulletSoftBody::getNodePos(int idx) const {
     if (idx >= getNumNodes()) {
         ofLogWarning("ofxBulletRope") << "getNodePos() : idx " << idx << " greater than num nodes (" << getNumNodes() << ")";

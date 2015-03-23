@@ -23,6 +23,7 @@ public:
 	ofxBulletWorldSoft			world;
 	ofxBulletBox*				ground;
     ofxBulletRope*				rope;
+	ofxBulletPatch*				patch;
 	
 	vector<ofxBulletRigidBody*> shapes;
 	vector<ofxBulletJoint*>		joints;

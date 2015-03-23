@@ -49,6 +49,11 @@ void ofApp::setup() {
 	rope->setMass(1);
 	rope->setStiffness(1, 1, 1);
 	rope->attachRigidBodyAt(0, shapes[0]->getRigidBody());
+
+	patch = new ofxBulletPatch();
+	patch->create(&world, ofVec3f(-2, 2, -2), ofVec3f(-2, 2, 2), ofVec3f(2, 2, 2), ofVec3f(2, 2, -2));
+	patch->add();
+	patch->attachRigidBodyAt(0, shapes[0]->getRigidBody());
     
 	bDrawDebug	= false;
 	bSpacebar	= false;
@@ -102,6 +107,7 @@ void ofApp::draw() {
 	ground->draw();
     
 	rope->draw();
+	patch->draw();
 	
 	ofSetColor(255, 0, 255);
 	for(int i = 0; i < shapes.size(); i++) {

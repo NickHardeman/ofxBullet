@@ -1,6 +1,6 @@
 //
 //  ofxBulletRope.cpp
-//  SoftBodyExample
+//  ofxBullet
 //
 //  Created by Elias Zananiri on 2014-12-02.
 //

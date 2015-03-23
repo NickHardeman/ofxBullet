@@ -29,8 +29,11 @@ public:
     int getType();
     
     float getMass() const;
+
     size_t getNumNodes() const;
     ofVec3f getNodePos(int idx) const;
+
+	size_t getNumFaces() const;
     
     // SETTERS //
     void setMass(float a_mass, bool a_fromfaces = false);
