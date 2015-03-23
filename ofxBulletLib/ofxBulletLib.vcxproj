@@ -28,6 +28,7 @@
     <ClInclude Include="..\src\ofxBulletUserData.h" />
     <ClInclude Include="..\src\ofxBulletUtils.h" />
     <ClInclude Include="..\src\ofxBulletWorldRigid.h" />
+    <ClInclude Include="..\src\ofxBulletWorldSoft.h" />
     <ClInclude Include="..\src\render\GLDebugDrawer.h" />
     <ClInclude Include="..\src\shapes\ofxBulletBaseShape.h" />
     <ClInclude Include="..\src\shapes\ofxBulletBox.h" />
@@ -36,12 +37,16 @@
     <ClInclude Include="..\src\shapes\ofxBulletConvexShape.h" />
     <ClInclude Include="..\src\shapes\ofxBulletCustomShape.h" />
     <ClInclude Include="..\src\shapes\ofxBulletCylinder.h" />
+    <ClInclude Include="..\src\shapes\ofxBulletRigidBody.h" />
+    <ClInclude Include="..\src\shapes\ofxBulletRope.h" />
+    <ClInclude Include="..\src\shapes\ofxBulletSoftBody.h" />
     <ClInclude Include="..\src\shapes\ofxBulletSphere.h" />
     <ClInclude Include="..\src\shapes\ofxBulletStaticPlane.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\joints\ofxBulletJoint.cpp" />
     <ClCompile Include="..\src\ofxBulletWorldRigid.cpp" />
+    <ClCompile Include="..\src\ofxBulletWorldSoft.cpp" />
     <ClCompile Include="..\src\render\GLDebugDrawer.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletBaseShape.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletBox.cpp" />
@@ -50,6 +55,9 @@
     <ClCompile Include="..\src\shapes\ofxBulletConvexShape.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletCustomShape.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletCylinder.cpp" />
+    <ClCompile Include="..\src\shapes\ofxBulletRigidBody.cpp" />
+    <ClCompile Include="..\src\shapes\ofxBulletRope.cpp" />
+    <ClCompile Include="..\src\shapes\ofxBulletSoftBody.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletSphere.cpp" />
     <ClCompile Include="..\src\shapes\ofxBulletStaticPlane.cpp" />
   </ItemGroup>

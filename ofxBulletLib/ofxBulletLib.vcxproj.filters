@@ -78,6 +78,18 @@
     <ClInclude Include="..\src\ofxBullet.h">
       <Filter>ofxBullet\src</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ofxBulletWorldSoft.h">
+      <Filter>ofxBullet\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletRigidBody.h">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletRope.h">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shapes\ofxBulletSoftBody.h">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\joints\ofxBulletJoint.cpp">
@@ -115,6 +127,18 @@
     </ClCompile>
     <ClCompile Include="..\src\ofxBulletWorldRigid.cpp">
       <Filter>ofxBullet\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ofxBulletWorldSoft.cpp">
+      <Filter>ofxBullet\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletRigidBody.cpp">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletRope.cpp">
+      <Filter>ofxBullet\src\shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shapes\ofxBulletSoftBody.cpp">
+      <Filter>ofxBullet\src\shapes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
