@@ -97,7 +97,7 @@ void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aM
         }
 	}
     
-    ofxBulletBaseShape::create( a_world, _shape, a_bt_tr, a_mass );
+    ofxBulletRigidBody::create( a_world, _shape, a_bt_tr, a_mass );
     
     
     createInternalUserData();
