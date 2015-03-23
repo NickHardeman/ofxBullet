@@ -49,9 +49,9 @@ void ofxBulletCylinder::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc,
 //--------------------------------------------------------------
 void ofxBulletCylinder::create( btDiscreteDynamicsWorld* a_world, btTransform &a_bt_tr, float a_mass, float a_radius, float a_height) {
 	if(!_bInited || _shape == NULL) {
-		ofxBulletBaseShape::create( a_world, (btCollisionShape*)ofBtGetCylinderCollisionShape(a_radius, a_height), a_bt_tr, a_mass );
+		ofxBulletRigidBody::create( a_world, (btCollisionShape*)ofBtGetCylinderCollisionShape(a_radius, a_height), a_bt_tr, a_mass );
 	} else {
-		ofxBulletBaseShape::create( a_world, _shape, a_bt_tr, a_mass );
+		ofxBulletRigidBody::create( a_world, _shape, a_bt_tr, a_mass );
 	}
 	createInternalUserData();
 }

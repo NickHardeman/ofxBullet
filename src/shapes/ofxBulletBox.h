@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include "ofxBulletBaseShape.h"
+#include "ofxBulletRigidBody.h"
 
-class ofxBulletBox : public ofxBulletBaseShape {
+class ofxBulletBox : public ofxBulletRigidBody {
 public:
 	ofxBulletBox();
 	~ofxBulletBox();

@@ -22,7 +22,7 @@ ofxBulletJoint::~ofxBulletJoint() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletJoint::create( btDiscreteDynamicsWorld* a_world, ofxBulletBaseShape* a_shape1, ofxBulletBaseShape* a_shape2 ) {
+void ofxBulletJoint::create( btDiscreteDynamicsWorld* a_world, ofxBulletRigidBody* a_shape1, ofxBulletRigidBody* a_shape2 ) {
 	_world = a_world;
 	// we should have these always influenced by the joint, so don't let them go to sleep //
 	a_shape1->setActivationState( DISABLE_DEACTIVATION );
@@ -44,7 +44,7 @@ void ofxBulletJoint::create( btDiscreteDynamicsWorld* a_world, ofxBulletBaseShap
 }
 
 //--------------------------------------------------------------
-void ofxBulletJoint::create( btDiscreteDynamicsWorld* a_world, ofxBulletBaseShape* a_shape, ofVec3f a_pos ) {
+void ofxBulletJoint::create( btDiscreteDynamicsWorld* a_world, ofxBulletRigidBody* a_shape, ofVec3f a_pos ) {
 	_world = a_world;
 	// we should have these always influenced by the joint, so don't let them go to sleep //
 	a_shape->setActivationState( DISABLE_DEACTIVATION );
