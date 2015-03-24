@@ -76,7 +76,7 @@ void ofxBulletRigidBody::removeRigidBody() {
 	}
     
     _bInited = _bAdded = false;
-    setRemoved();
+    //setRemoved();
 }
 
 // GETTERS //

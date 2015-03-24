@@ -253,8 +253,8 @@ bool ofxBulletBaseShape::checkCreate() {
 
 //--------------------------------------------------------------
 void ofxBulletBaseShape::activate() {
-	//((btCollisionObject*)_rigidBody->getCollisionShape())->activate( true );
-	_object->activate( true );
+	((btCollisionObject *)_object->getCollisionShape())->activate( true );
+	//_object->activate( true );
 }
 
 //--------------------------------------------------------------
