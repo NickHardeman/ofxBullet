@@ -31,7 +31,7 @@ public:
 	
 	btBoxShape*					boxShape;
 	btSphereShape*				sphereShape;
-	vector<ofxBulletBaseShape*>	shapes;
+	vector<ofxBulletRigidBody*>	shapes;
 	vector<bool>				bColliding;
 	int							mousePickIndex;
 	ofVec3f						mousePickPos;
