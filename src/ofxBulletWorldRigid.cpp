@@ -25,7 +25,6 @@ ofxBulletWorldRigid::ofxBulletWorldRigid() {
 	// disable collision event dispatching by default //
 	disableCollisionEvents();
 	disableGrabbing();
-	ofRegisterMouseEvents(this);
 }
 
 //--------------------------------------------------------------
@@ -174,11 +173,13 @@ ofxBulletRaycastData ofxBulletWorldRigid::raycastTest( ofVec3f a_rayStart, ofVec
 void ofxBulletWorldRigid::enableMousePickingEvents( short int a_filterMask ) {
 	_mouseFilterMask = a_filterMask;
 	bDispatchPickingEvents	= true;
+	ofRegisterMouseEvents(this);
 }
 
 //--------------------------------------------------------------
 void ofxBulletWorldRigid::disableMousePickingEvents() {
 	bDispatchPickingEvents	= false;
+	ofUnregisterMouseEvents(this);
 }
 
 //--------------------------------------------------------------
@@ -236,11 +237,13 @@ void ofxBulletWorldRigid::enableGrabbing(short int a_filterMask) {
 	_mouseFilterMask = a_filterMask;
 	bDispatchPickingEvents = true;
 	bRegisterGrabbing = true;
+	ofRegisterMouseEvents(this);
 }
 
 //--------------------------------------------------------------
 void ofxBulletWorldRigid::disableGrabbing() {
 	bRegisterGrabbing = false;
+	ofUnregisterMouseEvents(this);
 }
 
 
