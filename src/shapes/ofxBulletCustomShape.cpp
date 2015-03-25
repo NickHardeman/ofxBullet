@@ -168,7 +168,7 @@ bool ofxBulletCustomShape::addMesh( ofMesh a_mesh, ofVec3f a_localScaling, bool 
 }
 
 //--------------------------------------------------------------
-void ofxBulletCustomShape::add() {
+void ofxBulletCustomShape::preAdd() {
 	_bAdded = true;
 	btTransform trans;
 	trans.setIdentity();
@@ -187,9 +187,20 @@ void ofxBulletCustomShape::add() {
 	}
 	_rigidBody = ofGetBtRigidBodyFromCollisionShape( _shape, _startTrans, _mass);
 	createInternalUserData();
-	_world->addRigidBody(_rigidBody);
 	setProperties(.4, .75);
 	setDamping( .25 );
+}
+
+//--------------------------------------------------------------
+void ofxBulletCustomShape::add() {
+	preAdd();
+	_world->addRigidBody(_rigidBody);
+}
+
+//--------------------------------------------------------------
+void ofxBulletCustomShape::add(short group, short mask) {
+	preAdd();
+	_world->addRigidBody(_rigidBody, group, mask);
 }
 
 //--------------------------------------------------------------

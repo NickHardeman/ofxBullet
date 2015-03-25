@@ -27,6 +27,7 @@ public:
 	bool addShape( btCollisionShape* a_colShape, ofVec3f a_localCentroidPos );
 	bool addMesh(ofMesh a_mesh, ofVec3f a_localScaling, bool a_bUseConvexHull);
 	void add();
+	void add(short group, short mask);
 	
 	ofVec3f getCentroid();
 	int		getNumChildShapes();
@@ -35,6 +36,8 @@ public:
     void transformGL();
 	
 protected:
+	void preAdd();
+
 	btTransform				_startTrans;
 	ofVec3f					_centroid;
 	vector<ofVec3f>			centroids;
