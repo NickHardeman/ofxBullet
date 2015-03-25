@@ -51,6 +51,12 @@ void ofxBulletBaseShape::add() {
 }
 
 //--------------------------------------------------------------
+void ofxBulletBaseShape::add(short group, short mask) {
+	_bAdded = true;
+	_world->addRigidBody( _rigidBody, group, mask);
+}
+
+//--------------------------------------------------------------
 void ofxBulletBaseShape::remove() {
     
     if(_bUserDataCreatedInternally) {
