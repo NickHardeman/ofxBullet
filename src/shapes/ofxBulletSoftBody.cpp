@@ -47,7 +47,7 @@ void ofxBulletSoftBody::removeSoftBody() {
     }
     
     _bAdded = false;
-    setRemoved();
+    //setRemoved();
 }
 
 // GETTERS //
