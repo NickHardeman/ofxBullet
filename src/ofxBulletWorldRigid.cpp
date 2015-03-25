@@ -303,7 +303,7 @@ void ofxBulletWorldRigid::removeMouseConstraint() {
 //--------------------------------------------------------------
 void ofxBulletWorldRigid::destroy() {
 	
-	cout << "ofxBulletWorldRigid :: destroy : destroy() " << endl;
+	//cout << "ofxBulletWorldRigid :: destroy : destroy() " << endl;
 	//cleanup in the reverse order of creation/initialization
 	int i;
 	
