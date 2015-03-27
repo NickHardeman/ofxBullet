@@ -10,7 +10,7 @@
 #include "btShapeHull.h"
 
 //--------------------------------------------------------------
-ofxBulletConvexShape::ofxBulletConvexShape() {
+ofxBulletConvexShape::ofxBulletConvexShape() : ofxBulletRigidBody() {
     _type = OFX_BULLET_CONVEX_SHAPE;
 }
 

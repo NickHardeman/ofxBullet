@@ -9,7 +9,7 @@
 #include "ofxBulletCapsule.h"
 
 //--------------------------------------------------------------
-ofxBulletCapsule::ofxBulletCapsule() {
+ofxBulletCapsule::ofxBulletCapsule() : ofxBulletRigidBody() {
 	_type	= OFX_BULLET_CAPSULE_SHAPE;
 	hull	= NULL;
 }

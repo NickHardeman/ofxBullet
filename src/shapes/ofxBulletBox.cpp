@@ -9,7 +9,7 @@
 #include "ofxBulletBox.h"
 
 //--------------------------------------------------------------
-ofxBulletBox::ofxBulletBox() {
+ofxBulletBox::ofxBulletBox() : ofxBulletRigidBody() {
 	_type = OFX_BULLET_BOX_SHAPE;
 }
 

@@ -9,7 +9,7 @@
 #include "ofxBulletSphere.h"
 
 //--------------------------------------------------------------
-ofxBulletSphere::ofxBulletSphere() {
+ofxBulletSphere::ofxBulletSphere() : ofxBulletRigidBody() {
 	_type = OFX_BULLET_SPHERE_SHAPE;
 }
 

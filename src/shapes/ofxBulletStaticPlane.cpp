@@ -10,7 +10,7 @@
 #include "btBulletDynamicsCommon.h"
 
 //--------------------------------------------------------------
-ofxBulletStaticPlane::ofxBulletStaticPlane() {
+ofxBulletStaticPlane::ofxBulletStaticPlane() : ofxBulletRigidBody() {
     //
 }
 

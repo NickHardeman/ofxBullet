@@ -9,7 +9,7 @@
 #include "ofxBulletCustomShape.h"
 
 //--------------------------------------------------------------
-ofxBulletCustomShape::ofxBulletCustomShape() {
+ofxBulletCustomShape::ofxBulletCustomShape() : ofxBulletRigidBody() {
 	_type = OFX_BULLET_CUSTOM_SHAPE;
 }
 
