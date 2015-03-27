@@ -23,7 +23,6 @@ public:
     btSoftBodyWorldInfo& getInfo();
 
 protected:
-    virtual btBroadphaseInterface* createBroadphase();
     virtual btCollisionConfiguration* createCollisionConfig();
     virtual btDiscreteDynamicsWorld* createWorld();
     

@@ -25,11 +25,6 @@ void ofxBulletWorldSoft::setup() {
 }
 
 //--------------------------------------------------------------
-btBroadphaseInterface* ofxBulletWorldSoft::createBroadphase() {
-    return new btDbvtBroadphase();
-}
-
-//--------------------------------------------------------------
 btCollisionConfiguration* ofxBulletWorldSoft::createCollisionConfig() {
     return new btSoftBodyRigidBodyCollisionConfiguration();
 }
