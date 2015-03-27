@@ -49,8 +49,8 @@ void ofxBulletRigidBody::add() {
 //--------------------------------------------------------------
 void ofxBulletRigidBody::remove() {
 	setData(NULL);
-    removeShape();
 	removeRigidBody();
+    removeShape();
 	setRemoved();
 }
 
