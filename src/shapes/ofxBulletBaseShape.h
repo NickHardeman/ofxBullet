@@ -35,7 +35,7 @@ public:
         OFX_BULLET_SOFT_ELLIPSOID = 22
 	};
 	
-	virtual void remove();
+	virtual void remove() = 0;
     
 	// GETTERS //
 	btCollisionObject* getCollisionObject();

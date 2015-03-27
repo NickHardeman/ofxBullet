@@ -39,6 +39,7 @@ void ofxBulletRope::create(ofxBulletWorldSoft* a_world, const ofVec3f& a_from, c
     _linkLength = a_from.distance(a_to) / a_res;
     
     _type = OFX_BULLET_SOFT_ROPE;
+	createInternalUserData();
 }
 
 //--------------------------------------------------------------

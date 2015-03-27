@@ -29,6 +29,7 @@ void ofxBulletPatch::create(ofxBulletWorldSoft* a_world, const ofVec3f& a_p0, co
     setCreated(_softBody);
         
     _type = OFX_BULLET_SOFT_PATCH;
+	createInternalUserData();
 }
 
 //--------------------------------------------------------------

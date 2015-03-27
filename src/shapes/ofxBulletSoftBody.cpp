@@ -35,19 +35,21 @@ void ofxBulletSoftBody::add() {
 
 //--------------------------------------------------------------
 void ofxBulletSoftBody::remove() {
+	setData(NULL);
     removeSoftBody();
+	setRemoved();
 }
 
 //--------------------------------------------------------------
 void ofxBulletSoftBody::removeSoftBody() {
-    if(_world != NULL && _bAdded) {
-        _world->getWorld()->removeSoftBody(_softBody);
-        delete _softBody;
+	if(_softBody != NULL) {
+		if(_world != NULL && _bAdded) {
+			_world->getWorld()->removeSoftBody(_softBody);
+			_bAdded = false;
+		}
+		delete _softBody;
         _softBody = NULL;
-    }
-    
-    _bAdded = false;
-    //setRemoved();
+	}
 }
 
 // GETTERS //

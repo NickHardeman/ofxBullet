@@ -14,12 +14,13 @@ ofxBulletBaseShape::ofxBulletBaseShape() {
 	_bInited		= false;
 	_bAdded			= false;
 	_userPointer	= NULL;
+	_object			= NULL;
     _bUserDataCreatedInternally = true;
 }
 
 //--------------------------------------------------------------
 ofxBulletBaseShape::~ofxBulletBaseShape() {
-	remove();
+
 }
 
 //--------------------------------------------------------------
@@ -32,21 +33,9 @@ void ofxBulletBaseShape::setCreated(btCollisionObject* object)
 //--------------------------------------------------------------
 void ofxBulletBaseShape::setRemoved()
 {
-    _object = NULL;
-    _bCreated = false;
-}
 
-//--------------------------------------------------------------
-void ofxBulletBaseShape::remove() {
-    
-    if(_bUserDataCreatedInternally) {
-        if(_userPointer != NULL) {
-            delete ((ofxBulletUserData*)_userPointer);
-            _userPointer = NULL;
-        }
-    }
-    
-    setRemoved();
+	_object = NULL;
+    _bCreated = false;
 }
 
 //--------------------------------------------------------------
@@ -198,25 +187,22 @@ void ofxBulletBaseShape::setActivationState( int a_state ) {
 
 //--------------------------------------------------------------
 void ofxBulletBaseShape::setData(void* userPointer) {
-    if(_bUserDataCreatedInternally) {
-        if(_userPointer != NULL) {
+	// Remove old data first.
+	if(_userPointer != NULL) {
+		if(_bUserDataCreatedInternally) {
             delete ((ofxBulletUserData*)_userPointer);
-            _userPointer = NULL;
         }
     }
-    _bUserDataCreatedInternally = false;
-    
+
 	_userPointer = userPointer;
 	_object->setUserPointer( _userPointer );
+	_bUserDataCreatedInternally = false;
 }
 
 //--------------------------------------------------------------
 void ofxBulletBaseShape::createInternalUserData() {
-    _bUserDataCreatedInternally = true;
-    if(_userPointer == NULL) {
-        _userPointer = new ofxBulletUserData();
-        _object->setUserPointer( _userPointer );
-    }
+	setData(new ofxBulletUserData());
+	_bUserDataCreatedInternally = true;
 }
 
 // CHECKERS //

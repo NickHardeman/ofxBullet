@@ -29,6 +29,7 @@ void ofxBulletEllipsoid::create(ofxBulletWorldSoft* a_world, const ofVec3f& a_ce
     setCreated(_softBody);
         
     _type = OFX_BULLET_SOFT_ELLIPSOID;
+	createInternalUserData();
 }
 
 //--------------------------------------------------------------

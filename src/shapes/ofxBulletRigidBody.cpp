@@ -47,9 +47,11 @@ void ofxBulletRigidBody::add() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletRigidBody::remove() {    
+void ofxBulletRigidBody::remove() {
+	setData(NULL);
     removeShape();
 	removeRigidBody();
+	setRemoved();
 }
 
 //--------------------------------------------------------------
@@ -60,23 +62,24 @@ void ofxBulletRigidBody::removeShape() {
             _shape = NULL;
         }
     }
+	_bInited = false;
 }
 
 //--------------------------------------------------------------
 void ofxBulletRigidBody::removeRigidBody() {
-	if(_world != NULL && _bAdded) {
-		//cout << "ofxBulletBaseShape :: removeRigidBody : calling remove rigid body" << endl;
-		if (_rigidBody && _rigidBody->getMotionState()) {
-			delete _rigidBody->getMotionState();
+	if(_rigidBody != NULL) {
+		if(_world != NULL && _bAdded) {
+			_world->removeRigidBody(_rigidBody);
+			_bAdded = false;
 		}
-		_world->removeRigidBody(_rigidBody);
+		if (_rigidBody->getMotionState()) {
+			delete _rigidBody->getMotionState();
+			_rigidBody->setMotionState(NULL);
+		}
+
 		delete _rigidBody;
 		_rigidBody = NULL;
-		
 	}
-    
-    _bInited = _bAdded = false;
-    //setRemoved();
 }
 
 // GETTERS //
