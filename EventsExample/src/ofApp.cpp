@@ -1,7 +1,7 @@
-#include "testApp.h"
+#include "ofApp.h"
 
 //--------------------------------------------------------------
-void testApp::setup() {
+void ofApp::setup() {
 	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
 	ofBackground( 10, 10, 10);
@@ -12,10 +12,10 @@ void testApp::setup() {
 	world.setup();
 	// enables mouse Pick events //
 	world.enableGrabbing();
-	ofAddListener(world.MOUSE_PICK_EVENT, this, &testApp::mousePickEvent);
+	ofAddListener(world.MOUSE_PICK_EVENT, this, &ofApp::mousePickEvent);
 
 	world.enableCollisionEvents();
-	ofAddListener(world.COLLISION_EVENT, this, &testApp::onCollision);
+	ofAddListener(world.COLLISION_EVENT, this, &ofApp::onCollision);
 	world.setCamera(&camera);
 	world.setGravity( ofVec3f(0, 25., 0) );
 
@@ -90,7 +90,7 @@ void testApp::setup() {
 }
 
 //--------------------------------------------------------------
-void testApp::update() {
+void ofApp::update() {
 	for(int i = 0; i < shapes.size(); i++) {
 		bColliding[i] = false;
 	}
@@ -113,7 +113,7 @@ void testApp::update() {
 }
 
 //--------------------------------------------------------------
-void testApp::draw() {
+void ofApp::draw() {
 	glEnable( GL_DEPTH_TEST );
 	camera.begin();
 
@@ -173,7 +173,7 @@ void testApp::draw() {
 }
 
 //--------------------------------------------------------------
-void testApp::onCollision(ofxBulletCollisionData& cdata) {
+void ofApp::onCollision(ofxBulletCollisionData& cdata) {
 	for(int j = 0; j < bounds.size(); j++) {
 		if(*bounds[j] == cdata) {
 			return;
@@ -188,7 +188,7 @@ void testApp::onCollision(ofxBulletCollisionData& cdata) {
 }
 
 //--------------------------------------------------------------
-void testApp::mousePickEvent( ofxBulletMousePickEvent &e ) {
+void ofApp::mousePickEvent( ofxBulletMousePickEvent &e ) {
 	mousePickIndex = -1;
 	for(int i = 0; i < shapes.size(); i++) {
 		if(*shapes[i] == e) {
@@ -200,7 +200,7 @@ void testApp::mousePickEvent( ofxBulletMousePickEvent &e ) {
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed(int key) {
+void ofApp::keyPressed(int key) {
 	int ii = 0;
 
 	ofVec3f mouseLoc = camera.screenToWorld( ofVec3f((float)ofGetMouseX(), (float)ofGetMouseY(), 0) );
@@ -255,42 +255,42 @@ void testApp::keyPressed(int key) {
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key) {
+void ofApp::keyReleased(int key) {
 	if(key == ' ')
 		bSpacebar = false;
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y) {
+void ofApp::mouseMoved(int x, int y) {
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button) {
+void ofApp::mouseDragged(int x, int y, int button) {
 
 }
 
 //--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button) {
+void ofApp::mousePressed(int x, int y, int button) {
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button){
+void ofApp::mouseReleased(int x, int y, int button){
     mousePickIndex = -1;
 }
 
 //--------------------------------------------------------------
-void testApp::windowResized(int w, int h) {
+void ofApp::windowResized(int w, int h) {
 
 }
 
 //--------------------------------------------------------------
-void testApp::gotMessage(ofMessage msg) {
+void ofApp::gotMessage(ofMessage msg) {
 
 }
 
 //--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo) {
+void ofApp::dragEvent(ofDragInfo dragInfo) {
 
 }
