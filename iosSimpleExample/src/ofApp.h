@@ -25,7 +25,7 @@ public:
     void deviceOrientationChanged(int newOrientation);
     
     ofxBulletWorldRigid			world;
-    vector<ofxBulletBaseShape*>	shapes;
+    vector<ofxBulletRigidBody*>	shapes;
     vector<ofColor> colors;
     float lastShapeAddTimef;
     ofCamera    camera;
