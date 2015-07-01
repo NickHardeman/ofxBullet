@@ -9,7 +9,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxBulletBaseShape.h"
 #include "ofxBulletUserData.h"
 
 class ofxBulletCollisionData {

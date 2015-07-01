@@ -8,10 +8,10 @@
 
 #pragma once
 
-#include "ofxBulletBaseShape.h"
+#include "ofxBulletRigidBody.h"
 #include "btShapeHull.h"
 
-class ofxBulletCustomShape : public ofxBulletBaseShape {
+class ofxBulletCustomShape : public ofxBulletRigidBody {
 public:
 	ofxBulletCustomShape();
 	~ofxBulletCustomShape();

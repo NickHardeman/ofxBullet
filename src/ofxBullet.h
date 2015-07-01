@@ -9,6 +9,7 @@
 #pragma once
 
 #include "ofxBulletWorldRigid.h"
+#include "ofxBulletWorldSoft.h"
 #include "ofxBulletConstants.h"
 #include "ofxBulletUtils.h"
 #include "ofxBulletUserData.h"
@@ -24,6 +25,10 @@
 #include "ofxBulletConvexShape.h"
 #include "ofxBulletStaticPlane.h"
 #include "ofxBulletTriMeshShape.h"
+
+#include "ofxBulletEllipsoid.h"
+#include "ofxBulletPatch.h"
+#include "ofxBulletRope.h"
 
 // dynamics //
 #include "ofxBulletJoint.h"

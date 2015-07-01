@@ -7,9 +7,10 @@
 //
 
 #pragma once
-#include "ofxBulletBaseShape.h"
 
-class ofxBulletConvexShape : public ofxBulletBaseShape {
+#include "ofxBulletRigidBody.h"
+
+class ofxBulletConvexShape : public ofxBulletRigidBody {
 public:
     ofxBulletConvexShape();
 	~ofxBulletConvexShape();

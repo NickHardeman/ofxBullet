@@ -27,7 +27,8 @@ public:
 	ofxBulletWorldRigid();
 	~ofxBulletWorldRigid();
 	
-	void setup();
+	virtual void setup();
+    
 	void update( float aDeltaTimef=1.0f/60.0f, int aNumIterations=6 );
 	void setCameraPosition( ofVec3f a_pos );
 	void setCamera( ofCamera* a_cam );
@@ -44,6 +45,7 @@ public:
 	void disableMousePickingEvents();
 	void checkMousePicking(float a_mousex, float a_mousey);
 	
+    btDiscreteDynamicsWorld* getWorld();
 	void enableGrabbing( short int a_filterMask=btBroadphaseProxy::DefaultFilter | btBroadphaseProxy::KinematicFilter | btBroadphaseProxy::DebrisFilter | btBroadphaseProxy::SensorTrigger );
 	void disableGrabbing();
 	
@@ -51,7 +53,7 @@ public:
 	void drawDebug();
 	
 	bool checkWorld();
-	void setGravity( ofVec3f a_g );
+	virtual void setGravity( ofVec3f a_g );
 	ofVec3f getGravity();
 	
 	void removeMouseConstraint();
@@ -64,18 +66,23 @@ public:
 	void mouseScrolled( ofMouseEventArgs &a);
 	
 	btBroadphaseInterface*					broadphase;
-	btDefaultCollisionConfiguration*		collisionConfig;
+	btCollisionConfiguration*               collisionConfig;
 	btCollisionDispatcher*					dispatcher;
 	btSequentialImpulseConstraintSolver*	solver;
 	
-	btDiscreteDynamicsWorld*				world;
+	btDiscreteDynamicsWorld*                world;
 	btRigidBody*							ground;
 	
 protected:
+    virtual btBroadphaseInterface* createBroadphase();
+    virtual btCollisionConfiguration* createCollisionConfig();
+    virtual btDiscreteDynamicsWorld* createWorld();
+    
 	bool bDispatchCollisionEvents;
 	bool bDispatchPickingEvents;
 	bool bRegisterGrabbing;
 	bool bHasDebugDrawer;
+    
 private:
 	ofCamera*	_camera;
 	ofVec3f		_cameraPos;
@@ -87,7 +94,3 @@ private:
 	btTypedConstraint*	_pickConstraint;
 	float gOldPickingDist;
 };
-
-
-
-
