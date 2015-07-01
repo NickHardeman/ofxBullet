@@ -201,7 +201,7 @@ void ofxBulletBaseShape::setData(void* userPointer) {
 
 //--------------------------------------------------------------
 void ofxBulletBaseShape::createInternalUserData() {
-	setData(new ofxBulletUserData());
+	setData( new ofxBulletUserData() );
 	_bUserDataCreatedInternally = true;
 }
 

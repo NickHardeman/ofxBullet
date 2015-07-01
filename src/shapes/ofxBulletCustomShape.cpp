@@ -186,6 +186,7 @@ void ofxBulletCustomShape::add() {
 		((btCompoundShape*)_shape)->addChildShape( trans, shapes[i]);
 	}
 	_rigidBody = ofGetBtRigidBodyFromCollisionShape( _shape, _startTrans, _mass);
+    setCreated(_rigidBody);
 	createInternalUserData();
 	_world->addRigidBody(_rigidBody);
 	setProperties(.4, .75);

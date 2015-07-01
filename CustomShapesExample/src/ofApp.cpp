@@ -1,7 +1,7 @@
-#include "testApp.h"
+#include "ofApp.h"
 
 //--------------------------------------------------------------
-void testApp::setup() {
+void ofApp::setup() {
 	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
 	ofBackground( 10, 10, 10);
@@ -64,9 +64,10 @@ void testApp::setup() {
 	assimpModel.setPosition(0, 0, 0);
 	
 	ofQuaternion startRot = ofQuaternion(1., 0., 0., PI);
-	
-	for (int i = 0; i < 3; i++) {
-		logos.push_back( new ofxBulletCustomShape() );
+    
+    logos.resize( 3 );
+	for (int i = 0; i < logos.size(); i++) {
+        logos[i] = new ofxBulletCustomShape();
 		startLoc = ofVec3f( ofRandom(-5, 5), ofRandom(0, -hwidth+5), ofRandom(-5, 5) );
 		
 		if(i == 0) {
@@ -100,7 +101,7 @@ void testApp::setup() {
 }
 
 //--------------------------------------------------------------
-void testApp::update() {
+void ofApp::update() {
 	
 	if(bDropBox && bounds.size() > 0) {
 		for (int i = 0; i < bounds.size(); i++) {
@@ -121,7 +122,7 @@ void testApp::update() {
 }
 
 //--------------------------------------------------------------
-void testApp::draw() {
+void ofApp::draw() {
 	glEnable( GL_DEPTH_TEST );
 	
 	camera.begin();
@@ -147,7 +148,7 @@ void testApp::draw() {
 		ofNoFill();
         boundsShape->transformGL();
 		ofDrawBox(ofVec3f(0, 0,0), boundsWidth);
-		boundsShape->restoreTramsformGL();
+		boundsShape->restoreTransformGL();
 		ofFill();
 	}
 	
@@ -166,7 +167,7 @@ void testApp::draw() {
         logos[i]->transformGL();
 		ofScale(scale.x,scale.y,scale.z);
 		assimpModel.getMesh(0).drawFaces();
-		logos[i]->restoreTramsformGL();
+		logos[i]->restoreTransformGL();
 	}
 	glPopAttrib();
 	logoMat.end();
@@ -200,7 +201,7 @@ void testApp::draw() {
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed(int key) {
+void ofApp::keyPressed(int key) {
 	ofVec3f mouseLoc = camera.screenToWorld( ofVec3f((float)ofGetMouseX(), (float)ofGetMouseY(), 0) );
 	ofVec3f gravity = world.getGravity();
 	ofQuaternion startRot = ofQuaternion(1., 0., 0., PI);
@@ -253,41 +254,41 @@ void testApp::keyPressed(int key) {
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key) {
+void ofApp::keyReleased(int key) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y) {
+void ofApp::mouseMoved(int x, int y) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button) {
+void ofApp::mouseDragged(int x, int y, int button) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button) {
+void ofApp::mousePressed(int x, int y, int button) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button){
+void ofApp::mouseReleased(int x, int y, int button){
 	
 }
 
 //--------------------------------------------------------------
-void testApp::windowResized(int w, int h) {
+void ofApp::windowResized(int w, int h) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::gotMessage(ofMessage msg) {
+void ofApp::gotMessage(ofMessage msg) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo) { 
+void ofApp::dragEvent(ofDragInfo dragInfo) { 
 	
 }
