@@ -35,6 +35,7 @@ public:
         OFX_BULLET_SOFT_ELLIPSOID = 22
 	};
 	
+    virtual void add() = 0;
 	virtual void remove() = 0;
     
 	// GETTERS //
