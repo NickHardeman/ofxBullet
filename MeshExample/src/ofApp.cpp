@@ -1,7 +1,7 @@
-#include "testApp.h"
+#include "ofApp.h"
 
 //--------------------------------------------------------------
-void testApp::setup() {
+void ofApp::setup() {
 	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
 	ofBackground( 10, 10, 10);
@@ -101,7 +101,7 @@ void testApp::setup() {
 }
 
 //--------------------------------------------------------------
-void testApp::update() {
+void ofApp::update() {
     
     if( bSpacebar ) {
         shared_ptr< ofxBulletSphere > sphere( new ofxBulletSphere() );
@@ -135,7 +135,7 @@ void testApp::update() {
 }
 
 //--------------------------------------------------------------
-void testApp::draw() {
+void ofApp::draw() {
 	glEnable( GL_DEPTH_TEST );
 	camera.begin();
 	
@@ -181,12 +181,12 @@ void testApp::draw() {
 }
 
 //--------------------------------------------------------------
-void testApp::exit() {
+void ofApp::exit() {
     
 }
 
 //--------------------------------------------------------------
-void testApp::keyPressed(int key) {
+void ofApp::keyPressed(int key) {
 	switch (key) {
 		case ' ':
 			bSpacebar = true;
@@ -208,41 +208,41 @@ void testApp::keyPressed(int key) {
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key) {
+void ofApp::keyReleased(int key) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y) {
+void ofApp::mouseMoved(int x, int y) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button) {
+void ofApp::mouseDragged(int x, int y, int button) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button) {
+void ofApp::mousePressed(int x, int y, int button) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button){
+void ofApp::mouseReleased(int x, int y, int button){
 	
 }
 
 //--------------------------------------------------------------
-void testApp::windowResized(int w, int h) {
+void ofApp::windowResized(int w, int h) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::gotMessage(ofMessage msg) {
+void ofApp::gotMessage(ofMessage msg) {
 	
 }
 
 //--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo) { 
+void ofApp::dragEvent(ofDragInfo dragInfo) { 
 	
 }
