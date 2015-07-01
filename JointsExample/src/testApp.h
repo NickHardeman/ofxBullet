@@ -23,7 +23,7 @@ public:
 	ofxBulletWorldRigid			world;
 	ofxBulletBox*				ground;
 	
-	vector<ofxBulletBaseShape*> shapes;
+	vector<ofxBulletRigidBody*> shapes;
 	vector<ofxBulletJoint*>		joints;
 	vector<ofColor>				shapeColors;
 	ofColor						colors[4];

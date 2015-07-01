@@ -81,7 +81,7 @@ void testApp::draw() {
 	if(bDrawDebug) world.drawDebug();
 	
 	ofSetColor(255, 255, 255);
-	ofSphere(mousePos, .15f);
+	ofDrawSphere(mousePos, .15f);
 	
 	ofEnableLighting();
 	light.enable();
