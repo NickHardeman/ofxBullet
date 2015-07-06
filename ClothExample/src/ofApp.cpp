@@ -104,15 +104,20 @@ void ofApp::keyPressed(int key) {
     if( key == 'p' ) {
         patches.clear();
         
-        const btScalar	s=8;
-        const btScalar	h=-7;
-        const int		r=72;
+        const btScalar	s = 8;
+        const btScalar	h = -7;
+        const int		r = 64;
         
         shared_ptr<ofxBulletPatch> patch( new ofxBulletPatch() );
         patch->create( &world, ofVec3f(-s,h,-s), ofVec3f(s,h,-s), ofVec3f(-s, h, s ), ofVec3f(s,h,s), r, r );
         patch->getSoftBody()->getCollisionShape()->setMargin(0.25);
+        
+        patch->getSoftBody()->generateBendingConstraints(1, patch->getSoftBody()->m_materials[0]);
+        patch->getSoftBody()->m_materials[0]->m_kLST		=	0.4;
+        
         patch->add();
-        patch->setMass( 0.1, false );
+        patch->setMass( 0.25, false );
+        
         patch->getSoftBody()->m_cfg.piterations = 20;
         patch->getSoftBody()->m_cfg.citerations = 20;
         patch->getSoftBody()->m_cfg.diterations = 20;
