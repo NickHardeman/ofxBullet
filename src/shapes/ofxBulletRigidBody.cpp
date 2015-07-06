@@ -32,6 +32,8 @@ void ofxBulletRigidBody::create( btDiscreteDynamicsWorld* a_world, btCollisionSh
 	}
 	_mass			= a_mass;
 	_world			= a_world;
+    
+    _shape          = a_colShape;
 	
 	_rigidBody		= ofGetBtRigidBodyFromCollisionShape( a_colShape, a_bt_tr, a_mass);
 	setCreated(_rigidBody);

@@ -4,10 +4,6 @@ bool shouldRemoveRigidBody( const shared_ptr<ofxBulletRigidBody>& ab ) {
     return ab->getPosition().y > 15;
 }
 
-bool shouldRemoveBunny( const shared_ptr<ofxBulletSoftTriMesh>& ab ) {
-    return ab->getPosition().y > 15;
-}
-
 //--------------------------------------------------------------
 void ofApp::setup() {
     ofSetFrameRate( 60 );
@@ -22,20 +18,23 @@ void ofApp::setup() {
     world.setCamera(&camera);
     
     
-    ground = new ofxBulletBox();
-	ground->create( world.world, ofVec3f(0., 5.5, 0.), 0., 50., 1.f, 50.f );
-	ground->setProperties(.25, .95);
-	ground->add();
+	ground.create( world.world, ofVec3f(0., 5.5, 0.), 0., 50., 1.f, 50.f );
+	ground.setProperties(.25, .95);
+	ground.add();
     
-    // used from the OF examples/3d/pointPickerExample
-    mesh.load("lofi-bunny.ply");
-    
-    mesh.setMode( OF_PRIMITIVE_TRIANGLES );
     camera.enableMouseInput();
     
     
-    light.setPosition( 0, -5, 0 );
+    light.setPosition( 0, -10, 0 );
     
+    shared_ptr< ofxBulletSphere > sphere( new ofxBulletSphere() );
+    sphere->create( world.world, ofVec3f(0,-2.55,0), 0., 1.75 );
+    sphere->enableKinematic();
+    sphere->setFriction( 0.8 );
+    sphere->add();
+    sphere->getCollisionShape()->setMargin( 0.25 );
+    rigidBodies.push_back( sphere );
+
     
 }
 
@@ -44,7 +43,6 @@ void ofApp::update() {
 	world.update();
     
     ofRemove( rigidBodies, shouldRemoveRigidBody );
-    ofRemove( bunnies, shouldRemoveBunny );
 }
 
 //--------------------------------------------------------------
@@ -61,20 +59,19 @@ void ofApp::draw() {
     ofEnableLighting();
     light.enable();
     ofSetColor( 34,107,126 );
-    ground->draw();
+    ground.draw();
     
     ofSetHexColor( 0xC4EF02 );
     for( int i = 0; i < rigidBodies.size(); i++ ) {
         rigidBodies[i]->draw();
     }
     
-    ofSetLineWidth( 2 );
-    for( int i = 0; i < bunnies.size(); i++ ) {
-        ofSetHexColor( 0xDD3B49 );
-        bunnies[i]->draw();
-        ofSetHexColor( 0x3DABB7 );
-        bunnies[i]->getMesh().drawWireframe();
+    ofSetColor( 221,59,73 );
+    for( int i = 0; i < patches.size(); i++ ) {
+        patches[i]->update();
+        patches[i]->getMesh().drawWireframe();
     }
+    
     ofSetLineWidth( 1 );
     
     
@@ -87,58 +84,45 @@ void ofApp::draw() {
     ofDisableDepthTest();
     
     ofSetColor( 220, 220, 220 );
-    ofDrawBitmapString("Shoot ball(spacebar): "+ofToString( rigidBodies.size(), 0)+"\nAdd Bunny(b): "+ofToString(bunnies.size(), 0), 20, 20 );
+    ofDrawBitmapString("Shoot ball(spacebar): "+ofToString( rigidBodies.size(), 0)+"\nAdd Cloth(p): "+ofToString(patches.size(), 0), 20, 20 );
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
 	if( key == ' ' ) {
         shared_ptr< ofxBulletSphere > ss( new ofxBulletSphere() );
-        ss->create( world.world, camera.getPosition(), 0.75, 1. );
+        ss->create( world.world, camera.getPosition(), 0.02, .6 );
         ss->add();
         
         ofVec3f frc = -camera.getPosition();
         frc.normalize();
-        ss->applyCentralForce( frc * 2000 );
+        ss->applyCentralForce( frc * 50 );
         
         rigidBodies.push_back( ss );
     }
     
-    if( key == 'b' ) {
-        ofQuaternion tquat;
-        tquat.makeRotate( 180, 1, 0, 0 );
+    if( key == 'p' ) {
+        patches.clear();
         
-        float tscale = ofRandom(0.3, 1);
-        btTransform tt = ofGetBtTransform( ofVec3f( ofRandom(-5,5)*tscale*30, -15 * tscale * 30, 0), tquat );
+        const btScalar	s=8;
+        const btScalar	h=-7;
+        const int		r=72;
         
-        shared_ptr<ofxBulletSoftTriMesh> bunny(new ofxBulletSoftTriMesh());
-        bunny->create( &world, mesh, tt, 2 * tscale );
+        shared_ptr<ofxBulletPatch> patch( new ofxBulletPatch() );
+        patch->create( &world, ofVec3f(-s,h,-s), ofVec3f(s,h,-s), ofVec3f(-s, h, s ), ofVec3f(s,h,s), r, r );
+        patch->getSoftBody()->getCollisionShape()->setMargin(0.25);
+        patch->add();
+        patch->setMass( 0.1, false );
+        patch->getSoftBody()->m_cfg.piterations = 20;
+        patch->getSoftBody()->m_cfg.citerations = 20;
+        patch->getSoftBody()->m_cfg.diterations = 20;
         
-        bunny->getSoftBody()->generateBendingConstraints( 3, bunny->getSoftBody()->m_materials[0] );
-        
-        bunny->getSoftBody()->randomizeConstraints();
-        bunny->getSoftBody()->scale( btVector3( 0.025*tscale, 0.025*tscale, 0.025*tscale) );
-        
-        bunny->getSoftBody()->m_cfg.collisions =	btSoftBody::fCollision::CL_SS + btSoftBody::fCollision::CL_RS;
-        bunny->getSoftBody()->generateClusters(6);
-        
-        bunny->add();
-        
-        bunny->getSoftBody()->m_cfg.piterations =2;
-        bunny->getSoftBody()->m_cfg.kDF			=1;
-        bunny->getSoftBody()->m_cfg.kSSHR_CL	=1;
-        bunny->getSoftBody()->m_cfg.kSS_SPLT_CL	=0;
-        bunny->getSoftBody()->m_cfg.kSKHR_CL	=0.1f;
-        bunny->getSoftBody()->m_cfg.kSK_SPLT_CL	= 1;
-        
-//        bunny->setStiffness(0.5, 0.5, 0.5);
-        
-        bunnies.push_back( bunny );
+        patches.push_back( patch );
     }
     
     if( key == 127 || key == OF_KEY_DEL ) {
-        if( bunnies.size() ) {
-            bunnies.erase( bunnies.begin() );
+        if( patches.size() ) {
+            patches.erase( patches.begin() );
         }
     }
 }

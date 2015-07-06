@@ -18,6 +18,8 @@ public:
     
     void update();
     void draw();
+    
+    ofMesh& getMesh();
 
 protected:
     int _lastUpdateFrame;

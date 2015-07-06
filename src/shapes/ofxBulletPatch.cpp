@@ -63,3 +63,8 @@ void ofxBulletPatch::draw() {
     _cachedMesh.draw();
     restoreTransformGL();
 }
+
+//--------------------------------------------------------------
+ofMesh& ofxBulletPatch::getMesh() {
+    return _cachedMesh;
+}
