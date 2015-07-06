@@ -25,7 +25,9 @@ void ofxBulletSoftBody::add() {
     _bAdded = true;
     _world->getWorld()->addSoftBody(_softBody);
     
-    setMass(1);
+    if( _type != OFX_BULLET_TRI_MESH_SHAPE ) {
+        setMass(1);
+    }
     setStiffness(0.9, 0.9, 0.9);
     
     setSolverIterations(4);

@@ -32,7 +32,8 @@ public:
 
 		OFX_BULLET_SOFT_ROPE = 20,
         OFX_BULLET_SOFT_PATCH = 21,
-        OFX_BULLET_SOFT_ELLIPSOID = 22
+        OFX_BULLET_SOFT_ELLIPSOID = 22,
+        OFX_BULLET_SOFT_TRI_MESH = 23
 	};
 	
     virtual void add() = 0;
@@ -46,7 +47,7 @@ public:
 	int				getType();
 	
 	ofMatrix4x4		getTransformationMatrix() const;
-	ofVec3f			getPosition() const;
+	virtual ofVec3f			getPosition() const;
 	ofVec3f			getRotation() const;
 	ofVec3f			getRotationAxis() const;
 	float			getRotationAngle() const;

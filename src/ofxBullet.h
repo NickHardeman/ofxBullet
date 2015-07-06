@@ -29,6 +29,7 @@
 #include "ofxBulletEllipsoid.h"
 #include "ofxBulletPatch.h"
 #include "ofxBulletRope.h"
+#include "ofxBulletSoftTriMesh.h"
 
 // dynamics //
 #include "ofxBulletJoint.h"
