@@ -3,6 +3,7 @@ An OpenFrameworks add-on for Bullet Physics
 
 ![ofxBullet](http://farm7.staticflickr.com/6146/5975738528_39dd3a8022_b.jpg)
 ![ofxBullet Meshes](https://farm8.staticflickr.com/7585/16164216144_7ec2c2ba37_b.jpg)
+![ofxBullet Soft Bodies](https://c4.staticflickr.com/4/3723/19481496085_53a49459d9_b.jpg)
 
 Currently bullet libs are compiled for OSX, iOS and VS2012 and is tested with OF 0.8x <br/>
 Help with integration for CodeBlocks and linux is much appreciated. <br/>
