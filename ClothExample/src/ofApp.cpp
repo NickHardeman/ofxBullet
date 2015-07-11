@@ -68,7 +68,6 @@ void ofApp::draw() {
     
     ofSetColor( 221,59,73 );
     for( int i = 0; i < patches.size(); i++ ) {
-        patches[i]->update();
         patches[i]->getMesh().drawWireframe();
     }
     

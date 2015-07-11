@@ -11,9 +11,10 @@
 
 //--------------------------------------------------------------
 ofxBulletPatch::ofxBulletPatch() : ofxBulletSoftBody() {
-    _lastUpdateFrame = 0;
-    
     _cachedMesh.setMode(OF_PRIMITIVE_TRIANGLES);
+    _type = OFX_BULLET_SOFT_PATCH;
+    _resx = 10;
+    _resy = 10;
 }
 
 //--------------------------------------------------------------
@@ -22,34 +23,17 @@ void ofxBulletPatch::create(ofxBulletWorldSoft* a_world, const ofVec3f& a_p0, co
         ofLogError("ofxBulletPatch") << "create(): a_world param is NULL";
         return;
     }
+    
+    _resx = a_resx;
+    _resy = a_resy;
 
 	_world = a_world;
     
-    _softBody = btSoftBodyHelpers::CreatePatch(_world->getInfo(), btVector3(a_p0.x, a_p0.y, a_p0.z), btVector3(a_p1.x, a_p1.y, a_p1.z), btVector3(a_p2.x, a_p2.y, a_p2.z), btVector3(a_p3.x, a_p3.y, a_p3.z), a_resx, a_resy, 0, true);
+    _softBody = btSoftBodyHelpers::CreatePatch(_world->getInfo(), btVector3(a_p0.x, a_p0.y, a_p0.z), btVector3(a_p1.x, a_p1.y, a_p1.z), btVector3(a_p2.x, a_p2.y, a_p2.z), btVector3(a_p3.x, a_p3.y, a_p3.z), a_resx, a_resy, 0, true );
     setCreated(_softBody);
         
-    _type = OFX_BULLET_SOFT_PATCH;
+    
 	createInternalUserData();
-}
-
-//--------------------------------------------------------------
-void ofxBulletPatch::update() {
-    if (_lastUpdateFrame == ofGetFrameNum()) return;
-    
-    // Build the mesh.
-	_cachedMesh.clear();
-	for (int i = 0; i < getNumFaces(); ++i) {
-		for (int j = 0; j < 3; ++j) {
-			_cachedMesh.addVertex(ofVec3f(_softBody->m_faces.at(i).m_n[j]->m_x.x(), 
-										  _softBody->m_faces.at(i).m_n[j]->m_x.y(), 
-										  _softBody->m_faces.at(i).m_n[j]->m_x.z()));
-			_cachedMesh.addNormal(ofVec3f(_softBody->m_faces.at(i).m_n[j]->m_n.x(), 
-										  _softBody->m_faces.at(i).m_n[j]->m_n.y(), 
-										  _softBody->m_faces.at(i).m_n[j]->m_n.z()));
-		}
-    }
-    
-    _lastUpdateFrame = ofGetFrameNum();
 }
 
 //--------------------------------------------------------------
@@ -58,13 +42,167 @@ void ofxBulletPatch::draw() {
         ofLogWarning("ofxBulletPatch") << "draw() : must call create() first and add() after";
         return;
     }
-    update();
     transformGL();
-    _cachedMesh.draw();
+    getMesh().draw();
     restoreTransformGL();
 }
 
 //--------------------------------------------------------------
-ofMesh& ofxBulletPatch::getMesh() {
-    return _cachedMesh;
+int ofxBulletPatch::getResolutionX() {
+    return _resx;
 }
+
+//--------------------------------------------------------------
+int ofxBulletPatch::getResolutionY() {
+    return _resy;
+}
+
+//--------------------------------------------------------------
+void ofxBulletPatch::updateMesh( ofMesh& aMesh ) {
+    
+    int totalNodes = getNumNodes();
+    int totalFaces = getNumFaces();
+    vector< ofVec3f >& tverts = aMesh.getVertices();
+    
+    if( _cachedMesh.getMode() == OF_PRIMITIVE_TRIANGLES ) {
+        
+        if( tverts.size() != totalFaces * 3 ) {
+            tverts.resize( (getResolutionX()-1) * (getResolutionY()-1) * 6 );
+        }
+        
+        vector< ofVec3f >& tnormals = aMesh.getNormals();
+        if( tnormals.size() != tverts.size() ) {
+            tnormals.resize( tverts.size() );
+        }
+        
+        ofVec3f p1, p2, p3, p4;
+        ofVec3f n1, n2, n3, n4;
+        
+        int ti = 0;
+        for( int iy = 0; iy < getResolutionY()-1; iy++ ) {
+            for( int ix = 0; ix < getResolutionX()-1; ix++ ) {
+                
+                int ni = iy * getResolutionX() + ix;
+                p1.set( _softBody->m_nodes[ni].m_x.x(), _softBody->m_nodes[ni].m_x.y(), _softBody->m_nodes[ni].m_x.z() );
+                n1.set( _softBody->m_nodes[ni].m_n.x(), _softBody->m_nodes[ni].m_n.y(), _softBody->m_nodes[ni].m_n.z() );
+                ni = (iy+1) * getResolutionX() + ix;
+                p2.set( _softBody->m_nodes[ni].m_x.x(), _softBody->m_nodes[ni].m_x.y(), _softBody->m_nodes[ni].m_x.z() );
+                n2.set( _softBody->m_nodes[ni].m_n.x(), _softBody->m_nodes[ni].m_n.y(), _softBody->m_nodes[ni].m_n.z() );
+                ni = (iy+1) * getResolutionX() + ix+1;
+                p3.set( _softBody->m_nodes[ni].m_x.x(), _softBody->m_nodes[ni].m_x.y(), _softBody->m_nodes[ni].m_x.z() );
+                n3.set( _softBody->m_nodes[ni].m_n.x(), _softBody->m_nodes[ni].m_n.y(), _softBody->m_nodes[ni].m_n.z() );
+                ni = (iy) * getResolutionX() + ix+1;
+                p4.set( _softBody->m_nodes[ni].m_x.x(), _softBody->m_nodes[ni].m_x.y(), _softBody->m_nodes[ni].m_x.z() );
+                n4.set( _softBody->m_nodes[ni].m_n.x(), _softBody->m_nodes[ni].m_n.y(), _softBody->m_nodes[ni].m_n.z() );
+                
+                tverts[ti].set( p1 );
+                tnormals[ti].set( n1 );
+                ti += 1;
+                
+//                ni = (iy+1) * getResolutionX() + ix;
+                tverts[ti].set( p2 );
+                tnormals[ti].set( n2 );
+                ti += 1;
+                
+//                ni = (iy+1) * getResolutionX() + ix+1;
+                tverts[ti].set( p3 );
+                tnormals[ti].set( n3 );
+                ti += 1;
+                
+                
+                
+                //
+//                ni = (iy+1) * getResolutionX() + ix+1;
+                tverts[ti].set( p3 );
+                tnormals[ti].set( n3 );
+                ti += 1;
+                
+//                ni = (iy) * getResolutionX() + ix+1;
+                tverts[ti].set( p4 );
+                tnormals[ti].set( n4 );
+                ti += 1;
+                
+//                ni = (iy) * getResolutionX() + ix;
+                tverts[ti].set( p1 );
+                tnormals[ti].set( n1 );
+                ti += 1;
+            }
+            
+        }
+        
+    }
+    
+    _lastMeshUpdateFrame = ofGetFrameNum();
+}
+
+//--------------------------------------------------------------
+void ofxBulletPatch::updateMeshTexCoords( ofMesh& aMesh ) {
+    
+    vector<ofVec2f>& tcoords = getMesh().getTexCoords();
+    int numVerts = getMesh().getVertices().size();
+    if( tcoords.size() != numVerts ) {
+        tcoords.resize( numVerts );
+    }
+    
+    int tz = 0;
+    for( int iy = 0; iy < _resy-1; iy++ ) {
+        for( int ix = 0; ix < _resx-1; ix++ ) {
+            
+//            const bool	mdx=(ix+1)<resx;
+//			const bool	mdy=(iy+1)<resy;
+            
+            
+//            if(mdx&&mdy) {
+            
+                // psb->appendFace(node00,node10,node11);
+                int ti = tz + 0;
+                //                tcoords[ti].x = btSoftBodyHelpers::CalculateUV(resx,resy,ix,iy,0);
+                //                tcoords[ti].y = btSoftBodyHelpers::CalculateUV(resx,resy,ix,iy,1);
+                tcoords[ti].x = ofMap( ix, 0, _resx-1, 0, 1, true );
+                tcoords[ti].y = ofMap( iy, 0, _resy-1, 0, 1, true );
+                
+                
+                ti = tz + 1;
+                //                tcoords[ti].x = btSoftBodyHelpers::CalculateUV(resx,resy,ix,iy,0);
+                //                tcoords[ti].y = btSoftBodyHelpers::CalculateUV(resx,resy,ix,iy,2);
+                tcoords[ti].x = ofMap( ix, 0, _resx-1, 0, 1, true );
+                tcoords[ti].y = ofMap( iy+1, 0, _resy-1, 0, 1, true );
+                
+                ti = tz + 2;
+                //                tcoords[ti].x = btSoftBodyHelpers::CalculateUV(resx,resy,ix,iy,3);
+                //                tcoords[ti].y = btSoftBodyHelpers::CalculateUV(resx,resy,ix,iy,2);
+                tcoords[ti].x = ofMap( ix+1, 0, _resx-1, 0, 1, true );
+                tcoords[ti].y = ofMap( iy+1, 0, _resy-1, 0, 1, true );
+                
+                
+                // psb->appendFace(node11,node01,node00);
+                ti = tz + 3;
+                //                tcoords[ti ].x = btSoftBodyHelpers::CalculateUV(resx,resy,ix,iy,3);
+                //                tcoords[ti ].y = btSoftBodyHelpers::CalculateUV(resx,resy,ix,iy,2);
+                tcoords[ti].x = ofMap( ix+1, 0, _resx-1, 0, 1, true );
+                tcoords[ti].y = ofMap( iy+1, 0, _resy-1, 0, 1, true );
+                //
+                ti = tz + 4;
+                //                tcoords[ti ].x = btSoftBodyHelpers::CalculateUV(resx,resy,ix,iy,3);
+                //                tcoords[ti ].y = btSoftBodyHelpers::CalculateUV(resx,resy,ix,iy,1);
+                tcoords[ti].x = ofMap( ix+1, 0, _resx-1, 0, 1, true );
+                tcoords[ti].y = ofMap( iy, 0, _resy-1, 0, 1, true );
+                //
+                ti = tz + 5;
+                tcoords[ti].x = ofMap( ix, 0, _resx-1, 0, 1, true );
+                tcoords[ti].y = ofMap( iy, 0, _resy-1, 0, 1, true );
+                //                tcoords[ti].x = btSoftBodyHelpers::CalculateUV(resx,resy,ix,iy,0);
+                //                tcoords[ti].y = btSoftBodyHelpers::CalculateUV(resx,resy,ix,iy,1);
+                
+                //            tz += 12;
+                tz += 6;
+//            }
+            
+        }
+    }
+}
+
+
+
+
+

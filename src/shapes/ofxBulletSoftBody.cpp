@@ -13,6 +13,7 @@ ofxBulletSoftBody::ofxBulletSoftBody() : ofxBulletBaseShape() {
     _world = NULL;
     _softBody = NULL;
     _bAdded = false;
+    _lastMeshUpdateFrame = -1;
 }
 
 //--------------------------------------------------------------
@@ -91,6 +92,11 @@ ofVec3f ofxBulletSoftBody::getNodePos(int idx) const {
     return ofVec3f(_softBody->m_nodes.at(idx).m_x.x(),
                    _softBody->m_nodes.at(idx).m_x.y(),
                    _softBody->m_nodes.at(idx).m_x.z());
+}
+
+//--------------------------------------------------------------
+btSoftBody::tNodeArray& ofxBulletSoftBody::getBulletNodes() {
+    getSoftBody()->m_nodes;
 }
 
 // SETTERS //
@@ -209,3 +215,114 @@ void ofxBulletSoftBody::setNodePositionAt(size_t n, const ofVec3f& pos) {
 void ofxBulletSoftBody::attachRigidBodyAt(size_t n, btRigidBody *rigid) {
     _softBody->appendAnchor(n, rigid, true);
 }
+
+//--------------------------------------------------------------
+void ofxBulletSoftBody::updateMesh( ofMesh& aMesh ) {
+    
+    int totalNodes = getNumNodes();
+    int totalFaces = getNumFaces();
+    vector< ofVec3f >& tverts = aMesh.getVertices();
+    
+    if( _cachedMesh.getMode() == OF_PRIMITIVE_TRIANGLES ) {
+        
+        if( tverts.size() != totalFaces * 3 ) {
+            tverts.resize( 3*3 * 6 );
+        }
+        
+        vector< ofVec3f >& tnormals = aMesh.getNormals();
+        if( aMesh.getNumNormals() != totalFaces * 3 ) {
+            tnormals.resize( totalFaces * 3 );
+        }
+        
+        int ti = 0;
+        for( int iy = 0; iy < 3; iy++ ) {
+            for( int ix = 0; ix < 3; ix++ ) {
+                
+                int ni = iy * 4 + ix;
+                tverts[ti].x = _softBody->m_nodes[ni].m_x.x();
+                tverts[ti].y = _softBody->m_nodes[ni].m_x.y();
+                tverts[ti].z = _softBody->m_nodes[ni].m_x.z();
+                ti += 1;
+                
+                ni = (iy+1) * 4 + ix;
+                tverts[ti].x = _softBody->m_nodes[ni].m_x.x();
+                tverts[ti].y = _softBody->m_nodes[ni].m_x.y();
+                tverts[ti].z = _softBody->m_nodes[ni].m_x.z();
+                ti += 1;
+                
+                ni = (iy+1) * 4 + ix+1;
+                tverts[ti].x = _softBody->m_nodes[ni].m_x.x();
+                tverts[ti].y = _softBody->m_nodes[ni].m_x.y();
+                tverts[ti].z = _softBody->m_nodes[ni].m_x.z();
+                ti += 1;
+                
+                
+                ni = (iy+1) * 4 + ix+1;
+                tverts[ti].x = _softBody->m_nodes[ni].m_x.x();
+                tverts[ti].y = _softBody->m_nodes[ni].m_x.y();
+                tverts[ti].z = _softBody->m_nodes[ni].m_x.z();
+                ti += 1;
+                
+                ni = (iy) * 4 + ix+1;
+                tverts[ti].x = _softBody->m_nodes[ni].m_x.x();
+                tverts[ti].y = _softBody->m_nodes[ni].m_x.y();
+                tverts[ti].z = _softBody->m_nodes[ni].m_x.z();
+                ti += 1;
+                
+                ni = (iy) * 4 + ix;
+                tverts[ti].x = _softBody->m_nodes[ni].m_x.x();
+                tverts[ti].y = _softBody->m_nodes[ni].m_x.y();
+                tverts[ti].z = _softBody->m_nodes[ni].m_x.z();
+                ti += 1;
+            }
+            
+        }
+        
+//        for (int i = 0; i < totalFaces; i += 1 ) {
+//            for (int j = 0; j < 3; ++j) {
+////                ofVec3f tv( _softBody->m_faces.at(i).m_n[j]->m_x.x(),
+////                           _softBody->m_faces.at(i).m_n[j]->m_x.y(),
+////                           _softBody->m_faces.at(i).m_n[j]->m_x.z() );
+////                _cachedMesh.addVertex( tv );
+//                tverts[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_x.x();
+//                tverts[ i * 3 + j ].y = _softBody->m_faces.at(i).m_n[j]->m_x.y();
+//                tverts[ i * 3 + j ].z = _softBody->m_faces.at(i).m_n[j]->m_x.z();
+//                
+//                if( i % 2 == 0 ) {
+//                    tverts[ i * 3 + j ].z += 3;
+//                }
+//                
+//                tnormals[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_n.x();
+//                tnormals[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_n.y();
+//                tnormals[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_n.z();
+//            }
+//        }
+        
+    } else if( _cachedMesh.getMode() == OF_PRIMITIVE_LINE_STRIP ) {
+        
+        if( tverts.size() != totalNodes ) {
+            tverts.resize( totalNodes );
+        }
+        
+        for( int i = 0; i < totalNodes; i++ ) {
+            tverts[i].x = _softBody->m_nodes[i].m_x.x();
+            tverts[i].y = _softBody->m_nodes[i].m_x.y();
+            tverts[i].z = _softBody->m_nodes[i].m_x.z();
+        }
+    }
+    
+    _lastMeshUpdateFrame = ofGetFrameNum();
+}
+
+//--------------------------------------------------------------
+ofMesh& ofxBulletSoftBody::getMesh() {
+    if( _lastMeshUpdateFrame != ofGetFrameNum() ) {
+        updateMesh( _cachedMesh );
+    }
+    return _cachedMesh;
+}
+
+
+
+
+

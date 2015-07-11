@@ -33,10 +33,15 @@ void ofxBulletSoftTriMesh::create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, b
         return;
     }
     
+    if( aMesh.getMode() != OF_PRIMITIVE_TRIANGLES ) {
+        ofLogError("ofxBulletSoftTriMesh") << " only excepts meshes that are triangles";
+        return;
+    }
+    
     _world = a_world;
     
-    cachedMesh.clear();
-    cachedMesh = aMesh;
+    _cachedMesh.clear();
+    _cachedMesh = aMesh;
     
     if( bullet_vertices != NULL ) {
         delete bullet_vertices;
@@ -79,50 +84,49 @@ void ofxBulletSoftTriMesh::create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, b
 }
 
 //--------------------------------------------------------------
-void ofxBulletSoftTriMesh::updateCacheMesh() {
-    
-    btSoftBody::tNodeArray&   nodes( getSoftBody()->m_nodes );
-    
-    int totalNodes = _softBody->m_nodes.size();
-    vector< ofVec3f >& tverts = cachedMesh.getVertices();
-    for( int i = 0; i < totalNodes; i++ ) {
-        tverts[i].x = _softBody->m_nodes[i].m_x.x();
-        tverts[i].y = _softBody->m_nodes[i].m_x.y();
-        tverts[i].z = _softBody->m_nodes[i].m_x.z();
-    }
-    
-    
-    vector< ofVec3f >& tnormals = cachedMesh.getNormals();
-    if( cachedMesh.getNumNormals() != totalNodes ) {
-        tnormals.resize( totalNodes );
-    }
-    for( int i = 0; i < totalNodes; i++ ) { // m_n
-        tnormals[i].x = _softBody->m_nodes[i].m_n.x();
-        tnormals[i].y = _softBody->m_nodes[i].m_n.y();
-        tnormals[i].z = _softBody->m_nodes[i].m_n.z();
-    }
-    
-}
-
-//--------------------------------------------------------------
 void ofxBulletSoftTriMesh::draw() {
-    updateCacheMesh();
-    cachedMesh.draw();
-}
-
-//--------------------------------------------------------------
-ofMesh& ofxBulletSoftTriMesh::getMesh() {
-    updateCacheMesh();
-    return cachedMesh;
+    getMesh().draw();
 }
 
 //--------------------------------------------------------------
 ofVec3f	ofxBulletSoftTriMesh::getPosition() const {
+    // approximation //
     btVector3& bounds = _softBody->m_bounds[0];
     btVector3& bounds2 = _softBody->m_bounds[1];
     ofVec3f tpos( (bounds.x()+bounds2.x())/2, (bounds.y()+bounds2.y())/2, (bounds.z()+bounds2.z())/2 );
     return tpos;
-    //        ofDrawBox( (bounds.x()+bounds2.x())/2, (bounds.y()+bounds2.y())/2, (bounds.z()+bounds2.z())/2, 1 );
+}
+
+//--------------------------------------------------------------
+void ofxBulletSoftTriMesh::updateMesh( ofMesh& aMesh ) {
+    
+    int totalNodes = getNumNodes();
+    vector< ofVec3f >& tverts = aMesh.getVertices();
+    
+    if( _cachedMesh.getMode() == OF_PRIMITIVE_TRIANGLES ) {
+        
+        if( tverts.size() != totalNodes ) {
+            tverts.resize( totalNodes );
+        }
+        
+        vector< ofVec3f >& tnormals = aMesh.getNormals();
+        if( aMesh.getNumNormals() != totalNodes ) {
+            tnormals.resize( totalNodes );
+        }
+        
+        for( int i = 0; i < totalNodes; i++ ) {
+            tverts[i].x = _softBody->m_nodes[i].m_x.x();
+            tverts[i].y = _softBody->m_nodes[i].m_x.y();
+            tverts[i].z = _softBody->m_nodes[i].m_x.z();
+            
+            tnormals[i].x = _softBody->m_nodes[i].m_n.x();
+            tnormals[i].y = _softBody->m_nodes[i].m_n.y();
+            tnormals[i].z = _softBody->m_nodes[i].m_n.z();
+        }
+        
+    }
+    
+    _lastMeshUpdateFrame = ofGetFrameNum();
 }
 
 

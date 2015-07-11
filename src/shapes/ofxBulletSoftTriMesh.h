@@ -17,13 +17,11 @@ public:
 	void create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, ofVec3f a_loc, ofQuaternion a_rot, float a_mass );
 	void create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, btTransform &a_bt_tr, float a_mass );
     
-    void updateCacheMesh();
     void draw();
     
-    ofMesh& getMesh();
     ofVec3f	getPosition() const;
+    void updateMesh( ofMesh& aMesh );
     
 protected:
-    ofMesh cachedMesh;
     btScalar* bullet_vertices;
 };

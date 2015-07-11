@@ -10,9 +10,8 @@
 
 //--------------------------------------------------------------
 ofxBulletRope::ofxBulletRope() : ofxBulletSoftBody() {
-    _lastUpdateFrame = 0;
     _linkLength = 1.0;
-    
+    _type = OFX_BULLET_SOFT_ROPE;
     _cachedMesh.setMode(OF_PRIMITIVE_LINE_STRIP);
 }
 
@@ -38,20 +37,8 @@ void ofxBulletRope::create(ofxBulletWorldSoft* a_world, const ofVec3f& a_from, c
     
     _linkLength = a_from.distance(a_to) / a_res;
     
-    _type = OFX_BULLET_SOFT_ROPE;
+    
 	createInternalUserData();
-}
-
-//--------------------------------------------------------------
-void ofxBulletRope::update() {
-    if (_lastUpdateFrame == ofGetFrameNum()) return;
-    
-    // Update vertices.
-    for (int i = 0; i < getNumNodes(); i++) {
-        _cachedMesh.getVerticesPointer()[i].set(getNodePos(i));
-    }
-    
-    _lastUpdateFrame = ofGetFrameNum();
 }
 
 //--------------------------------------------------------------
@@ -60,9 +47,8 @@ void ofxBulletRope::draw() {
         ofLogWarning("ofxBulletRope") << "draw() : must call create() first and add() after";
         return;
     }
-    update();
     transformGL();
-    _cachedMesh.draw();
+    getMesh().draw();
     restoreTransformGL();
 }
 
@@ -111,3 +97,28 @@ ofVec3f ofxBulletRope::getPoint(float pct)
     ofVec3f nextNode = getNodePos(nodeIdx + 1);
     return prevNode.getInterpolated(nextNode, nodePct);
 }
+
+//--------------------------------------------------------------
+void ofxBulletRope::updateMesh( ofMesh& aMesh ) {
+    
+    int totalNodes = getNumNodes();
+    vector< ofVec3f >& tverts = aMesh.getVertices();
+    
+    if( _cachedMesh.getMode() == OF_PRIMITIVE_LINE_STRIP ) {
+        
+        if( tverts.size() != totalNodes ) {
+            tverts.resize( totalNodes );
+        }
+        
+        for( int i = 0; i < totalNodes; i++ ) {
+            tverts[i].x = _softBody->m_nodes[i].m_x.x();
+            tverts[i].y = _softBody->m_nodes[i].m_x.y();
+            tverts[i].z = _softBody->m_nodes[i].m_x.z();
+        }
+    }
+    
+    _lastMeshUpdateFrame = ofGetFrameNum();
+}
+
+
+

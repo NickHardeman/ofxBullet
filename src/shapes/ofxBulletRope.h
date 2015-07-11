@@ -16,7 +16,6 @@ public:
     
     void create(ofxBulletWorldSoft* a_world, const ofVec3f& a_from, const ofVec3f& a_to, int a_res = 10);
     
-    void update();
     void draw();
     
     void appendNode();
@@ -24,9 +23,9 @@ public:
     ofVec3f getPoint(float pct);
     
     float getLinkLength() const;
+    
+    void updateMesh( ofMesh& aMesh );
 
 protected:
-    int _lastUpdateFrame;
     float _linkLength;
-    ofMesh _cachedMesh;
 };

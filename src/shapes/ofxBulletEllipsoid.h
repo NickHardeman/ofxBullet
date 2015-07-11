@@ -16,10 +16,11 @@ public:
     
     void create(ofxBulletWorldSoft* a_world, const ofVec3f& center, const ofVec3f& radius, int res = 10);
     
-    void update();
     void draw();
+    
+    ofVec3f getRadius();
+    int getResolution();
 
 protected:
-    int _lastUpdateFrame;
-    ofMesh _cachedMesh;
+    ofVec3f _radius;
 };

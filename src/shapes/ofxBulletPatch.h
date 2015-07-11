@@ -16,12 +16,14 @@ public:
     
     void create(ofxBulletWorldSoft* a_world, const ofVec3f& a_p0, const ofVec3f& a_p1, const ofVec3f& a_p2, const ofVec3f& a_p3, int a_resx = 10, int a_resy = 10);
     
-    void update();
     void draw();
     
-    ofMesh& getMesh();
+    int getResolutionX();
+    int getResolutionY();
+    
+    void updateMesh( ofMesh& aMesh );
+    void updateMeshTexCoords( ofMesh& aMesh );
 
 protected:
-    int _lastUpdateFrame;
-    ofMesh _cachedMesh;
+    int _resx, _resy;
 };

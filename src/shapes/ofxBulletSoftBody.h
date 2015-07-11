@@ -32,6 +32,7 @@ public:
 
     size_t getNumNodes() const;
     ofVec3f getNodePos(int idx) const;
+    btSoftBody::tNodeArray& getBulletNodes();
 
 	size_t getNumFaces() const;
     
@@ -63,11 +64,19 @@ public:
     
     void setSolverIterations(int n);
     
+    
+    // mesh //
+    virtual void updateMesh( ofMesh& aMesh );
+    ofMesh& getMesh();
+    
 protected:
     ofxBulletWorldSoft* _world;
     btSoftBody* _softBody;
+    ofMesh _cachedMesh;
     
     bool _bAdded;
     
     int _type;
+    
+    int _lastMeshUpdateFrame;
 };
