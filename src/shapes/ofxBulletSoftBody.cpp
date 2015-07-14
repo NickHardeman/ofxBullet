@@ -226,7 +226,7 @@ void ofxBulletSoftBody::updateMesh( ofMesh& aMesh ) {
     if( _cachedMesh.getMode() == OF_PRIMITIVE_TRIANGLES ) {
         
         if( tverts.size() != totalFaces * 3 ) {
-            tverts.resize( 3*3 * 6 );
+            tverts.resize( totalFaces * 3 );
         }
         
         vector< ofVec3f >& tnormals = aMesh.getNormals();
@@ -234,69 +234,18 @@ void ofxBulletSoftBody::updateMesh( ofMesh& aMesh ) {
             tnormals.resize( totalFaces * 3 );
         }
         
-        int ti = 0;
-        for( int iy = 0; iy < 3; iy++ ) {
-            for( int ix = 0; ix < 3; ix++ ) {
+        for (int i = 0; i < totalFaces; i += 1 ) {
+            for (int j = 0; j < 3; ++j) {
                 
-                int ni = iy * 4 + ix;
-                tverts[ti].x = _softBody->m_nodes[ni].m_x.x();
-                tverts[ti].y = _softBody->m_nodes[ni].m_x.y();
-                tverts[ti].z = _softBody->m_nodes[ni].m_x.z();
-                ti += 1;
+                tverts[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_x.x();
+                tverts[ i * 3 + j ].y = _softBody->m_faces.at(i).m_n[j]->m_x.y();
+                tverts[ i * 3 + j ].z = _softBody->m_faces.at(i).m_n[j]->m_x.z();
                 
-                ni = (iy+1) * 4 + ix;
-                tverts[ti].x = _softBody->m_nodes[ni].m_x.x();
-                tverts[ti].y = _softBody->m_nodes[ni].m_x.y();
-                tverts[ti].z = _softBody->m_nodes[ni].m_x.z();
-                ti += 1;
-                
-                ni = (iy+1) * 4 + ix+1;
-                tverts[ti].x = _softBody->m_nodes[ni].m_x.x();
-                tverts[ti].y = _softBody->m_nodes[ni].m_x.y();
-                tverts[ti].z = _softBody->m_nodes[ni].m_x.z();
-                ti += 1;
-                
-                
-                ni = (iy+1) * 4 + ix+1;
-                tverts[ti].x = _softBody->m_nodes[ni].m_x.x();
-                tverts[ti].y = _softBody->m_nodes[ni].m_x.y();
-                tverts[ti].z = _softBody->m_nodes[ni].m_x.z();
-                ti += 1;
-                
-                ni = (iy) * 4 + ix+1;
-                tverts[ti].x = _softBody->m_nodes[ni].m_x.x();
-                tverts[ti].y = _softBody->m_nodes[ni].m_x.y();
-                tverts[ti].z = _softBody->m_nodes[ni].m_x.z();
-                ti += 1;
-                
-                ni = (iy) * 4 + ix;
-                tverts[ti].x = _softBody->m_nodes[ni].m_x.x();
-                tverts[ti].y = _softBody->m_nodes[ni].m_x.y();
-                tverts[ti].z = _softBody->m_nodes[ni].m_x.z();
-                ti += 1;
+                tnormals[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_n.x();
+                tnormals[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_n.y();
+                tnormals[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_n.z();
             }
-            
         }
-        
-//        for (int i = 0; i < totalFaces; i += 1 ) {
-//            for (int j = 0; j < 3; ++j) {
-////                ofVec3f tv( _softBody->m_faces.at(i).m_n[j]->m_x.x(),
-////                           _softBody->m_faces.at(i).m_n[j]->m_x.y(),
-////                           _softBody->m_faces.at(i).m_n[j]->m_x.z() );
-////                _cachedMesh.addVertex( tv );
-//                tverts[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_x.x();
-//                tverts[ i * 3 + j ].y = _softBody->m_faces.at(i).m_n[j]->m_x.y();
-//                tverts[ i * 3 + j ].z = _softBody->m_faces.at(i).m_n[j]->m_x.z();
-//                
-//                if( i % 2 == 0 ) {
-//                    tverts[ i * 3 + j ].z += 3;
-//                }
-//                
-//                tnormals[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_n.x();
-//                tnormals[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_n.y();
-//                tnormals[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_n.z();
-//            }
-//        }
         
     } else if( _cachedMesh.getMode() == OF_PRIMITIVE_LINE_STRIP ) {
         
