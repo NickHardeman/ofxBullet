@@ -242,8 +242,8 @@ void ofxBulletSoftBody::updateMesh( ofMesh& aMesh ) {
                 tverts[ i * 3 + j ].z = _softBody->m_faces.at(i).m_n[j]->m_x.z();
                 
                 tnormals[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_n.x();
-                tnormals[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_n.y();
-                tnormals[ i * 3 + j ].x = _softBody->m_faces.at(i).m_n[j]->m_n.z();
+                tnormals[ i * 3 + j ].y = _softBody->m_faces.at(i).m_n[j]->m_n.y();
+                tnormals[ i * 3 + j ].z = _softBody->m_faces.at(i).m_n[j]->m_n.z();
             }
         }
         
