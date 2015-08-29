@@ -25,12 +25,21 @@ ofxBulletWorldRigid::ofxBulletWorldRigid() {
 	// disable collision event dispatching by default //
 	disableCollisionEvents();
 	disableGrabbing();
-	ofRegisterMouseEvents(this);
+    
+    ofAddListener( ofEvents().mouseMoved, this, &ofxBulletWorldRigid::mouseMoved );
+    ofAddListener( ofEvents().mouseDragged, this, &ofxBulletWorldRigid::mouseDragged );
+    ofAddListener( ofEvents().mousePressed, this, &ofxBulletWorldRigid::mousePressed );
+    ofAddListener( ofEvents().mouseReleased, this, &ofxBulletWorldRigid::mouseReleased );
 }
 
 //--------------------------------------------------------------
 ofxBulletWorldRigid::~ofxBulletWorldRigid() {
 	destroy();
+    
+    ofRemoveListener( ofEvents().mouseMoved, this, &ofxBulletWorldRigid::mouseMoved );
+    ofRemoveListener( ofEvents().mouseDragged, this, &ofxBulletWorldRigid::mouseDragged );
+    ofRemoveListener( ofEvents().mousePressed, this, &ofxBulletWorldRigid::mousePressed );
+    ofRemoveListener( ofEvents().mouseReleased, this, &ofxBulletWorldRigid::mouseReleased );
 }
 
 //--------------------------------------------------------------
@@ -408,7 +417,3 @@ void ofxBulletWorldRigid::mouseReleased( ofMouseEventArgs &a ) {
 	removeMouseConstraint();
 }
 
-//--------------------------------------------------------------
-void ofxBulletWorldRigid::mouseScrolled( ofMouseEventArgs &a ) {
-    
-}
