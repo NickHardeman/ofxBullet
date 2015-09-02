@@ -73,6 +73,16 @@ float ofxBulletSoftBody::getMass() const {
 }
 
 //--------------------------------------------------------------
+ofVec3f	ofxBulletSoftBody::getPosition() const {
+    ofVec3f avgpos;
+    for ( int i = 0; i < getNumNodes(); i++ ) {
+        avgpos += getNodePos(i);
+    }
+    avgpos /= (float)getNumNodes();
+    return avgpos;
+}
+
+//--------------------------------------------------------------
 size_t ofxBulletSoftBody::getNumNodes() const {
     return _softBody->m_nodes.size();
 }

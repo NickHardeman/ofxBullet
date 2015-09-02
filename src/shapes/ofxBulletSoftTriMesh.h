@@ -19,7 +19,6 @@ public:
     
     void draw();
     
-    ofVec3f	getPosition() const;
     void updateMesh( ofMesh& aMesh );
     
 protected:
