@@ -96,7 +96,7 @@ ofVec3f ofxBulletSoftBody::getNodePos(int idx) const {
 
 //--------------------------------------------------------------
 btSoftBody::tNodeArray& ofxBulletSoftBody::getBulletNodes() {
-    getSoftBody()->m_nodes;
+    return getSoftBody()->m_nodes;
 }
 
 // SETTERS //

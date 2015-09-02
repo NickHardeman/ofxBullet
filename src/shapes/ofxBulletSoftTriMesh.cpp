@@ -54,8 +54,10 @@ void ofxBulletSoftTriMesh::create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, b
     int totalVerts    = (int)aMesh.getNumVertices();
     int totalIndices  = (int)aMesh.getNumIndices();
     
-    bullet_vertices  = new btScalar[ totalVerts * 3 ];
-    int bullet_indices[ (int)(totalIndices/3) ][3];//         = int[ totalIndices/3 ][3];
+    bullet_vertices = new btScalar[ totalVerts * 3 ];
+    int numIndices = (int)(totalIndices / 3);
+    int** bullet_indices = new int*[ numIndices ];
+    for( int i = 0; i < numIndices; i++ ) bullet_indices[i] = new int[3];
     
     vector< ofVec3f >& tverts       = aMesh.getVertices();
     vector< ofIndexType >& tindices = aMesh.getIndices();
@@ -80,6 +82,11 @@ void ofxBulletSoftTriMesh::create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, b
     
     setCreated(_softBody);
     createInternalUserData();
+
+    for( int i = 0; i < numIndices; i++ ) {
+        delete [] bullet_indices[i];
+    }
+    delete [] bullet_indices;
     
 }
 
