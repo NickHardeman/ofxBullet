@@ -29,6 +29,8 @@ public:
     int getType();
     
     float getMass() const;
+    // returns an average position of all of the nodes //
+    virtual ofVec3f	getPosition() const;
 
     size_t getNumNodes() const;
     ofVec3f getNodePos(int idx) const;

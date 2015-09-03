@@ -96,15 +96,6 @@ void ofxBulletSoftTriMesh::draw() {
 }
 
 //--------------------------------------------------------------
-ofVec3f	ofxBulletSoftTriMesh::getPosition() const {
-    // approximation //
-    btVector3& bounds = _softBody->m_bounds[0];
-    btVector3& bounds2 = _softBody->m_bounds[1];
-    ofVec3f tpos( (bounds.x()+bounds2.x())/2, (bounds.y()+bounds2.y())/2, (bounds.z()+bounds2.z())/2 );
-    return tpos;
-}
-
-//--------------------------------------------------------------
 void ofxBulletSoftTriMesh::updateMesh( ofMesh& aMesh ) {
     
     int totalNodes = getNumNodes();
