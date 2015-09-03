@@ -56,8 +56,7 @@ void ofxBulletSoftTriMesh::create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, b
     
     bullet_vertices = new btScalar[ totalVerts * 3 ];
     int numIndices = (int)(totalIndices / 3);
-    int** bullet_indices = new int*[ numIndices ];
-    for( int i = 0; i < numIndices; i++ ) bullet_indices[i] = new int[3];
+    int* bullet_indices = new int[ numIndices * 3 ];
     
     vector< ofVec3f >& tverts       = aMesh.getVertices();
     vector< ofIndexType >& tindices = aMesh.getIndices();
@@ -68,14 +67,14 @@ void ofxBulletSoftTriMesh::create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, b
         bullet_vertices[i*3+2] = tverts[i].z;
     }
     for( int i = 0; i < totalIndices; i += 3 ) {
-        bullet_indices[i/3][0] = tindices[i+0];
-        bullet_indices[i/3][1] = tindices[i+1];
-        bullet_indices[i/3][2] = tindices[i+2];
+        bullet_indices[i+0] = tindices[i+0];
+        bullet_indices[i+1] = tindices[i+1];
+        bullet_indices[i+2] = tindices[i+2];
     }
     
     _softBody = btSoftBodyHelpers::CreateFromTriMesh( _world->getInfo(),
                                                          bullet_vertices,
-                                                         &bullet_indices[0][0],
+                                                         bullet_indices,
                                                          totalIndices/3 );
     _softBody->transform( a_bt_tr );
     setMass( a_mass, true );
@@ -83,9 +82,6 @@ void ofxBulletSoftTriMesh::create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, b
     setCreated(_softBody);
     createInternalUserData();
 
-    for( int i = 0; i < numIndices; i++ ) {
-        delete [] bullet_indices[i];
-    }
     delete [] bullet_indices;
     
 }
