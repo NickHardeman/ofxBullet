@@ -6,7 +6,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "openframeworksLib", "..\..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ofxBulletLib", "..\ofxBulletLib\ofxBulletLib.vcxproj", "{C9B3BD9A-E282-4F65-8F90-61A717D9F0F5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoftBodyExample", "SoftBodyExample.vcxproj", "{7FD42DF7-442E-479A-BA76-D0022F99702A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoftBodyMeshExample", "SoftBodyMeshExample.vcxproj", "{7FD42DF7-442E-479A-BA76-D0022F99702A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C9B3BD9A-E282-4F65-8F90-61A717D9F0F5} = {C9B3BD9A-E282-4F65-8F90-61A717D9F0F5}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
