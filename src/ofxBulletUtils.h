@@ -81,16 +81,20 @@ static btVector3 ofGetBtVector( ofVec3f aVec ) {
     return btVector3( btScalar(aVec.x), btScalar(aVec.y), btScalar(aVec.z));
 }
 
-static btTransform ofGetBtTransform( ofVec3f aGlobalPos, ofQuaternion aQuat ) {
-    float angle; ofVec3f axis;
+static btQuaternion ofGetBtQuat( ofQuaternion aQuat ) {
+    float angle;
+    ofVec3f axis;
     aQuat.getRotate( angle, axis );
     btQuaternion btquat;
     btquat = btQuaternion::getIdentity();
     btquat.setRotation( ofGetBtVector( axis ), angle * DEG_TO_RAD );
-    
+    return btquat;
+}
+
+static btTransform ofGetBtTransform( ofVec3f aGlobalPos, ofQuaternion aQuat ) {
     btTransform trans;
     trans.setIdentity();
-    trans.setRotation( btquat );
+    trans.setRotation( ofGetBtQuat(aQuat) );
     trans.setOrigin( ofGetBtVector( aGlobalPos ) );
     return trans;
 }
