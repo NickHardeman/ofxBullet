@@ -27,7 +27,7 @@ void ofApp::setup() {
     fbo.begin(); {
         ofClear(0, 0, 0, 255 );
         ofSetColor( 11,90,121, 255);
-        ofRect(0, 0, ofGetWidth(), ofGetHeight() );
+        ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight() );
         ofSetColor(120, 140, 150, 255);
         
         int numIterations = 4;
@@ -40,31 +40,31 @@ void ofApp::setup() {
             ofSetLineWidth( 1.5 );
             if( i % 2 == 0 ) ofSetLineWidth( 0.5 );
             
-            ofLine( tx, 0, tx, fbo.getHeight() );
-            ofLine( 0, ty, fbo.getWidth(), ty );
+            ofDrawLine( tx, 0, tx, fbo.getHeight() );
+            ofDrawLine( 0, ty, fbo.getWidth(), ty );
         }
         
     } fbo.end();
     
     ofSetLineWidth( 1 );
     
-    fbo.getTextureReference().bind();
-    glGenerateMipmap( fbo.getTextureReference().texData.textureTarget);
+    fbo.getTexture().bind();
+    glGenerateMipmap( fbo.getTexture().texData.textureTarget);
     ofSetMinMagFilters( GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR_MIPMAP_LINEAR );
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisotropy);
 //    glSamplerParameterf( fbo.getTextureReference().texData.textureTarget, GL_TEXTURE_MAX_ANISOTROPY_EXT, 2 );
-    fbo.getTextureReference().unbind();
+    fbo.getTexture().unbind();
     
     
     fboSphere.allocate( 256, 256, GL_RGB, 4 );
     fboSphere.begin(); {
         ofClear(0, 0, 0, 255 );
         ofSetColor( 239,201,198 );
-        ofRect(0, 0, fboSphere.getWidth(), fboSphere.getHeight() );
+        ofDrawRectangle(0, 0, fboSphere.getWidth(), fboSphere.getHeight() );
         ofSetColor(90, 90, 90, 255 );
         ofSetLineWidth( 3 );
-        ofLine( 0, 0, fboSphere.getWidth(), fboSphere.getHeight() );
-        ofLine( 0, fboSphere.getHeight(), fboSphere.getWidth(), 0 );
+        ofDrawLine( 0, 0, fboSphere.getWidth(), fboSphere.getHeight() );
+        ofDrawLine( 0, fboSphere.getHeight(), fboSphere.getWidth(), 0 );
         
     } fboSphere.end();
     
@@ -143,17 +143,17 @@ void ofApp::draw() {
 	if(bDrawDebug) world.drawDebug();
 	else {
         ofSetColor( 255, 255, 255, 255 );
-        fbo.getTextureReference().bind();
-        glSamplerParameterf( fbo.getTextureReference().texData.textureTarget, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisotropy );
+        fbo.getTexture().bind();
+        glSamplerParameterf( fbo.getTexture().texData.textureTarget, GL_TEXTURE_MAX_ANISOTROPY_EXT, anisotropy );
         ofSetTextureWrap( GL_REPEAT, GL_REPEAT );
         mesh.draw();
-        fbo.getTextureReference().unbind();
+        fbo.getTexture().unbind();
         
-        fboSphere.getTextureReference().bind();
+        fboSphere.getTexture().bind();
         for( int i = 0; i < bulletSpheres.size(); i++ ) {
             bulletSpheres[i]->draw();
         }
-        fboSphere.getTextureReference().unbind();
+        fboSphere.getTexture().unbind();
     }
 	
     

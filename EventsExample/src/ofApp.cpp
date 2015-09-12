@@ -156,7 +156,7 @@ void ofApp::draw() {
 
 	ofEnableAlphaBlending();
 	ofSetColor(0, 0, 0, 150);
-	ofRect(0, 0, 250, 120);
+	ofDrawRectangle(0, 0, 250, 120);
 	ofDisableAlphaBlending();
 
 	ofSetColor(255, 255, 255);
