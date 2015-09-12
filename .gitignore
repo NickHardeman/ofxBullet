@@ -16,6 +16,7 @@ build/
 !data/
 xcuserdata/
 project.xcworkspace/
+xcshareddata/
 
 ipch/
 *.suo
