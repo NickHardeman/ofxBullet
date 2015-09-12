@@ -27,7 +27,7 @@ public:
 	
 	ofEasyCam					camera;
     
-    ofVec3f anchor, end;
+    ofVec3f anchor, end, axis;
     bool bAdd;
 		
 };

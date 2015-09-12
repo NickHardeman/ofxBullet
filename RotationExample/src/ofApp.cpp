@@ -14,13 +14,14 @@ void ofApp::setup() {
 	world.setup();
 	world.enableGrabbing();
 	world.setCamera(&camera);
+    world.setGravity( ofVec3f(0, 30, 0) );
     
     ground.create( world.world, ofVec3f(0., 5.5, 0.), 0., 100.f, 1.f, 100.f );
 	ground.setProperties(.25, .95);
 	ground.add();
 	
     anchor.set( 0, 0, 0 );
-    end.set( 4, 0, 0 );
+    axis.set( 1, 0, 0 );
     
     bAdd = false;
 }
@@ -30,11 +31,14 @@ void ofApp::update() {
 	world.update();
 	ofSetWindowTitle(ofToString(ofGetFrameRate(), 0));
     
-    end.rotate( ofGetLastFrameTime() * 2.6 * 60., ofVec3f(0,1,0) );
+    axis.rotate( ofWrapDegrees(ofGetLastFrameTime() * 4.6 * 60.), ofVec3f(0,1,0) );
     
-    float tlen = ((sin( ofGetElapsedTimef() * 2.5 ) * 0.5 + 0.5) + 0.5) * 4.5;
-    end.normalize();
-    end *= tlen;
+    float tlen = ((sin( ofGetElapsedTimef() * 5.5 ) * 0.5 + 0.5) + 0.5) * 4.5;
+    end = anchor + axis * tlen;
+    
+    if( ofGetFrameNum() % 10 == 0 ) {
+        bAdd = true;
+    }
     
     if( bAdd ) {
         shared_ptr< ofxBulletCapsule > capsule( new ofxBulletCapsule() );
@@ -44,7 +48,7 @@ void ofApp::update() {
         // the up vector of the capsule object is 0,1,0
         ofVec3f localCapsuleAxis( 0, 1, 0 );
         // now make a vector that points along the line we are making from anchor to end
-        ofVec3f direction = (end + anchor) - anchor;
+        ofVec3f direction = end - anchor;
         
         float radius = ofRandom(0.2, 0.4 );
         float height = 5.;
@@ -65,7 +69,7 @@ void ofApp::update() {
         bAdd = false;
     }
     
-    if( bodies.size() > 500 ) {
+    if( bodies.size() > 200 ) {
         bodies.erase( bodies.begin() );
     }
 }
@@ -89,9 +93,10 @@ void ofApp::draw() {
     
     ofSetColor( 255 );
     ofDrawSphere( anchor, 0.15 );
-    ofDrawSphere( end, 0.15 );
+//    ofDrawSphere( end, 0.15 );
     ofSetColor( 220, 0, 0 );
-    ofDrawLine( end, anchor );
+//    ofDrawLine( end, anchor );
+    ofDrawArrow( anchor, end, 0.35 );
 	
 	camera.end();
     ofDisableDepthTest();
@@ -111,6 +116,21 @@ void ofApp::keyPressed(int key) {
     if( key == ' ' ) {
         world.disableGrabbing();
         camera.enableMouseInput();
+    }
+    
+    if( key == OF_KEY_RIGHT ) {
+        anchor.x += 0.5;
+    }
+    
+    if( key == OF_KEY_LEFT ) {
+        anchor.x -= 0.5;
+    }
+    if( key == OF_KEY_UP ) {
+        anchor.z += 0.5;
+    }
+    
+    if( key == OF_KEY_DOWN ) {
+        anchor.z -= 0.5;
     }
 }
 
