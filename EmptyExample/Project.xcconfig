@@ -9,10 +9,10 @@ BULLET_LIB_PATH = $(OF_PATH)/addons/ofxBullet/libs/bullet2.8.2
 
 OFX_BULLET_HEADERS = "$(BULLET_LIB_PATH)/include/**"
 
-LIB_BULLET_COLLISION_RELEASE    = "$(BULLET_LIB_PATH)/lib/osx/x86_64/libBulletCollision.a"
-LIB_BULLET_DYNAMICS_RELEASE     = "$(BULLET_LIB_PATH)/lib/osx/x86_64/libBulletDynamics.a"
-LIB_BULLET_MATH_RELEASE         = "$(BULLET_LIB_PATH)/lib/osx/x86_64/libLinearMath.a"
-LIB_BULLET_SOFT_BODY_RELEASE    = "$(BULLET_LIB_PATH)/lib/osx/x86_64/libBulletSoftBody.a"
+LIB_BULLET_COLLISION_RELEASE    = "$(BULLET_LIB_PATH)/lib/osx/fat/libBulletCollision.a"
+LIB_BULLET_DYNAMICS_RELEASE     = "$(BULLET_LIB_PATH)/lib/osx/fat/libBulletDynamics.a"
+LIB_BULLET_MATH_RELEASE         = "$(BULLET_LIB_PATH)/lib/osx/fat/libLinearMath.a"
+LIB_BULLET_SOFT_BODY_RELEASE    = "$(BULLET_LIB_PATH)/lib/osx/fat/libBulletSoftBody.a"
 
 OFX_BULLET_LIBS = $(LIB_BULLET_COLLISION_RELEASE) $(LIB_BULLET_DYNAMICS_RELEASE) $(LIB_BULLET_MATH_RELEASE) $(LIB_BULLET_SOFT_BODY_RELEASE)
 

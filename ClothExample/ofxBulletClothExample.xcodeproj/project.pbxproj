@@ -7,46 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2E4E507E1B438EA600ADBEA6 /* ofxBulletJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E50521B438EA500ADBEA6 /* ofxBulletJoint.cpp */; };
-		2E4E507F1B438EA600ADBEA6 /* ofxBulletWorldRigid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E50581B438EA500ADBEA6 /* ofxBulletWorldRigid.cpp */; };
-		2E4E50801B438EA600ADBEA6 /* ofxBulletWorldSoft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E505A1B438EA500ADBEA6 /* ofxBulletWorldSoft.cpp */; };
-		2E4E50811B438EA600ADBEA6 /* GLDebugDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E505D1B438EA500ADBEA6 /* GLDebugDrawer.cpp */; };
-		2E4E50821B438EA600ADBEA6 /* ofxBulletBaseShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E50601B438EA500ADBEA6 /* ofxBulletBaseShape.cpp */; };
-		2E4E50831B438EA600ADBEA6 /* ofxBulletBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E50621B438EA500ADBEA6 /* ofxBulletBox.cpp */; };
-		2E4E50841B438EA600ADBEA6 /* ofxBulletCapsule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E50641B438EA500ADBEA6 /* ofxBulletCapsule.cpp */; };
-		2E4E50851B438EA600ADBEA6 /* ofxBulletCone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E50661B438EA500ADBEA6 /* ofxBulletCone.cpp */; };
-		2E4E50861B438EA600ADBEA6 /* ofxBulletConvexShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E50681B438EA500ADBEA6 /* ofxBulletConvexShape.cpp */; };
-		2E4E50871B438EA600ADBEA6 /* ofxBulletCustomShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E506A1B438EA500ADBEA6 /* ofxBulletCustomShape.cpp */; };
-		2E4E50881B438EA600ADBEA6 /* ofxBulletCylinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E506C1B438EA500ADBEA6 /* ofxBulletCylinder.cpp */; };
-		2E4E50891B438EA600ADBEA6 /* ofxBulletEllipsoid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E506E1B438EA500ADBEA6 /* ofxBulletEllipsoid.cpp */; };
-		2E4E508A1B438EA600ADBEA6 /* ofxBulletPatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E50701B438EA500ADBEA6 /* ofxBulletPatch.cpp */; };
-		2E4E508B1B438EA600ADBEA6 /* ofxBulletRigidBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E50721B438EA600ADBEA6 /* ofxBulletRigidBody.cpp */; };
-		2E4E508C1B438EA600ADBEA6 /* ofxBulletRope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E50741B438EA600ADBEA6 /* ofxBulletRope.cpp */; };
-		2E4E508D1B438EA600ADBEA6 /* ofxBulletSoftBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E50761B438EA600ADBEA6 /* ofxBulletSoftBody.cpp */; };
-		2E4E508E1B438EA600ADBEA6 /* ofxBulletSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E50781B438EA600ADBEA6 /* ofxBulletSphere.cpp */; };
-		2E4E508F1B438EA600ADBEA6 /* ofxBulletStaticPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E507A1B438EA600ADBEA6 /* ofxBulletStaticPlane.cpp */; };
-		2E4E50901B438EA600ADBEA6 /* ofxBulletTriMeshShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E4E507C1B438EA600ADBEA6 /* ofxBulletTriMeshShape.cpp */; };
-		2E57E3171B49F6100012BB0F /* ofxBulletSoftTriMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2E57E3151B49F6100012BB0F /* ofxBulletSoftTriMesh.cpp */; };
-		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
+		2EB90E3D1BA42B5000569B2C /* ofxBulletJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E0F1BA42B5000569B2C /* ofxBulletJoint.cpp */; };
+		2EB90E3E1BA42B5000569B2C /* ofxBulletWorldRigid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E151BA42B5000569B2C /* ofxBulletWorldRigid.cpp */; };
+		2EB90E3F1BA42B5000569B2C /* ofxBulletWorldSoft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E171BA42B5000569B2C /* ofxBulletWorldSoft.cpp */; };
+		2EB90E401BA42B5000569B2C /* GLDebugDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E1A1BA42B5000569B2C /* GLDebugDrawer.cpp */; };
+		2EB90E411BA42B5000569B2C /* ofxBulletBaseShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E1D1BA42B5000569B2C /* ofxBulletBaseShape.cpp */; };
+		2EB90E421BA42B5000569B2C /* ofxBulletBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E1F1BA42B5000569B2C /* ofxBulletBox.cpp */; };
+		2EB90E431BA42B5000569B2C /* ofxBulletCapsule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E211BA42B5000569B2C /* ofxBulletCapsule.cpp */; };
+		2EB90E441BA42B5000569B2C /* ofxBulletCone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E231BA42B5000569B2C /* ofxBulletCone.cpp */; };
+		2EB90E451BA42B5000569B2C /* ofxBulletConvexShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E251BA42B5000569B2C /* ofxBulletConvexShape.cpp */; };
+		2EB90E461BA42B5000569B2C /* ofxBulletCustomShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E271BA42B5000569B2C /* ofxBulletCustomShape.cpp */; };
+		2EB90E471BA42B5000569B2C /* ofxBulletCylinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E291BA42B5000569B2C /* ofxBulletCylinder.cpp */; };
+		2EB90E481BA42B5000569B2C /* ofxBulletEllipsoid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E2B1BA42B5000569B2C /* ofxBulletEllipsoid.cpp */; };
+		2EB90E491BA42B5000569B2C /* ofxBulletPatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E2D1BA42B5000569B2C /* ofxBulletPatch.cpp */; };
+		2EB90E4A1BA42B5000569B2C /* ofxBulletRigidBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E2F1BA42B5000569B2C /* ofxBulletRigidBody.cpp */; };
+		2EB90E4B1BA42B5000569B2C /* ofxBulletRope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E311BA42B5000569B2C /* ofxBulletRope.cpp */; };
+		2EB90E4C1BA42B5000569B2C /* ofxBulletSoftBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E331BA42B5000569B2C /* ofxBulletSoftBody.cpp */; };
+		2EB90E4D1BA42B5000569B2C /* ofxBulletSoftTriMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E351BA42B5000569B2C /* ofxBulletSoftTriMesh.cpp */; };
+		2EB90E4E1BA42B5000569B2C /* ofxBulletSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E371BA42B5000569B2C /* ofxBulletSphere.cpp */; };
+		2EB90E4F1BA42B5000569B2C /* ofxBulletStaticPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E391BA42B5000569B2C /* ofxBulletStaticPlane.cpp */; };
+		2EB90E501BA42B5000569B2C /* ofxBulletTriMeshShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2EB90E3B1BA42B5000569B2C /* ofxBulletTriMeshShape.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
-		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
-		E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */; };
-		E45BE97D0E8CC7DD009D7055 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9730E8CC7DD009D7055 /* AudioToolbox.framework */; };
-		E45BE97E0E8CC7DD009D7055 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9740E8CC7DD009D7055 /* Carbon.framework */; };
-		E45BE97F0E8CC7DD009D7055 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9750E8CC7DD009D7055 /* CoreAudio.framework */; };
-		E45BE9800E8CC7DD009D7055 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9760E8CC7DD009D7055 /* CoreFoundation.framework */; };
-		E45BE9810E8CC7DD009D7055 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9770E8CC7DD009D7055 /* CoreServices.framework */; };
-		E45BE9830E8CC7DD009D7055 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9790E8CC7DD009D7055 /* OpenGL.framework */; };
-		E45BE9840E8CC7DD009D7055 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
 		E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
-		E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424410CC5A17004149E2 /* AppKit.framework */; };
-		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
-		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
-		E4EB6799138ADC1D00A09F29 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
-		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
-		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
-		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,84 +56,67 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2E4E504E1B438EA500ADBEA6 /* ofxBulletCollisionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCollisionData.h; sourceTree = "<group>"; };
-		2E4E504F1B438EA500ADBEA6 /* ofxBulletMousePickEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletMousePickEvent.h; sourceTree = "<group>"; };
-		2E4E50501B438EA500ADBEA6 /* ofxBulletRaycastData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletRaycastData.h; sourceTree = "<group>"; };
-		2E4E50521B438EA500ADBEA6 /* ofxBulletJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletJoint.cpp; sourceTree = "<group>"; };
-		2E4E50531B438EA500ADBEA6 /* ofxBulletJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletJoint.h; sourceTree = "<group>"; };
-		2E4E50541B438EA500ADBEA6 /* ofxBullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBullet.h; sourceTree = "<group>"; };
-		2E4E50551B438EA500ADBEA6 /* ofxBulletConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletConstants.h; sourceTree = "<group>"; };
-		2E4E50561B438EA500ADBEA6 /* ofxBulletUserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletUserData.h; sourceTree = "<group>"; };
-		2E4E50571B438EA500ADBEA6 /* ofxBulletUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletUtils.h; sourceTree = "<group>"; };
-		2E4E50581B438EA500ADBEA6 /* ofxBulletWorldRigid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletWorldRigid.cpp; sourceTree = "<group>"; };
-		2E4E50591B438EA500ADBEA6 /* ofxBulletWorldRigid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletWorldRigid.h; sourceTree = "<group>"; };
-		2E4E505A1B438EA500ADBEA6 /* ofxBulletWorldSoft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletWorldSoft.cpp; sourceTree = "<group>"; };
-		2E4E505B1B438EA500ADBEA6 /* ofxBulletWorldSoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletWorldSoft.h; sourceTree = "<group>"; };
-		2E4E505D1B438EA500ADBEA6 /* GLDebugDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLDebugDrawer.cpp; sourceTree = "<group>"; };
-		2E4E505E1B438EA500ADBEA6 /* GLDebugDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLDebugDrawer.h; sourceTree = "<group>"; };
-		2E4E50601B438EA500ADBEA6 /* ofxBulletBaseShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletBaseShape.cpp; sourceTree = "<group>"; };
-		2E4E50611B438EA500ADBEA6 /* ofxBulletBaseShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletBaseShape.h; sourceTree = "<group>"; };
-		2E4E50621B438EA500ADBEA6 /* ofxBulletBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletBox.cpp; sourceTree = "<group>"; };
-		2E4E50631B438EA500ADBEA6 /* ofxBulletBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletBox.h; sourceTree = "<group>"; };
-		2E4E50641B438EA500ADBEA6 /* ofxBulletCapsule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCapsule.cpp; sourceTree = "<group>"; };
-		2E4E50651B438EA500ADBEA6 /* ofxBulletCapsule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCapsule.h; sourceTree = "<group>"; };
-		2E4E50661B438EA500ADBEA6 /* ofxBulletCone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCone.cpp; sourceTree = "<group>"; };
-		2E4E50671B438EA500ADBEA6 /* ofxBulletCone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCone.h; sourceTree = "<group>"; };
-		2E4E50681B438EA500ADBEA6 /* ofxBulletConvexShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletConvexShape.cpp; sourceTree = "<group>"; };
-		2E4E50691B438EA500ADBEA6 /* ofxBulletConvexShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletConvexShape.h; sourceTree = "<group>"; };
-		2E4E506A1B438EA500ADBEA6 /* ofxBulletCustomShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCustomShape.cpp; sourceTree = "<group>"; };
-		2E4E506B1B438EA500ADBEA6 /* ofxBulletCustomShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCustomShape.h; sourceTree = "<group>"; };
-		2E4E506C1B438EA500ADBEA6 /* ofxBulletCylinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCylinder.cpp; sourceTree = "<group>"; };
-		2E4E506D1B438EA500ADBEA6 /* ofxBulletCylinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCylinder.h; sourceTree = "<group>"; };
-		2E4E506E1B438EA500ADBEA6 /* ofxBulletEllipsoid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletEllipsoid.cpp; sourceTree = "<group>"; };
-		2E4E506F1B438EA500ADBEA6 /* ofxBulletEllipsoid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletEllipsoid.h; sourceTree = "<group>"; };
-		2E4E50701B438EA500ADBEA6 /* ofxBulletPatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletPatch.cpp; sourceTree = "<group>"; };
-		2E4E50711B438EA500ADBEA6 /* ofxBulletPatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletPatch.h; sourceTree = "<group>"; };
-		2E4E50721B438EA600ADBEA6 /* ofxBulletRigidBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletRigidBody.cpp; sourceTree = "<group>"; };
-		2E4E50731B438EA600ADBEA6 /* ofxBulletRigidBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletRigidBody.h; sourceTree = "<group>"; };
-		2E4E50741B438EA600ADBEA6 /* ofxBulletRope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletRope.cpp; sourceTree = "<group>"; };
-		2E4E50751B438EA600ADBEA6 /* ofxBulletRope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletRope.h; sourceTree = "<group>"; };
-		2E4E50761B438EA600ADBEA6 /* ofxBulletSoftBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletSoftBody.cpp; sourceTree = "<group>"; };
-		2E4E50771B438EA600ADBEA6 /* ofxBulletSoftBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletSoftBody.h; sourceTree = "<group>"; };
-		2E4E50781B438EA600ADBEA6 /* ofxBulletSphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletSphere.cpp; sourceTree = "<group>"; };
-		2E4E50791B438EA600ADBEA6 /* ofxBulletSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletSphere.h; sourceTree = "<group>"; };
-		2E4E507A1B438EA600ADBEA6 /* ofxBulletStaticPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletStaticPlane.cpp; sourceTree = "<group>"; };
-		2E4E507B1B438EA600ADBEA6 /* ofxBulletStaticPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletStaticPlane.h; sourceTree = "<group>"; };
-		2E4E507C1B438EA600ADBEA6 /* ofxBulletTriMeshShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletTriMeshShape.cpp; sourceTree = "<group>"; };
-		2E4E507D1B438EA600ADBEA6 /* ofxBulletTriMeshShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletTriMeshShape.h; sourceTree = "<group>"; };
-		2E57E3151B49F6100012BB0F /* ofxBulletSoftTriMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletSoftTriMesh.cpp; sourceTree = "<group>"; };
-		2E57E3161B49F6100012BB0F /* ofxBulletSoftTriMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletSoftTriMesh.h; sourceTree = "<group>"; };
-		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
+		2EB90E0B1BA42B5000569B2C /* ofxBulletCollisionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCollisionData.h; sourceTree = "<group>"; };
+		2EB90E0C1BA42B5000569B2C /* ofxBulletMousePickEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletMousePickEvent.h; sourceTree = "<group>"; };
+		2EB90E0D1BA42B5000569B2C /* ofxBulletRaycastData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletRaycastData.h; sourceTree = "<group>"; };
+		2EB90E0F1BA42B5000569B2C /* ofxBulletJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletJoint.cpp; sourceTree = "<group>"; };
+		2EB90E101BA42B5000569B2C /* ofxBulletJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletJoint.h; sourceTree = "<group>"; };
+		2EB90E111BA42B5000569B2C /* ofxBullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBullet.h; sourceTree = "<group>"; };
+		2EB90E121BA42B5000569B2C /* ofxBulletConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletConstants.h; sourceTree = "<group>"; };
+		2EB90E131BA42B5000569B2C /* ofxBulletUserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletUserData.h; sourceTree = "<group>"; };
+		2EB90E141BA42B5000569B2C /* ofxBulletUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletUtils.h; sourceTree = "<group>"; };
+		2EB90E151BA42B5000569B2C /* ofxBulletWorldRigid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletWorldRigid.cpp; sourceTree = "<group>"; };
+		2EB90E161BA42B5000569B2C /* ofxBulletWorldRigid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletWorldRigid.h; sourceTree = "<group>"; };
+		2EB90E171BA42B5000569B2C /* ofxBulletWorldSoft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletWorldSoft.cpp; sourceTree = "<group>"; };
+		2EB90E181BA42B5000569B2C /* ofxBulletWorldSoft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletWorldSoft.h; sourceTree = "<group>"; };
+		2EB90E1A1BA42B5000569B2C /* GLDebugDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLDebugDrawer.cpp; sourceTree = "<group>"; };
+		2EB90E1B1BA42B5000569B2C /* GLDebugDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLDebugDrawer.h; sourceTree = "<group>"; };
+		2EB90E1D1BA42B5000569B2C /* ofxBulletBaseShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletBaseShape.cpp; sourceTree = "<group>"; };
+		2EB90E1E1BA42B5000569B2C /* ofxBulletBaseShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletBaseShape.h; sourceTree = "<group>"; };
+		2EB90E1F1BA42B5000569B2C /* ofxBulletBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletBox.cpp; sourceTree = "<group>"; };
+		2EB90E201BA42B5000569B2C /* ofxBulletBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletBox.h; sourceTree = "<group>"; };
+		2EB90E211BA42B5000569B2C /* ofxBulletCapsule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCapsule.cpp; sourceTree = "<group>"; };
+		2EB90E221BA42B5000569B2C /* ofxBulletCapsule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCapsule.h; sourceTree = "<group>"; };
+		2EB90E231BA42B5000569B2C /* ofxBulletCone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCone.cpp; sourceTree = "<group>"; };
+		2EB90E241BA42B5000569B2C /* ofxBulletCone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCone.h; sourceTree = "<group>"; };
+		2EB90E251BA42B5000569B2C /* ofxBulletConvexShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletConvexShape.cpp; sourceTree = "<group>"; };
+		2EB90E261BA42B5000569B2C /* ofxBulletConvexShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletConvexShape.h; sourceTree = "<group>"; };
+		2EB90E271BA42B5000569B2C /* ofxBulletCustomShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCustomShape.cpp; sourceTree = "<group>"; };
+		2EB90E281BA42B5000569B2C /* ofxBulletCustomShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCustomShape.h; sourceTree = "<group>"; };
+		2EB90E291BA42B5000569B2C /* ofxBulletCylinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletCylinder.cpp; sourceTree = "<group>"; };
+		2EB90E2A1BA42B5000569B2C /* ofxBulletCylinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletCylinder.h; sourceTree = "<group>"; };
+		2EB90E2B1BA42B5000569B2C /* ofxBulletEllipsoid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletEllipsoid.cpp; sourceTree = "<group>"; };
+		2EB90E2C1BA42B5000569B2C /* ofxBulletEllipsoid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletEllipsoid.h; sourceTree = "<group>"; };
+		2EB90E2D1BA42B5000569B2C /* ofxBulletPatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletPatch.cpp; sourceTree = "<group>"; };
+		2EB90E2E1BA42B5000569B2C /* ofxBulletPatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletPatch.h; sourceTree = "<group>"; };
+		2EB90E2F1BA42B5000569B2C /* ofxBulletRigidBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletRigidBody.cpp; sourceTree = "<group>"; };
+		2EB90E301BA42B5000569B2C /* ofxBulletRigidBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletRigidBody.h; sourceTree = "<group>"; };
+		2EB90E311BA42B5000569B2C /* ofxBulletRope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletRope.cpp; sourceTree = "<group>"; };
+		2EB90E321BA42B5000569B2C /* ofxBulletRope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletRope.h; sourceTree = "<group>"; };
+		2EB90E331BA42B5000569B2C /* ofxBulletSoftBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletSoftBody.cpp; sourceTree = "<group>"; };
+		2EB90E341BA42B5000569B2C /* ofxBulletSoftBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletSoftBody.h; sourceTree = "<group>"; };
+		2EB90E351BA42B5000569B2C /* ofxBulletSoftTriMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletSoftTriMesh.cpp; sourceTree = "<group>"; };
+		2EB90E361BA42B5000569B2C /* ofxBulletSoftTriMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletSoftTriMesh.h; sourceTree = "<group>"; };
+		2EB90E371BA42B5000569B2C /* ofxBulletSphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletSphere.cpp; sourceTree = "<group>"; };
+		2EB90E381BA42B5000569B2C /* ofxBulletSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletSphere.h; sourceTree = "<group>"; };
+		2EB90E391BA42B5000569B2C /* ofxBulletStaticPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletStaticPlane.cpp; sourceTree = "<group>"; };
+		2EB90E3A1BA42B5000569B2C /* ofxBulletStaticPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletStaticPlane.h; sourceTree = "<group>"; };
+		2EB90E3B1BA42B5000569B2C /* ofxBulletTriMeshShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBulletTriMeshShape.cpp; sourceTree = "<group>"; };
+		2EB90E3C1BA42B5000569B2C /* ofxBulletTriMeshShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBulletTriMeshShape.h; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
-		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
-		E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
-		E45BE9730E8CC7DD009D7055 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
-		E45BE9740E8CC7DD009D7055 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
-		E45BE9750E8CC7DD009D7055 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
-		E45BE9760E8CC7DD009D7055 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
-		E45BE9770E8CC7DD009D7055 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		E45BE9790E8CC7DD009D7055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
-		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		E4B69B5B0A3A1756003C02F2 /* ofxBulletClothExampleDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ofxBulletClothExampleDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
-		E4C2424410CC5A17004149E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		E4C2424510CC5A17004149E2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		E4C2424610CC5A17004149E2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
-		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
-		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
-		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,160 +124,121 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */,
-				E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */,
-				E4EB6799138ADC1D00A09F29 /* GLUT.framework in Frameworks */,
 				E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */,
-				E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */,
-				E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */,
-				E45BE97D0E8CC7DD009D7055 /* AudioToolbox.framework in Frameworks */,
-				E45BE97E0E8CC7DD009D7055 /* Carbon.framework in Frameworks */,
-				E45BE97F0E8CC7DD009D7055 /* CoreAudio.framework in Frameworks */,
-				E45BE9800E8CC7DD009D7055 /* CoreFoundation.framework in Frameworks */,
-				E45BE9810E8CC7DD009D7055 /* CoreServices.framework in Frameworks */,
-				E45BE9830E8CC7DD009D7055 /* OpenGL.framework in Frameworks */,
-				E45BE9840E8CC7DD009D7055 /* QuickTime.framework in Frameworks */,
-				E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */,
-				E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */,
-				E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */,
-				E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2E4E504C1B438EA500ADBEA6 /* src */ = {
+		2EB90E081BA42B4200569B2C /* ofxBullet */ = {
 			isa = PBXGroup;
 			children = (
-				2E4E504D1B438EA500ADBEA6 /* events */,
-				2E4E50511B438EA500ADBEA6 /* joints */,
-				2E4E50541B438EA500ADBEA6 /* ofxBullet.h */,
-				2E4E50551B438EA500ADBEA6 /* ofxBulletConstants.h */,
-				2E4E50561B438EA500ADBEA6 /* ofxBulletUserData.h */,
-				2E4E50571B438EA500ADBEA6 /* ofxBulletUtils.h */,
-				2E4E50581B438EA500ADBEA6 /* ofxBulletWorldRigid.cpp */,
-				2E4E50591B438EA500ADBEA6 /* ofxBulletWorldRigid.h */,
-				2E4E505A1B438EA500ADBEA6 /* ofxBulletWorldSoft.cpp */,
-				2E4E505B1B438EA500ADBEA6 /* ofxBulletWorldSoft.h */,
-				2E4E505C1B438EA500ADBEA6 /* render */,
-				2E4E505F1B438EA500ADBEA6 /* shapes */,
+				2EB90E091BA42B5000569B2C /* src */,
 			);
-			path = src;
+			name = ofxBullet;
 			sourceTree = "<group>";
 		};
-		2E4E504D1B438EA500ADBEA6 /* events */ = {
+		2EB90E091BA42B5000569B2C /* src */ = {
 			isa = PBXGroup;
 			children = (
-				2E4E504E1B438EA500ADBEA6 /* ofxBulletCollisionData.h */,
-				2E4E504F1B438EA500ADBEA6 /* ofxBulletMousePickEvent.h */,
-				2E4E50501B438EA500ADBEA6 /* ofxBulletRaycastData.h */,
+				2EB90E0A1BA42B5000569B2C /* events */,
+				2EB90E0E1BA42B5000569B2C /* joints */,
+				2EB90E111BA42B5000569B2C /* ofxBullet.h */,
+				2EB90E121BA42B5000569B2C /* ofxBulletConstants.h */,
+				2EB90E131BA42B5000569B2C /* ofxBulletUserData.h */,
+				2EB90E141BA42B5000569B2C /* ofxBulletUtils.h */,
+				2EB90E151BA42B5000569B2C /* ofxBulletWorldRigid.cpp */,
+				2EB90E161BA42B5000569B2C /* ofxBulletWorldRigid.h */,
+				2EB90E171BA42B5000569B2C /* ofxBulletWorldSoft.cpp */,
+				2EB90E181BA42B5000569B2C /* ofxBulletWorldSoft.h */,
+				2EB90E191BA42B5000569B2C /* render */,
+				2EB90E1C1BA42B5000569B2C /* shapes */,
+			);
+			name = src;
+			path = ../src;
+			sourceTree = "<group>";
+		};
+		2EB90E0A1BA42B5000569B2C /* events */ = {
+			isa = PBXGroup;
+			children = (
+				2EB90E0B1BA42B5000569B2C /* ofxBulletCollisionData.h */,
+				2EB90E0C1BA42B5000569B2C /* ofxBulletMousePickEvent.h */,
+				2EB90E0D1BA42B5000569B2C /* ofxBulletRaycastData.h */,
 			);
 			path = events;
 			sourceTree = "<group>";
 		};
-		2E4E50511B438EA500ADBEA6 /* joints */ = {
+		2EB90E0E1BA42B5000569B2C /* joints */ = {
 			isa = PBXGroup;
 			children = (
-				2E4E50521B438EA500ADBEA6 /* ofxBulletJoint.cpp */,
-				2E4E50531B438EA500ADBEA6 /* ofxBulletJoint.h */,
+				2EB90E0F1BA42B5000569B2C /* ofxBulletJoint.cpp */,
+				2EB90E101BA42B5000569B2C /* ofxBulletJoint.h */,
 			);
 			path = joints;
 			sourceTree = "<group>";
 		};
-		2E4E505C1B438EA500ADBEA6 /* render */ = {
+		2EB90E191BA42B5000569B2C /* render */ = {
 			isa = PBXGroup;
 			children = (
-				2E4E505D1B438EA500ADBEA6 /* GLDebugDrawer.cpp */,
-				2E4E505E1B438EA500ADBEA6 /* GLDebugDrawer.h */,
+				2EB90E1A1BA42B5000569B2C /* GLDebugDrawer.cpp */,
+				2EB90E1B1BA42B5000569B2C /* GLDebugDrawer.h */,
 			);
 			path = render;
 			sourceTree = "<group>";
 		};
-		2E4E505F1B438EA500ADBEA6 /* shapes */ = {
+		2EB90E1C1BA42B5000569B2C /* shapes */ = {
 			isa = PBXGroup;
 			children = (
-				2E4E50601B438EA500ADBEA6 /* ofxBulletBaseShape.cpp */,
-				2E4E50611B438EA500ADBEA6 /* ofxBulletBaseShape.h */,
-				2E4E50621B438EA500ADBEA6 /* ofxBulletBox.cpp */,
-				2E4E50631B438EA500ADBEA6 /* ofxBulletBox.h */,
-				2E4E50641B438EA500ADBEA6 /* ofxBulletCapsule.cpp */,
-				2E4E50651B438EA500ADBEA6 /* ofxBulletCapsule.h */,
-				2E4E50661B438EA500ADBEA6 /* ofxBulletCone.cpp */,
-				2E4E50671B438EA500ADBEA6 /* ofxBulletCone.h */,
-				2E4E50681B438EA500ADBEA6 /* ofxBulletConvexShape.cpp */,
-				2E4E50691B438EA500ADBEA6 /* ofxBulletConvexShape.h */,
-				2E4E506A1B438EA500ADBEA6 /* ofxBulletCustomShape.cpp */,
-				2E4E506B1B438EA500ADBEA6 /* ofxBulletCustomShape.h */,
-				2E4E506C1B438EA500ADBEA6 /* ofxBulletCylinder.cpp */,
-				2E4E506D1B438EA500ADBEA6 /* ofxBulletCylinder.h */,
-				2E4E506E1B438EA500ADBEA6 /* ofxBulletEllipsoid.cpp */,
-				2E4E506F1B438EA500ADBEA6 /* ofxBulletEllipsoid.h */,
-				2E4E50701B438EA500ADBEA6 /* ofxBulletPatch.cpp */,
-				2E4E50711B438EA500ADBEA6 /* ofxBulletPatch.h */,
-				2E4E50721B438EA600ADBEA6 /* ofxBulletRigidBody.cpp */,
-				2E4E50731B438EA600ADBEA6 /* ofxBulletRigidBody.h */,
-				2E4E50741B438EA600ADBEA6 /* ofxBulletRope.cpp */,
-				2E4E50751B438EA600ADBEA6 /* ofxBulletRope.h */,
-				2E4E50761B438EA600ADBEA6 /* ofxBulletSoftBody.cpp */,
-				2E4E50771B438EA600ADBEA6 /* ofxBulletSoftBody.h */,
-				2E4E50781B438EA600ADBEA6 /* ofxBulletSphere.cpp */,
-				2E4E50791B438EA600ADBEA6 /* ofxBulletSphere.h */,
-				2E4E507A1B438EA600ADBEA6 /* ofxBulletStaticPlane.cpp */,
-				2E4E507B1B438EA600ADBEA6 /* ofxBulletStaticPlane.h */,
-				2E4E507C1B438EA600ADBEA6 /* ofxBulletTriMeshShape.cpp */,
-				2E4E507D1B438EA600ADBEA6 /* ofxBulletTriMeshShape.h */,
-				2E57E3151B49F6100012BB0F /* ofxBulletSoftTriMesh.cpp */,
-				2E57E3161B49F6100012BB0F /* ofxBulletSoftTriMesh.h */,
+				2EB90E1D1BA42B5000569B2C /* ofxBulletBaseShape.cpp */,
+				2EB90E1E1BA42B5000569B2C /* ofxBulletBaseShape.h */,
+				2EB90E1F1BA42B5000569B2C /* ofxBulletBox.cpp */,
+				2EB90E201BA42B5000569B2C /* ofxBulletBox.h */,
+				2EB90E211BA42B5000569B2C /* ofxBulletCapsule.cpp */,
+				2EB90E221BA42B5000569B2C /* ofxBulletCapsule.h */,
+				2EB90E231BA42B5000569B2C /* ofxBulletCone.cpp */,
+				2EB90E241BA42B5000569B2C /* ofxBulletCone.h */,
+				2EB90E251BA42B5000569B2C /* ofxBulletConvexShape.cpp */,
+				2EB90E261BA42B5000569B2C /* ofxBulletConvexShape.h */,
+				2EB90E271BA42B5000569B2C /* ofxBulletCustomShape.cpp */,
+				2EB90E281BA42B5000569B2C /* ofxBulletCustomShape.h */,
+				2EB90E291BA42B5000569B2C /* ofxBulletCylinder.cpp */,
+				2EB90E2A1BA42B5000569B2C /* ofxBulletCylinder.h */,
+				2EB90E2B1BA42B5000569B2C /* ofxBulletEllipsoid.cpp */,
+				2EB90E2C1BA42B5000569B2C /* ofxBulletEllipsoid.h */,
+				2EB90E2D1BA42B5000569B2C /* ofxBulletPatch.cpp */,
+				2EB90E2E1BA42B5000569B2C /* ofxBulletPatch.h */,
+				2EB90E2F1BA42B5000569B2C /* ofxBulletRigidBody.cpp */,
+				2EB90E301BA42B5000569B2C /* ofxBulletRigidBody.h */,
+				2EB90E311BA42B5000569B2C /* ofxBulletRope.cpp */,
+				2EB90E321BA42B5000569B2C /* ofxBulletRope.h */,
+				2EB90E331BA42B5000569B2C /* ofxBulletSoftBody.cpp */,
+				2EB90E341BA42B5000569B2C /* ofxBulletSoftBody.h */,
+				2EB90E351BA42B5000569B2C /* ofxBulletSoftTriMesh.cpp */,
+				2EB90E361BA42B5000569B2C /* ofxBulletSoftTriMesh.h */,
+				2EB90E371BA42B5000569B2C /* ofxBulletSphere.cpp */,
+				2EB90E381BA42B5000569B2C /* ofxBulletSphere.h */,
+				2EB90E391BA42B5000569B2C /* ofxBulletStaticPlane.cpp */,
+				2EB90E3A1BA42B5000569B2C /* ofxBulletStaticPlane.h */,
+				2EB90E3B1BA42B5000569B2C /* ofxBulletTriMeshShape.cpp */,
+				2EB90E3C1BA42B5000569B2C /* ofxBulletTriMeshShape.h */,
 			);
 			path = shapes;
 			sourceTree = "<group>";
 		};
-		2EEF2F0D17BB2A72003CFA1C /* ofxBullet */ = {
+		6948EE371B920CB800B5AC1A /* local_addons */ = {
 			isa = PBXGroup;
 			children = (
-				2E4E504C1B438EA500ADBEA6 /* src */,
 			);
-			name = ofxBullet;
-			path = ..;
+			name = local_addons;
 			sourceTree = "<group>";
 		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				2EEF2F0D17BB2A72003CFA1C /* ofxBullet */,
+				2EB90E081BA42B4200569B2C /* ofxBullet */,
 			);
 			name = addons;
-			sourceTree = "<group>";
-		};
-		BBAB23C913894ECA00AA2426 /* system frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				E7F985F515E0DE99003869B5 /* Accelerate.framework */,
-				E4C2424410CC5A17004149E2 /* AppKit.framework */,
-				E4C2424510CC5A17004149E2 /* Cocoa.framework */,
-				E4C2424610CC5A17004149E2 /* IOKit.framework */,
-				E45BE9710E8CC7DD009D7055 /* AGL.framework */,
-				E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */,
-				E45BE9730E8CC7DD009D7055 /* AudioToolbox.framework */,
-				E45BE9740E8CC7DD009D7055 /* Carbon.framework */,
-				E45BE9750E8CC7DD009D7055 /* CoreAudio.framework */,
-				E45BE9760E8CC7DD009D7055 /* CoreFoundation.framework */,
-				E45BE9770E8CC7DD009D7055 /* CoreServices.framework */,
-				E45BE9790E8CC7DD009D7055 /* OpenGL.framework */,
-				E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */,
-				E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */,
-				E7E077E715D3B6510020DFD4 /* QTKit.framework */,
-			);
-			name = "system frameworks";
-			sourceTree = "<group>";
-		};
-		BBAB23CA13894EDB00AA2426 /* 3rd party frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BBAB23BE13894E4700AA2426 /* GLUT.framework */,
-			);
-			name = "3rd party frameworks";
 			sourceTree = "<group>";
 		};
 		E4328144138ABC890047C5CB /* Products */ = {
@@ -322,15 +249,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E45BE5980E8CC70C009D7055 /* frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BBAB23CA13894EDB00AA2426 /* 3rd party frameworks */,
-				BBAB23C913894ECA00AA2426 /* system frameworks */,
-			);
-			name = frameworks;
-			sourceTree = "<group>";
-		};
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
@@ -339,7 +257,7 @@
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
-				E45BE5980E8CC70C009D7055 /* frameworks */,
+				6948EE371B920CB800B5AC1A /* local_addons */,
 				E4B69B5B0A3A1756003C02F2 /* ofxBulletClothExampleDebug.app */,
 			);
 			sourceTree = "<group>";
@@ -391,7 +309,7 @@
 		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0600;
 			};
 			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "ofxBulletClothExample" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -441,7 +359,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cp -f ../../../libs/fmodex/lib/osx/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/libfmodex.dylib\"; install_name_tool -change ./libfmodex.dylib @executable_path/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\";\nmkdir -p \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\ncp -f \"$ICON_FILE\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\n";
+			shellScript = "rsync -aved ../../../libs/fmodex/lib/osx/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/\"; install_name_tool -change ./libfmodex.dylib @executable_path/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\";\nmkdir -p \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\nrsync -aved \"$ICON_FILE\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\nrsync -aved ../../../libs/glut/lib/osx/GLUT.framework \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Frameworks/\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -450,28 +368,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E4E507F1B438EA600ADBEA6 /* ofxBulletWorldRigid.cpp in Sources */,
+				2EB90E3E1BA42B5000569B2C /* ofxBulletWorldRigid.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
-				2E4E50891B438EA600ADBEA6 /* ofxBulletEllipsoid.cpp in Sources */,
-				2E4E508A1B438EA600ADBEA6 /* ofxBulletPatch.cpp in Sources */,
-				2E4E508C1B438EA600ADBEA6 /* ofxBulletRope.cpp in Sources */,
-				2E4E50821B438EA600ADBEA6 /* ofxBulletBaseShape.cpp in Sources */,
-				2E4E50851B438EA600ADBEA6 /* ofxBulletCone.cpp in Sources */,
-				2E57E3171B49F6100012BB0F /* ofxBulletSoftTriMesh.cpp in Sources */,
-				2E4E50881B438EA600ADBEA6 /* ofxBulletCylinder.cpp in Sources */,
-				2E4E50801B438EA600ADBEA6 /* ofxBulletWorldSoft.cpp in Sources */,
-				2E4E508B1B438EA600ADBEA6 /* ofxBulletRigidBody.cpp in Sources */,
-				2E4E508D1B438EA600ADBEA6 /* ofxBulletSoftBody.cpp in Sources */,
-				2E4E50841B438EA600ADBEA6 /* ofxBulletCapsule.cpp in Sources */,
-				2E4E507E1B438EA600ADBEA6 /* ofxBulletJoint.cpp in Sources */,
-				2E4E508F1B438EA600ADBEA6 /* ofxBulletStaticPlane.cpp in Sources */,
-				2E4E50861B438EA600ADBEA6 /* ofxBulletConvexShape.cpp in Sources */,
-				2E4E50811B438EA600ADBEA6 /* GLDebugDrawer.cpp in Sources */,
-				2E4E50871B438EA600ADBEA6 /* ofxBulletCustomShape.cpp in Sources */,
-				2E4E508E1B438EA600ADBEA6 /* ofxBulletSphere.cpp in Sources */,
-				2E4E50901B438EA600ADBEA6 /* ofxBulletTriMeshShape.cpp in Sources */,
-				2E4E50831B438EA600ADBEA6 /* ofxBulletBox.cpp in Sources */,
+				2EB90E481BA42B5000569B2C /* ofxBulletEllipsoid.cpp in Sources */,
+				2EB90E501BA42B5000569B2C /* ofxBulletTriMeshShape.cpp in Sources */,
+				2EB90E491BA42B5000569B2C /* ofxBulletPatch.cpp in Sources */,
+				2EB90E4B1BA42B5000569B2C /* ofxBulletRope.cpp in Sources */,
+				2EB90E411BA42B5000569B2C /* ofxBulletBaseShape.cpp in Sources */,
+				2EB90E441BA42B5000569B2C /* ofxBulletCone.cpp in Sources */,
+				2EB90E471BA42B5000569B2C /* ofxBulletCylinder.cpp in Sources */,
+				2EB90E3F1BA42B5000569B2C /* ofxBulletWorldSoft.cpp in Sources */,
+				2EB90E4A1BA42B5000569B2C /* ofxBulletRigidBody.cpp in Sources */,
+				2EB90E4C1BA42B5000569B2C /* ofxBulletSoftBody.cpp in Sources */,
+				2EB90E4E1BA42B5000569B2C /* ofxBulletSphere.cpp in Sources */,
+				2EB90E431BA42B5000569B2C /* ofxBulletCapsule.cpp in Sources */,
+				2EB90E3D1BA42B5000569B2C /* ofxBulletJoint.cpp in Sources */,
+				2EB90E4F1BA42B5000569B2C /* ofxBulletStaticPlane.cpp in Sources */,
+				2EB90E451BA42B5000569B2C /* ofxBulletConvexShape.cpp in Sources */,
+				2EB90E401BA42B5000569B2C /* GLDebugDrawer.cpp in Sources */,
+				2EB90E461BA42B5000569B2C /* ofxBulletCustomShape.cpp in Sources */,
+				2EB90E421BA42B5000569B2C /* ofxBulletBox.cpp in Sources */,
+				2EB90E4D1BA42B5000569B2C /* ofxBulletSoftTriMesh.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,7 +408,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -506,14 +423,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(OF_CORE_HEADERS)",
-					src,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
-					"-lpthread",
 					"-mtune=native",
 				);
 				SDKROOT = macosx;
@@ -524,7 +437,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -541,14 +453,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(OF_CORE_HEADERS)",
-					src,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
-					"-lpthread",
 					"-mtune=native",
 				);
 				SDKROOT = macosx;
@@ -557,22 +464,23 @@
 		};
 		E4B69B600A3A1757003C02F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = NONE;
-				HEADER_SEARCH_PATHS = (
-					"$(HEADER_BULLET)",
-					"$(OF_CORE_HEADERS)",
-					src,
-				);
 				ICON = "$(ICON_NAME_DEBUG)";
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = ofxBulletClothExampleDebug;
 				WRAPPER_EXTENSION = app;
 			};
@@ -580,23 +488,25 @@
 		};
 		E4B69B610A3A1757003C02F2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../../libs/glut/lib/osx\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = NONE;
-				HEADER_SEARCH_PATHS = (
-					"$(HEADER_BULLET)",
-					"$(OF_CORE_HEADERS)",
-					src,
-				);
 				ICON = "$(ICON_NAME_RELEASE)";
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = ofxBulletClothExample;
 				WRAPPER_EXTENSION = app;
+				baseConfigurationReference = E4EB6923138AFD0F00A09F29;
 			};
 			name = Release;
 		};
