@@ -81,6 +81,10 @@ static btVector3 ofGetBtVector( ofVec3f aVec ) {
     return btVector3( btScalar(aVec.x), btScalar(aVec.y), btScalar(aVec.z));
 }
 
+static ofVec3f ofGetOfVector( btVector3 aVec ) {
+    return ofVec3f( aVec.getX(), aVec.getY(), aVec.getZ() );
+}
+
 static btQuaternion ofGetBtQuat( ofQuaternion aQuat ) {
     float angle;
     ofVec3f axis;
