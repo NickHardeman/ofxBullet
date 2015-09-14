@@ -84,7 +84,13 @@ void ofxBulletRigidBody::removeRigidBody() {
 			delete _rigidBody->getMotionState();
 			_rigidBody->setMotionState(NULL);
 		}
-
+        
+        // this is a bug in bullet bullet2.83.6, you have to remove both rigid body and collision object
+        // before you just had to call removeRigidBody //
+        if( _world != NULL ) {
+            _world->removeCollisionObject( _rigidBody );
+        }
+        
 		delete _rigidBody;
 		_rigidBody = NULL;
 	}
