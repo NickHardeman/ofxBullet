@@ -126,7 +126,7 @@ void ofApp::update() {
         for( int i = 0; i < verts.size(); i++ ) {
             verts[i].y = ofSignedNoise( verts[i].x*0.025, verts[i].y*0.025 + verts[i].z*0.025, ofGetElapsedTimef() * 0.75 ) * 3;
         }
-        bulletMesh->updateMesh( world.world, mesh );
+        bulletMesh->updateMesh( mesh );
     }
     
     world.update( ofGetLastFrameTime(), 12 );
