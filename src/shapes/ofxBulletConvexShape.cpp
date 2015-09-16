@@ -16,7 +16,7 @@ ofxBulletConvexShape::ofxBulletConvexShape() : ofxBulletRigidBody() {
 
 //--------------------------------------------------------------
 ofxBulletConvexShape::~ofxBulletConvexShape() {
-    
+    remove();
 }
 
 //--------------------------------------------------------------

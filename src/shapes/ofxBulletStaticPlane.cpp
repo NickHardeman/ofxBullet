@@ -16,7 +16,7 @@ ofxBulletStaticPlane::ofxBulletStaticPlane() : ofxBulletRigidBody() {
 
 //--------------------------------------------------------------
 ofxBulletStaticPlane::~ofxBulletStaticPlane() {
-    //
+    remove();
 }
 
 //--------------------------------------------------------------

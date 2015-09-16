@@ -15,7 +15,7 @@ ofxBulletCylinder::ofxBulletCylinder() : ofxBulletRigidBody() {
 
 //--------------------------------------------------------------
 ofxBulletCylinder::~ofxBulletCylinder() {
-	
+	remove();
 }
 
 //--------------------------------------------------------------

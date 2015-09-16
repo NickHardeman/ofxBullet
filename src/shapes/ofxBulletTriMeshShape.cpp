@@ -18,7 +18,7 @@ ofxBulletTriMeshShape::ofxBulletTriMeshShape() : ofxBulletRigidBody() {
 
 //--------------------------------------------------------------
 ofxBulletTriMeshShape::~ofxBulletTriMeshShape() {
-    
+    remove();
 }
 
 //--------------------------------------------------------------

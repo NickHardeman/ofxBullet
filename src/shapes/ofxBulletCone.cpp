@@ -15,7 +15,7 @@ ofxBulletCone::ofxBulletCone() : ofxBulletRigidBody() {
 
 //--------------------------------------------------------------
 ofxBulletCone::~ofxBulletCone() {
-
+    remove();
 }
 
 //--------------------------------------------------------------

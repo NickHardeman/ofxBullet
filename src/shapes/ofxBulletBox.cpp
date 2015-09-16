@@ -15,7 +15,7 @@ ofxBulletBox::ofxBulletBox() : ofxBulletRigidBody() {
 
 //--------------------------------------------------------------
 ofxBulletBox::~ofxBulletBox() {
-	
+	remove();
 }
 
 //--------------------------------------------------------------

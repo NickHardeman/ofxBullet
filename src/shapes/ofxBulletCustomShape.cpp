@@ -15,7 +15,7 @@ ofxBulletCustomShape::ofxBulletCustomShape() : ofxBulletRigidBody() {
 
 //--------------------------------------------------------------
 ofxBulletCustomShape::~ofxBulletCustomShape() {
-	
+	remove();
 }
 
 // pass in an already created compound shape //

@@ -16,7 +16,7 @@ ofxBulletCapsule::ofxBulletCapsule() : ofxBulletRigidBody() {
 
 //--------------------------------------------------------------
 ofxBulletCapsule::~ofxBulletCapsule() {
-	
+	remove();
 }
 
 //--------------------------------------------------------------
