@@ -35,7 +35,9 @@ public:
 	
 	void enableCollisionEvents();
 	void disableCollisionEvents();
-	void checkCollisions();
+    void enableCollisionBatching();
+    void disableCollisionBatching();
+    vector< ofxBulletCollisionData >& getCollisions();
 	
 	ofxBulletRaycastData raycastTest(float a_x, float a_y, short int a_filterMask=btBroadphaseProxy::AllFilter);
 	//ofxBulletRaycastData raycastTest( ofVec3f a_castRay, short int a_filterMask=btBroadphaseProxy::AllFilter);
@@ -73,6 +75,8 @@ public:
 	btRigidBody*							ground;
 	
 protected:
+    void checkCollisions();
+    
     virtual btBroadphaseInterface* createBroadphase();
     virtual btCollisionConfiguration* createCollisionConfig();
     virtual btDiscreteDynamicsWorld* createWorld();
@@ -81,6 +85,9 @@ protected:
 	bool bDispatchPickingEvents;
 	bool bRegisterGrabbing;
 	bool bHasDebugDrawer;
+    
+    vector< ofxBulletCollisionData > collisions;
+    bool bBatchCollisions;
     
 private:
 	ofCamera*	_camera;
@@ -92,4 +99,5 @@ private:
 	///constraint for mouse picking
 	btTypedConstraint*	_pickConstraint;
 	float gOldPickingDist;
+    
 };
