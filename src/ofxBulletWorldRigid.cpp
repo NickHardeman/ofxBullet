@@ -285,7 +285,9 @@ void ofxBulletWorldRigid::drawDebug() {
 	if(!bHasDebugDrawer) {
 		enableDebugDraw();
 	}
+	((GLDebugDrawer*)world->getDebugDrawer())->clear();
 	world->debugDrawWorld();
+    ((GLDebugDrawer*)world->getDebugDrawer())->render();
 }
 
 
