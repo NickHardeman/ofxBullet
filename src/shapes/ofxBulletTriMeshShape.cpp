@@ -8,7 +8,7 @@
 #include "ofxBulletTriMeshShape.h"
 
 //--------------------------------------------------------------
-ofxBulletTriMeshShape::ofxBulletTriMeshShape() {
+ofxBulletTriMeshShape::ofxBulletTriMeshShape() : ofxBulletRigidBody() {
     _type = OFX_BULLET_TRI_MESH_SHAPE;
     
     bullet_vertices     = NULL;
@@ -97,7 +97,7 @@ void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aM
         }
 	}
     
-    ofxBulletBaseShape::create( a_world, _shape, a_bt_tr, a_mass );
+    ofxBulletRigidBody::create( a_world, _shape, a_bt_tr, a_mass );
     
     
     createInternalUserData();

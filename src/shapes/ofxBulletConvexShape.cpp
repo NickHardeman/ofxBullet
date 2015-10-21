@@ -10,7 +10,7 @@
 #include "btShapeHull.h"
 
 //--------------------------------------------------------------
-ofxBulletConvexShape::ofxBulletConvexShape() {
+ofxBulletConvexShape::ofxBulletConvexShape() : ofxBulletRigidBody() {
     _type = OFX_BULLET_CONVEX_SHAPE;
 }
 
@@ -125,7 +125,7 @@ void ofxBulletConvexShape::create( btDiscreteDynamicsWorld* a_world, btTransform
 		ofLogWarning("ofxBulletConvexShape :: create : must call init first");
         return;
 	}
-    ofxBulletBaseShape::create( a_world, _shape, a_bt_tr, a_mass );
+    ofxBulletRigidBody::create( a_world, _shape, a_bt_tr, a_mass );
 	createInternalUserData();
 }
 

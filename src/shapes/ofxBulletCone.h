@@ -8,11 +8,11 @@
 
 #pragma once
 
-#include "ofxBulletBaseShape.h"
+#include "ofxBulletRigidBody.h"
 #include "ofMain.h"
 #include "ofVbo.h"
 
-class ofxBulletCone : public ofxBulletBaseShape {
+class ofxBulletCone : public ofxBulletRigidBody {
 public:
 	ofxBulletCone();
 	~ofxBulletCone();

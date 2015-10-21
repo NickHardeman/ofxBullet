@@ -34,19 +34,36 @@ ofxBulletWorldRigid::~ofxBulletWorldRigid() {
 
 //--------------------------------------------------------------
 void ofxBulletWorldRigid::setup() {
-	if(broadphase == NULL) {
-		btVector3 worldAabbMin(-1000,-1000,-1000);
-		btVector3 worldAabbMax(1000,1000,1000);
-		broadphase = new btAxisSweep3 (worldAabbMin, worldAabbMax);
-	}
-	
-	if(collisionConfig == NULL)			collisionConfig = new btDefaultCollisionConfiguration();
-	if(dispatcher == NULL)				dispatcher = new btCollisionDispatcher( collisionConfig );
-	if(solver == NULL)					solver = new btSequentialImpulseConstraintSolver;
-	if(world == NULL)					world = new btDiscreteDynamicsWorld( dispatcher, broadphase, solver, collisionConfig );
-	// default gravity //
+    if(broadphase == NULL)      broadphase = createBroadphase();
+	if(collisionConfig == NULL)	collisionConfig = createCollisionConfig();
+	if(dispatcher == NULL)		dispatcher = new btCollisionDispatcher( collisionConfig );
+	if(solver == NULL)			solver = new btSequentialImpulseConstraintSolver;
+    if(world == NULL)           world = createWorld();
+    
+    // default gravity //
 	setGravity(ofVec3f(0.f, 9.8f, 0.f));
-	
+}
+
+//--------------------------------------------------------------
+btBroadphaseInterface* ofxBulletWorldRigid::createBroadphase() {
+    btVector3 worldAabbMin( -1000,-1000,-1000 );
+    btVector3 worldAabbMax( 1000,1000,1000 );
+    return new btAxisSweep3( worldAabbMin, worldAabbMax );
+}
+
+//--------------------------------------------------------------
+btCollisionConfiguration* ofxBulletWorldRigid::createCollisionConfig() {
+    return new btDefaultCollisionConfiguration();
+}
+
+//--------------------------------------------------------------
+btDiscreteDynamicsWorld* ofxBulletWorldRigid::createWorld() {
+    return new btDiscreteDynamicsWorld( dispatcher, broadphase, solver, collisionConfig );
+}
+
+//--------------------------------------------------------------
+btDiscreteDynamicsWorld* ofxBulletWorldRigid::getWorld() {
+    return (btDiscreteDynamicsWorld*)world;
 }
 
 //--------------------------------------------------------------

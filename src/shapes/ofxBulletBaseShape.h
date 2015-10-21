@@ -18,7 +18,7 @@
 class ofxBulletBaseShape {
 public:
 	ofxBulletBaseShape();
-	~ofxBulletBaseShape();
+	virtual ~ofxBulletBaseShape();
 	
 	enum CollisionFilterGroups {
 		OFX_BULLET_BOX_SHAPE = 1,
@@ -28,29 +28,27 @@ public:
 		OFX_BULLET_CYLINDER_SHAPE = 5,
 		OFX_BULLET_CUSTOM_SHAPE = 6,
         OFX_BULLET_CONVEX_SHAPE = 7,
-        OFX_BULLET_TRI_MESH_SHAPE
+        OFX_BULLET_TRI_MESH_SHAPE = 8,
+
+		OFX_BULLET_SOFT_ROPE = 20,
+        OFX_BULLET_SOFT_PATCH = 21,
+        OFX_BULLET_SOFT_ELLIPSOID = 22,
+        OFX_BULLET_SOFT_TRI_MESH = 23
 	};
 	
-	virtual void create( btDiscreteDynamicsWorld* a_world, btCollisionShape* a_colShape, btTransform &a_bt_tr, float a_mass );
-	virtual void add();
 	virtual void add(short group, short mask);
-    virtual void remove();
-    virtual void removeShape();
-	virtual void removeRigidBody();
-	
-	// GETTERS //
-	btRigidBody*	getRigidBody();
+    virtual void add() = 0;
+	virtual void remove() = 0;
+    
+    // GETTERS //
+	btCollisionObject* getCollisionObject();
 	virtual void*	getData() const;
-	btCollisionShape* getCollisionShape() const;
 	int				getActivationState();
 	
 	int				getType();
-    bool            isCollisionShapeInternal();
 	
-	float			getMass() const;
-	void			getOpenGLMatrix( btScalar* a_m );
 	ofMatrix4x4		getTransformationMatrix() const;
-	ofVec3f			getPosition() const;
+	virtual ofVec3f			getPosition() const;
 	ofVec3f			getRotation() const;
 	ofVec3f			getRotationAxis() const;
 	float			getRotationAngle() const;
@@ -58,8 +56,6 @@ public:
 	
 	float			getRestitution() const;
 	float			getFriction() const;
-	float			getDamping() const;
-	float			getAngularDamping() const;
 	
 	// used for checking collisions. Data is set using getData and operator is used to see if the same //
 	bool	operator==( const void* userData) const;
@@ -80,9 +76,6 @@ public:
 	void setActivationState( int a_state );
 	
 	// SETTERS, must be called after create() //
-	void setDamping( float a_linear_damp );
-	void setAngularDamping( float a_angular_damp );
-	void setDamping( float a_linear_damp, float a_angular_damp );
 	void activate();
 	// can be called at any time //
 	// if you want to control the object. Make sure to have a mass of 0.f
@@ -94,43 +87,30 @@ public:
 	bool checkPropCreate();
 	bool checkCreate();
 	
-	// FORCES //
-	void applyForce( const ofVec3f& a_frc, const ofVec3f& a_rel_pos );
-	void applyForce( const btVector3& a_frc, const btVector3& a_rel_pos );
-	
-	void applyCentralForce( const ofVec3f& a_frc );
-	void applyCentralForce( float a_x, float a_y, float a_z );
-	void applyCentralForce( const btVector3& a_frc );
-	
-	void applyTorque( const ofVec3f& a_torque );
-	void applyTorque( float a_x, float a_y, float a_z );
-	void applyTorque( const btVector3& a_torque );
-	
 	virtual void draw() {};
     
     virtual void transformGL();
-    virtual void restoreTramsformGL();
+    virtual void restoreTransformGL();
 	
 protected:
+	void setCreated(btCollisionObject* object);
+	void setRemoved();
+
     // initially use call this function in shape constructors so we know that the data was created
     // internally //
     void createInternalUserData();
+
+	btCollisionObject* _object;
 	
-	btDiscreteDynamicsWorld*	_world;
-	btCollisionShape*			_shape;
-	btRigidBody*				_rigidBody;
-	float						_mass;
+	void*	_userPointer;
 	
-	void*						_userPointer;
+	bool	_bInited;
+	bool	_bCreated;
+	bool	_bAdded;
+    
+	bool	_bUserDataCreatedInternally;
 	
-	bool						_bInited;
-	bool						_bCreated;
-	bool						_bAdded;
-    // if the collision shape was created internally, then, we must delete it //
-    bool                        _bColShapeCreatedInternally;
-    bool                        _bUserDataCreatedInternally;
-	
-	int							_type;
+	int		_type;
 };
 
 

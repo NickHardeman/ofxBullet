@@ -6,9 +6,10 @@
 //
 
 #pragma once
-#include "ofxBulletBaseShape.h"
 
-class ofxBulletTriMeshShape : public ofxBulletBaseShape {
+#include "ofxBulletRigidBody.h"
+
+class ofxBulletTriMeshShape : public ofxBulletRigidBody {
 public:
     ofxBulletTriMeshShape();
     ~ofxBulletTriMeshShape();

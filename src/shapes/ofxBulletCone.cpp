@@ -9,7 +9,7 @@
 #include "ofxBulletCone.h"
 
 //--------------------------------------------------------------
-ofxBulletCone::ofxBulletCone() {
+ofxBulletCone::ofxBulletCone() : ofxBulletRigidBody() {
 	_type = OFX_BULLET_CONE_SHAPE;
 }
 
@@ -49,9 +49,9 @@ void ofxBulletCone::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQ
 //--------------------------------------------------------------
 void ofxBulletCone::create( btDiscreteDynamicsWorld* a_world, btTransform &a_bt_tr, float a_mass, float a_radius, float a_height ) {
 	if(!_bInited || _shape == NULL) {
-		ofxBulletBaseShape::create( a_world, (btCollisionShape*)new btConeShape(a_radius, a_height ), a_bt_tr, a_mass );
+		ofxBulletRigidBody::create( a_world, (btCollisionShape*)new btConeShape(a_radius, a_height ), a_bt_tr, a_mass );
 	} else {
-		ofxBulletBaseShape::create( a_world, _shape, a_bt_tr, a_mass );
+		ofxBulletRigidBody::create( a_world, _shape, a_bt_tr, a_mass );
 	}
 	createInternalUserData();
 }
@@ -92,7 +92,7 @@ void ofxBulletCone::draw() {
     ofRotate(180, 1, 0, 0);
     ofDrawCone( 0, 0, 0, getRadius(), getHeight() );
     ofPopMatrix();
-    restoreTramsformGL();
+    restoreTransformGL();
 }
 
 

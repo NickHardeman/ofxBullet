@@ -9,7 +9,7 @@
 #include "ofxBulletCustomShape.h"
 
 //--------------------------------------------------------------
-ofxBulletCustomShape::ofxBulletCustomShape() {
+ofxBulletCustomShape::ofxBulletCustomShape() : ofxBulletRigidBody() {
 	_type = OFX_BULLET_CUSTOM_SHAPE;
 }
 
@@ -186,6 +186,7 @@ void ofxBulletCustomShape::preAdd() {
 		((btCompoundShape*)_shape)->addChildShape( trans, shapes[i]);
 	}
 	_rigidBody = ofGetBtRigidBodyFromCollisionShape( _shape, _startTrans, _mass);
+    setCreated(_rigidBody);
 	createInternalUserData();
 	setProperties(.4, .75);
 	setDamping( .25 );
@@ -226,5 +227,7 @@ void ofxBulletCustomShape::transformGL() {
     ofxBulletBaseShape::transformGL();
     ofTranslate(-getCentroid().x, -getCentroid().y, -getCentroid().z);
 }
+
+
 
 

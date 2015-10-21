@@ -9,7 +9,7 @@
 #include "ofxBulletBox.h"
 
 //--------------------------------------------------------------
-ofxBulletBox::ofxBulletBox() {
+ofxBulletBox::ofxBulletBox() : ofxBulletRigidBody() {
 	_type = OFX_BULLET_BOX_SHAPE;
 }
 
@@ -49,9 +49,9 @@ void ofxBulletBox::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQu
 //--------------------------------------------------------------
 void ofxBulletBox::create( btDiscreteDynamicsWorld* a_world, btTransform &a_bt_tr, float a_mass, float a_sizeX, float a_sizeY, float a_sizeZ ) {
 	if(!_bInited || _shape == NULL) {
-		ofxBulletBaseShape::create( a_world, (btCollisionShape*)ofBtGetBoxCollisionShape( a_sizeX, a_sizeY, a_sizeZ ), a_bt_tr, a_mass );
+		ofxBulletRigidBody::create( a_world, (btCollisionShape*)ofBtGetBoxCollisionShape( a_sizeX, a_sizeY, a_sizeZ ), a_bt_tr, a_mass );
 	} else {
-		ofxBulletBaseShape::create( a_world, _shape, a_bt_tr, a_mass );
+		ofxBulletRigidBody::create( a_world, _shape, a_bt_tr, a_mass );
 	}
 	createInternalUserData();
 }
@@ -76,7 +76,7 @@ void ofxBulletBox::draw() {
     transformGL();
 	ofVec3f size = getSize();
     ofDrawBox(0, 0, 0, size.x, size.y, size.z);
-	restoreTramsformGL();
+	restoreTransformGL();
 }
  
 //--------------------------------------------------------------

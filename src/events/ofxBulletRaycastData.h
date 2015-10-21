@@ -9,7 +9,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxBulletBaseShape.h"
 
 class ofxBulletRaycastData {
 public:

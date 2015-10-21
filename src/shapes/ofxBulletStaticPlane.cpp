@@ -10,7 +10,7 @@
 #include "btBulletDynamicsCommon.h"
 
 //--------------------------------------------------------------
-ofxBulletStaticPlane::ofxBulletStaticPlane() {
+ofxBulletStaticPlane::ofxBulletStaticPlane() : ofxBulletRigidBody() {
     //
 }
 
@@ -48,7 +48,7 @@ void ofxBulletStaticPlane::create(btDiscreteDynamicsWorld * world, ofPoint plane
     
     btTransform transform = ofGetBtTransformFromVec3f(planePosition);
     float mass = 0.0;
-    ofxBulletBaseShape::create(world, staticPlaneShape, transform, mass);
+    ofxBulletRigidBody::create(world, staticPlaneShape, transform, mass);
     
     createInternalUserData();
 }
