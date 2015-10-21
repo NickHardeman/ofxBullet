@@ -16,7 +16,7 @@ ofxBulletCapsule::ofxBulletCapsule() : ofxBulletRigidBody() {
 
 //--------------------------------------------------------------
 ofxBulletCapsule::~ofxBulletCapsule() {
-	
+	remove();
 }
 
 //--------------------------------------------------------------
@@ -41,9 +41,7 @@ void ofxBulletCapsule::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, 
 
 //--------------------------------------------------------------
 void ofxBulletCapsule::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass, float a_radius, float a_height ) {
-	btTransform tr	= ofGetBtTransformFromVec3f( a_loc );
-	tr.setRotation( btQuaternion(btVector3(a_rot.x(), a_rot.y(), a_rot.z()), a_rot.w()) );
-	
+	btTransform tr	= ofGetBtTransform( a_loc, a_rot );
 	create( a_world, tr, a_mass, a_radius, a_height );
 }
 

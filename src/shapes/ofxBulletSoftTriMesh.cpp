@@ -54,8 +54,8 @@ void ofxBulletSoftTriMesh::create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, b
     int totalVerts    = (int)aMesh.getNumVertices();
     int totalIndices  = (int)aMesh.getNumIndices();
     
-    bullet_vertices  = new btScalar[ totalVerts * 3 ];
-    int bullet_indices[ (int)(totalIndices/3) ][3];//         = int[ totalIndices/3 ][3];
+    bullet_vertices = new btScalar[ totalVerts * 3 ];
+    int* bullet_indices = new int[ totalIndices ];
     
     vector< ofVec3f >& tverts       = aMesh.getVertices();
     vector< ofIndexType >& tindices = aMesh.getIndices();
@@ -65,36 +65,27 @@ void ofxBulletSoftTriMesh::create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, b
         bullet_vertices[i*3+1] = tverts[i].y;
         bullet_vertices[i*3+2] = tverts[i].z;
     }
-    for( int i = 0; i < totalIndices; i += 3 ) {
-        bullet_indices[i/3][0] = tindices[i+0];
-        bullet_indices[i/3][1] = tindices[i+1];
-        bullet_indices[i/3][2] = tindices[i+2];
+    for( int i = 0; i < totalIndices; i++ ) {
+        bullet_indices[i] = tindices[i];
     }
     
     _softBody = btSoftBodyHelpers::CreateFromTriMesh( _world->getInfo(),
                                                          bullet_vertices,
-                                                         &bullet_indices[0][0],
+                                                         bullet_indices,
                                                          totalIndices/3 );
     _softBody->transform( a_bt_tr );
     setMass( a_mass, true );
     
     setCreated(_softBody);
     createInternalUserData();
+
+    delete [] bullet_indices;
     
 }
 
 //--------------------------------------------------------------
 void ofxBulletSoftTriMesh::draw() {
     getMesh().draw();
-}
-
-//--------------------------------------------------------------
-ofVec3f	ofxBulletSoftTriMesh::getPosition() const {
-    // approximation //
-    btVector3& bounds = _softBody->m_bounds[0];
-    btVector3& bounds2 = _softBody->m_bounds[1];
-    ofVec3f tpos( (bounds.x()+bounds2.x())/2, (bounds.y()+bounds2.y())/2, (bounds.z()+bounds2.z())/2 );
-    return tpos;
 }
 
 //--------------------------------------------------------------

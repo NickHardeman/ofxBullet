@@ -2,6 +2,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
+    
+    // not sure ofxAssimpModelLoader is working for 10.8 in 009, so I can't test ....
+    
 	ofSetFrameRate(60);
 	ofSetVerticalSync(true);
 	ofBackground( 10, 10, 10);

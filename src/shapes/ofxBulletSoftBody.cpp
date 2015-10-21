@@ -73,6 +73,16 @@ float ofxBulletSoftBody::getMass() const {
 }
 
 //--------------------------------------------------------------
+ofVec3f	ofxBulletSoftBody::getPosition() const {
+    ofVec3f avgpos;
+    for ( int i = 0; i < getNumNodes(); i++ ) {
+        avgpos += getNodePos(i);
+    }
+    avgpos /= (float)getNumNodes();
+    return avgpos;
+}
+
+//--------------------------------------------------------------
 size_t ofxBulletSoftBody::getNumNodes() const {
     return _softBody->m_nodes.size();
 }
@@ -96,7 +106,7 @@ ofVec3f ofxBulletSoftBody::getNodePos(int idx) const {
 
 //--------------------------------------------------------------
 btSoftBody::tNodeArray& ofxBulletSoftBody::getBulletNodes() {
-    getSoftBody()->m_nodes;
+    return getSoftBody()->m_nodes;
 }
 
 // SETTERS //

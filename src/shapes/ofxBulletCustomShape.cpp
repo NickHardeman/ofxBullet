@@ -15,7 +15,7 @@ ofxBulletCustomShape::ofxBulletCustomShape() : ofxBulletRigidBody() {
 
 //--------------------------------------------------------------
 ofxBulletCustomShape::~ofxBulletCustomShape() {
-	
+	remove();
 }
 
 // pass in an already created compound shape //
@@ -36,8 +36,7 @@ void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_l
 
 //--------------------------------------------------------------
 void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass ) {
-	btTransform tr	= ofGetBtTransformFromVec3f( a_loc );
-	tr.setRotation( btQuaternion(btVector3(a_rot.x(), a_rot.y(), a_rot.z()), a_rot.w()) );
+	btTransform tr	= ofGetBtTransform( a_loc, a_rot );
 	create( a_world, tr, a_mass );
 }
 
