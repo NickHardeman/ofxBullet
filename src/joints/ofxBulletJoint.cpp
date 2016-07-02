@@ -105,11 +105,28 @@ void ofxBulletJoint::setAngularUpperLimit( ofVec3f a_limit ) {
 void ofxBulletJoint::setAngularUpperLimit( float a_x, float a_y, float a_z ) {
 	_joint->setAngularUpperLimit( btVector3(a_x, a_y, a_z) );
 }
+void ofxBulletJoint::setConstraintForceMixing(float constraintForceMixing){
+    _joint->setParam(BT_CONSTRAINT_STOP_CFM,constraintForceMixing,0);
+    _joint->setParam(BT_CONSTRAINT_STOP_CFM,constraintForceMixing,1);
+    _joint->setParam(BT_CONSTRAINT_STOP_CFM,constraintForceMixing,2);
+    _joint->setParam(BT_CONSTRAINT_STOP_CFM,constraintForceMixing,3);
+    _joint->setParam(BT_CONSTRAINT_STOP_CFM,constraintForceMixing,4);
+    _joint->setParam(BT_CONSTRAINT_STOP_CFM,constraintForceMixing,5);
+}
+
+void ofxBulletJoint::setErrorReduction(float errorReduction){
+    _joint->setParam(BT_CONSTRAINT_STOP_ERP,errorReduction,0);
+    _joint->setParam(BT_CONSTRAINT_STOP_ERP,errorReduction,1);
+    _joint->setParam(BT_CONSTRAINT_STOP_ERP,errorReduction,2);
+    _joint->setParam(BT_CONSTRAINT_STOP_ERP,errorReduction,3);
+    _joint->setParam(BT_CONSTRAINT_STOP_ERP,errorReduction,4);
+    _joint->setParam(BT_CONSTRAINT_STOP_ERP,errorReduction,5);
+}
 /******************************************************/
 
 //--------------------------------------------------------------
-void ofxBulletJoint::add() {
-	_world->addConstraint(_joint, true);
+void ofxBulletJoint::add(bool disableCollisionsBetweenLinkedBodies) {
+	_world->addConstraint(_joint, disableCollisionsBetweenLinkedBodies);
 	_bAdded = true;
 }
 
