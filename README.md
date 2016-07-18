@@ -41,4 +41,4 @@ Copy the EmptyExample Folder from ofxBullet into the OF/apps/yourFolderName/
 Control bodies, move them, rotate them. <br/>
 If you would like to control rigid bodies that will influence others,
 please read <br/>
-http://forum.openframeworks.cc/index.php/topic,7954.0.html
+https://forum.openframeworks.cc/t/how-to-rotate-and-translate-a-ofxbullet-body/7954
