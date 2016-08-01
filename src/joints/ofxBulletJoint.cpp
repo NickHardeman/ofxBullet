@@ -29,7 +29,8 @@ void ofxBulletJoint::create( btDiscreteDynamicsWorld* a_world, ofxBulletRigidBod
 	a_shape2->setActivationState( DISABLE_DEACTIVATION );
 	
 	ofVec3f diff = a_shape2->getPosition() - a_shape1->getPosition();
-	
+	diff = diff * a_shape1->getRotationQuat().inverse();
+
 	btTransform frameInA = btTransform::getIdentity();
 	frameInA.setOrigin( btVector3(btScalar(-diff.x), btScalar(-diff.y), btScalar(-diff.z)) );
 	btTransform frameInB = btTransform::getIdentity();
