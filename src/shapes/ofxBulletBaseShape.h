@@ -36,10 +36,11 @@ public:
         OFX_BULLET_SOFT_TRI_MESH = 23
 	};
 	
+	virtual void add(short group, short mask);
     virtual void add() = 0;
 	virtual void remove() = 0;
     
-	// GETTERS //
+    // GETTERS //
 	btCollisionObject* getCollisionObject();
 	virtual void*	getData() const;
 	int				getActivationState();

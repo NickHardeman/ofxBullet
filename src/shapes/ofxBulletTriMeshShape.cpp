@@ -18,7 +18,7 @@ ofxBulletTriMeshShape::ofxBulletTriMeshShape() : ofxBulletRigidBody() {
 
 //--------------------------------------------------------------
 ofxBulletTriMeshShape::~ofxBulletTriMeshShape() {
-    
+    remove();
 }
 
 //--------------------------------------------------------------
@@ -29,8 +29,7 @@ void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aM
 
 //--------------------------------------------------------------
 void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, ofVec3f a_loc, ofQuaternion a_rot, float a_mass, ofVec3f aAAbbMin, ofVec3f aAAbbMax ) {
-    btTransform tr	= ofGetBtTransformFromVec3f( a_loc );
-	tr.setRotation( btQuaternion(btVector3(a_rot.x(), a_rot.y(), a_rot.z()), a_rot.w()) );
+    btTransform tr	= ofGetBtTransform( a_loc, a_rot );
     create( a_world, aMesh, tr, a_mass );
 }
 
@@ -104,7 +103,7 @@ void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aM
 }
 
 //--------------------------------------------------------------
-void ofxBulletTriMeshShape::updateMesh( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh ) {
+void ofxBulletTriMeshShape::updateMesh( ofMesh& aMesh ) {
     if( aMesh.getNumVertices() != totalVerts || aMesh.getNumIndices() != totalIndices ) {
         ofLogWarning() << "updateMesh :: the verts or the indices are not the correct size, not updating";
         return;
@@ -126,8 +125,10 @@ void ofxBulletTriMeshShape::updateMesh( btDiscreteDynamicsWorld* a_world, ofMesh
 //    triShape->partialRefitTree( aabbMin, aabbMax );
     triShape->refitTree( aabbMin, aabbMax );
     
-    //clear all contact points involving mesh proxy. Note: this is a slow/unoptimized operation.
-    a_world->getBroadphase()->getOverlappingPairCache()->cleanProxyFromPairs( getRigidBody()->getBroadphaseHandle(), a_world->getDispatcher());
+    if( _world != NULL ) {
+        //clear all contact points involving mesh proxy. Note: this is a slow/unoptimized operation.
+        _world->getBroadphase()->getOverlappingPairCache()->cleanProxyFromPairs( getRigidBody()->getBroadphaseHandle(), _world->getDispatcher());
+    }
 }
 
 //--------------------------------------------------------------

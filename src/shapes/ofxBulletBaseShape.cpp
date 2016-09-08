@@ -31,9 +31,14 @@ void ofxBulletBaseShape::setCreated(btCollisionObject* object)
 }
 
 //--------------------------------------------------------------
+void ofxBulletBaseShape::add(short group, short mask) {
+	_bAdded = true;
+	_world->addRigidBody( _rigidBody, group, mask);
+}
+
+//--------------------------------------------------------------
 void ofxBulletBaseShape::setRemoved()
 {
-
 	_object = NULL;
     _bCreated = false;
 }
@@ -188,14 +193,17 @@ void ofxBulletBaseShape::setActivationState( int a_state ) {
 //--------------------------------------------------------------
 void ofxBulletBaseShape::setData(void* userPointer) {
 	// Remove old data first.
-	if(_userPointer != NULL) {
-		if(_bUserDataCreatedInternally) {
+    if(_bUserDataCreatedInternally) {
+        if(_userPointer != NULL) {
             delete ((ofxBulletUserData*)_userPointer);
+            _userPointer = NULL;
         }
     }
-
+    
 	_userPointer = userPointer;
-	_object->setUserPointer( _userPointer );
+    if( _object != NULL ) {
+        _object->setUserPointer( _userPointer );
+    }
 	_bUserDataCreatedInternally = false;
 }
 

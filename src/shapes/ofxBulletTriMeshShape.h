@@ -21,7 +21,7 @@ public:
 	void create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, btTransform &a_bt_tr, float a_mass,
                 ofVec3f aAAbbMin=ofVec3f(0,0,0), ofVec3f aAAbbMax=ofVec3f(0,0,0) );
     
-    void updateMesh( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh );
+    void updateMesh( ofMesh& aMesh );
     
     void removeShape();
     

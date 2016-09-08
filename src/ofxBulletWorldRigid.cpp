@@ -25,6 +25,7 @@ ofxBulletWorldRigid::ofxBulletWorldRigid() {
 	// disable collision event dispatching by default //
 	disableCollisionEvents();
 	disableGrabbing();
+    disableCollisionBatching();
     
     ofAddListener( ofEvents().mouseMoved, this, &ofxBulletWorldRigid::mouseMoved );
     ofAddListener( ofEvents().mouseDragged, this, &ofxBulletWorldRigid::mouseDragged );
@@ -107,9 +108,26 @@ void ofxBulletWorldRigid::disableCollisionEvents() {
 	bDispatchCollisionEvents = false;
 }
 
+//--------------------------------------------------------------
+void ofxBulletWorldRigid::enableCollisionBatching() {
+    bBatchCollisions = true;
+}
+
+//--------------------------------------------------------------
+void ofxBulletWorldRigid::disableCollisionBatching() {
+    bBatchCollisions = false;
+    
+}
+
+//--------------------------------------------------------------
+vector< ofxBulletCollisionData >& ofxBulletWorldRigid::getCollisions() {
+    return collisions;
+}
+
 // http://bulletphysics.org/mediawiki-1.5.8/index.php/Collision_Callbacks_and_Triggers
 //--------------------------------------------------------------
 void ofxBulletWorldRigid::checkCollisions() {
+	collisions.clear();
 	//Assume world->stepSimulation or world->performDiscreteCollisionDetection has been called
 	int numManifolds = world->getDispatcher()->getNumManifolds();
 	//cout << "numManifolds: " << numManifolds << endl;
@@ -143,7 +161,11 @@ void ofxBulletWorldRigid::checkCollisions() {
 			}
 		}
 		if(numContacts > 0) {
-			ofNotifyEvent( COLLISION_EVENT, cdata, this );
+            if( bBatchCollisions ) {
+                collisions.push_back( cdata );
+            } else {
+                ofNotifyEvent( COLLISION_EVENT, cdata, this );
+            }
 		}
 	}
 	//you can un-comment out this line, and then all points are removed
@@ -200,11 +222,13 @@ ofxBulletRaycastData ofxBulletWorldRigid::raycastTest( ofVec3f a_rayStart, ofVec
 void ofxBulletWorldRigid::enableMousePickingEvents( short int a_filterMask ) {
 	_mouseFilterMask = a_filterMask;
 	bDispatchPickingEvents	= true;
+	ofRegisterMouseEvents(this);
 }
 
 //--------------------------------------------------------------
 void ofxBulletWorldRigid::disableMousePickingEvents() {
 	bDispatchPickingEvents	= false;
+	ofUnregisterMouseEvents(this);
 }
 
 //--------------------------------------------------------------
@@ -262,11 +286,13 @@ void ofxBulletWorldRigid::enableGrabbing(short int a_filterMask) {
 	_mouseFilterMask = a_filterMask;
 	bDispatchPickingEvents = true;
 	bRegisterGrabbing = true;
+	ofRegisterMouseEvents(this);
 }
 
 //--------------------------------------------------------------
 void ofxBulletWorldRigid::disableGrabbing() {
 	bRegisterGrabbing = false;
+	ofUnregisterMouseEvents(this);
 }
 
 
@@ -285,7 +311,9 @@ void ofxBulletWorldRigid::drawDebug() {
 	if(!bHasDebugDrawer) {
 		enableDebugDraw();
 	}
+	((GLDebugDrawer*)world->getDebugDrawer())->clear();
 	world->debugDrawWorld();
+    ((GLDebugDrawer*)world->getDebugDrawer())->render();
 }
 
 
@@ -329,7 +357,7 @@ void ofxBulletWorldRigid::removeMouseConstraint() {
 //--------------------------------------------------------------
 void ofxBulletWorldRigid::destroy() {
 	
-	cout << "ofxBulletWorldRigid :: destroy : destroy() " << endl;
+	//cout << "ofxBulletWorldRigid :: destroy : destroy() " << endl;
 	//cleanup in the reverse order of creation/initialization
 	int i;
 	

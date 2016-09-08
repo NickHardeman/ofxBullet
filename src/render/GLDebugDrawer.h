@@ -32,6 +32,10 @@ public:
 	virtual void	setDebugMode(int debugMode);
 
 	virtual int		getDebugMode() const { return m_debugMode;}
+    
+    ofMesh lineMesh;
+    void clear();
+    void render();
 
 };
 

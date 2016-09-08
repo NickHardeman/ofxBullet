@@ -70,7 +70,7 @@
     <ClCompile Include="..\src\shapes\ofxBulletTriMeshShape.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C9B3BD9A-E282-4F65-8F90-61A717D9F0F5}</ProjectGuid>
+    <ProjectGuid>{641DB976-E775-4D72-86EB-897E2C4A0EEE}</ProjectGuid>
     <RootNamespace>ofxTimelineLib</RootNamespace>
     <ProjectName>ofxBulletLib</ProjectName>
   </PropertyGroup>
