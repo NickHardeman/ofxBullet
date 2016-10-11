@@ -59,10 +59,11 @@ int ofxBulletPatch::getResolutionY() {
 
 //--------------------------------------------------------------
 void ofxBulletPatch::updateMesh( ofMesh& aMesh ) {
-    
+
+
     int totalNodes = getNumNodes();
     int totalFaces = getNumFaces();
-    vector< ofVec3f >& tverts = aMesh.getVertices();
+    auto& tverts = aMesh.getVertices();
     
     if( _cachedMesh.getMode() == OF_PRIMITIVE_TRIANGLES ) {
         
@@ -70,7 +71,7 @@ void ofxBulletPatch::updateMesh( ofMesh& aMesh ) {
             tverts.resize( (getResolutionX()-1) * (getResolutionY()-1) * 6 );
         }
         
-        vector< ofVec3f >& tnormals = aMesh.getNormals();
+        auto& tnormals = aMesh.getNormals();
         if( tnormals.size() != tverts.size() ) {
             tnormals.resize( tverts.size() );
         }
@@ -95,36 +96,36 @@ void ofxBulletPatch::updateMesh( ofMesh& aMesh ) {
                 p4.set( _softBody->m_nodes[ni].m_x.x(), _softBody->m_nodes[ni].m_x.y(), _softBody->m_nodes[ni].m_x.z() );
                 n4.set( _softBody->m_nodes[ni].m_n.x(), _softBody->m_nodes[ni].m_n.y(), _softBody->m_nodes[ni].m_n.z() );
                 
-                tverts[ti].set( p1 );
-                tnormals[ti].set( n1 );
+                tverts[ti] = p1;
+                tnormals[ti] = n1;
                 ti += 1;
                 
 //                ni = (iy+1) * getResolutionX() + ix;
-                tverts[ti].set( p2 );
-                tnormals[ti].set( n2 );
+                tverts[ti] = p2;
+                tnormals[ti] = n2;
                 ti += 1;
                 
 //                ni = (iy+1) * getResolutionX() + ix+1;
-                tverts[ti].set( p3 );
-                tnormals[ti].set( n3 );
+                tverts[ti] = p3;
+                tnormals[ti] = n3;
                 ti += 1;
                 
                 
                 
                 //
 //                ni = (iy+1) * getResolutionX() + ix+1;
-                tverts[ti].set( p3 );
-                tnormals[ti].set( n3 );
+                tverts[ti] = p3;
+                tnormals[ti] = n3;
                 ti += 1;
                 
 //                ni = (iy) * getResolutionX() + ix+1;
-                tverts[ti].set( p4 );
-                tnormals[ti].set( n4 );
+                tverts[ti] = p4;
+                tnormals[ti] = n4;
                 ti += 1;
                 
 //                ni = (iy) * getResolutionX() + ix;
-                tverts[ti].set( p1 );
-                tnormals[ti].set( n1 );
+                tverts[ti] = p1;
+                tnormals[ti] = n1;
                 ti += 1;
             }
             
@@ -137,8 +138,8 @@ void ofxBulletPatch::updateMesh( ofMesh& aMesh ) {
 
 //--------------------------------------------------------------
 void ofxBulletPatch::updateMeshTexCoords( ofMesh& aMesh ) {
-    
-    vector<ofVec2f>& tcoords = getMesh().getTexCoords();
+
+    auto& tcoords = getMesh().getTexCoords();
     int numVerts = getMesh().getVertices().size();
     if( tcoords.size() != numVerts ) {
         tcoords.resize( numVerts );

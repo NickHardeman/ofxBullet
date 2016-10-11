@@ -71,8 +71,8 @@ void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aM
         bullet_vertices   = new btVector3[ totalVerts ];
         bullet_indices    = new int[ totalIndices ];
         
-        vector< ofVec3f >& tverts       = aMesh.getVertices();
-        vector< ofIndexType >& tindices = aMesh.getIndices();
+        auto& tverts = aMesh.getVertices();
+        auto& tindices = aMesh.getIndices();
         
         for( int i = 0; i < totalVerts; i++ ) {
             bullet_vertices[i].setValue( tverts[i].x, tverts[i].y, tverts[i].z );
@@ -109,13 +109,14 @@ void ofxBulletTriMeshShape::updateMesh( btDiscreteDynamicsWorld* a_world, ofMesh
         ofLogWarning() << "updateMesh :: the verts or the indices are not the correct size, not updating";
         return;
     }
-    vector< ofVec3f >& tverts       = aMesh.getVertices();
+    
+    auto& tverts = aMesh.getVertices();
     
     btVector3 aabbMin(BT_LARGE_FLOAT,BT_LARGE_FLOAT,BT_LARGE_FLOAT);
     btVector3 aabbMax(-BT_LARGE_FLOAT,-BT_LARGE_FLOAT,-BT_LARGE_FLOAT);
     
     for( int i = 0; i < totalVerts; i++ ) {
-        ofVec3f& v = tverts[i];
+        auto& v = tverts[i];
         bullet_vertices[i].setValue( v.x, v.y, v.z );
         
         aabbMin.setMin( bullet_vertices[i] );
