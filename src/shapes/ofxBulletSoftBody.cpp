@@ -231,7 +231,7 @@ void ofxBulletSoftBody::updateMesh( ofMesh& aMesh ) {
     
     int totalNodes = getNumNodes();
     int totalFaces = getNumFaces();
-    vector< ofVec3f >& tverts = aMesh.getVertices();
+    auto& tverts = aMesh.getVertices();
     
     if( _cachedMesh.getMode() == OF_PRIMITIVE_TRIANGLES ) {
         
@@ -239,7 +239,7 @@ void ofxBulletSoftBody::updateMesh( ofMesh& aMesh ) {
             tverts.resize( totalFaces * 3 );
         }
         
-        vector< ofVec3f >& tnormals = aMesh.getNormals();
+        auto& tnormals = aMesh.getNormals();
         if( aMesh.getNumNormals() != totalFaces * 3 ) {
             tnormals.resize( totalFaces * 3 );
         }

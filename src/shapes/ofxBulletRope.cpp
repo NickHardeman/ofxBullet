@@ -102,7 +102,7 @@ ofVec3f ofxBulletRope::getPoint(float pct)
 void ofxBulletRope::updateMesh( ofMesh& aMesh ) {
     
     int totalNodes = getNumNodes();
-    vector< ofVec3f >& tverts = aMesh.getVertices();
+    auto& tverts = aMesh.getVertices();
     
     if( _cachedMesh.getMode() == OF_PRIMITIVE_LINE_STRIP ) {
         

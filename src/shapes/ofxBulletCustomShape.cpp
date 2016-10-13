@@ -86,9 +86,9 @@ bool ofxBulletCustomShape::addMesh( ofMesh a_mesh, ofVec3f a_localScaling, bool 
 	}
 	
 	btVector3 localScaling( a_localScaling.x, a_localScaling.y, a_localScaling.z );
-	vector <ofIndexType>	indicies = a_mesh.getIndices();
-	vector <ofVec3f>		verticies = a_mesh.getVertices();
-	
+	auto indicies = a_mesh.getIndices();
+	auto verticies = a_mesh.getVertices();
+    
 	btVector3 centroid = btVector3(0, 0, 0);
 	
 	if(!a_bUseConvexHull) {

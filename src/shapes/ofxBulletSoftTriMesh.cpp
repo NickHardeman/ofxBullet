@@ -57,7 +57,7 @@ void ofxBulletSoftTriMesh::create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, b
     bullet_vertices = new btScalar[ totalVerts * 3 ];
     int* bullet_indices = new int[ totalIndices ];
     
-    vector< ofVec3f >& tverts       = aMesh.getVertices();
+    auto& tverts       = aMesh.getVertices();
     vector< ofIndexType >& tindices = aMesh.getIndices();
     
     for( int i = 0; i < totalVerts; i++ ) {
@@ -92,7 +92,7 @@ void ofxBulletSoftTriMesh::draw() {
 void ofxBulletSoftTriMesh::updateMesh( ofMesh& aMesh ) {
     
     int totalNodes = getNumNodes();
-    vector< ofVec3f >& tverts = aMesh.getVertices();
+    auto& tverts = aMesh.getVertices();
     
     if( _cachedMesh.getMode() == OF_PRIMITIVE_TRIANGLES ) {
         
@@ -100,7 +100,7 @@ void ofxBulletSoftTriMesh::updateMesh( ofMesh& aMesh ) {
             tverts.resize( totalNodes );
         }
         
-        vector< ofVec3f >& tnormals = aMesh.getNormals();
+        auto& tnormals = aMesh.getNormals();
         if( aMesh.getNumNormals() != totalNodes ) {
             tnormals.resize( totalNodes );
         }

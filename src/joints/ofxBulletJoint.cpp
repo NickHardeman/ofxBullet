@@ -183,7 +183,7 @@ void ofxBulletJoint::draw() {
 		pa = _targetPos;
 	}
     
-    ofLine( pa, pb );
+    ofDrawLine( pa, pb );
 }
 
 //--------------------------------------------------------------
@@ -193,7 +193,7 @@ void ofxBulletJoint::drawJointConstraints() {
 	ofVec3f pa = getPivotAWorldPos();
 	ofVec3f pb = getPivotBWorldPos();
 	
-	ofLine( pa, pb );
+	ofDrawLine( pa, pb );
 	
 	ofSetColor(255, 0, 0);
 	ofDrawSphere(pa, .5);

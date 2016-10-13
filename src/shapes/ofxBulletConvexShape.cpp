@@ -25,8 +25,8 @@ void ofxBulletConvexShape::init( ofMesh& aMesh, ofVec3f a_localScaling, bool a_b
     btVector3 centroid = btVector3(0, 0, 0);
     btVector3 localScaling( a_localScaling.x, a_localScaling.y, a_localScaling.z );
     
-    vector <ofIndexType>	indicies    = aMesh.getIndices();
-	vector <ofVec3f>		verticies   = aMesh.getVertices();
+    auto indicies = aMesh.getIndices();
+    auto verticies = aMesh.getVertices();
 	
 	if(!a_bUseConvexHull) {
 		for(int i = 0; i < verticies.size(); i++) {
