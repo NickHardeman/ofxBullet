@@ -32,9 +32,11 @@ public:
 	void	setAngularLowerLimit( float a_x, float a_y, float a_z );
 	void	setAngularUpperLimit( ofVec3f a_limit );
 	void	setAngularUpperLimit( float a_x, float a_y, float a_z );
+    void	setConstraintForceMixing(float ConstraintForceMixing);
+    void	setErrorReduction(float errorReduction);
 	/******************************/
 	
-	void	add();
+	void	add(bool disableCollisionsBetweenLinkedBodies);
 	
 	ofVec3f getPivotAWorldPos();
 	ofVec3f getPivotBWorldPos();
