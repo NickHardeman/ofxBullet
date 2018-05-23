@@ -97,14 +97,14 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-	glEnable( GL_DEPTH_TEST );
+    ofEnableDepthTest();
 	camera.begin();
 	
 	ofSetLineWidth(1.f);
 	if(bDrawDebug) world.drawDebug();
 	
 	ofSetColor(255, 255, 255);
-	ofSphere(mousePos, .15f);
+	ofDrawSphere(mousePos, .15f);
 	
 	ofEnableLighting();
 	light.enable();
@@ -136,7 +136,7 @@ void ofApp::draw() {
 	ofDisableLighting();
 	
 	camera.end();
-	glDisable(GL_DEPTH_TEST);
+    ofDisableDepthTest();
 	
 	ofSetColor(255, 255, 255);
 	stringstream ss;

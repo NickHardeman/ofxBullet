@@ -33,10 +33,7 @@ void ofApp::setup() {
     mesh.setMode( OF_PRIMITIVE_TRIANGLES );
     camera.enableMouseInput();
     
-    
     light.setPosition( 0, -5, 0 );
-    
-    
 }
 
 //--------------------------------------------------------------

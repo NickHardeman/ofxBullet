@@ -74,7 +74,7 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-	glEnable( GL_DEPTH_TEST );
+    ofEnableDepthTest();
 	camera.begin();
 	
 	ofSetLineWidth(1.f);
@@ -103,7 +103,7 @@ void ofApp::draw() {
 	ofDisableLighting();
 	
 	camera.end();
-	glDisable(GL_DEPTH_TEST);
+    ofDisableDepthTest();
 	
 	ofSetColor(255, 255, 255);
 	stringstream ss;

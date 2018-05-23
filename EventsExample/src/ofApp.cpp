@@ -114,7 +114,7 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-	glEnable( GL_DEPTH_TEST );
+    ofEnableDepthTest();
 	camera.begin();
 
 	ofSetLineWidth(1.f);
@@ -152,11 +152,11 @@ void ofApp::draw() {
 	ofDisableLighting();
 
 	camera.end();
-	glDisable(GL_DEPTH_TEST);
+    ofDisableDepthTest();
 
 	ofEnableAlphaBlending();
 	ofSetColor(0, 0, 0, 150);
-	ofRect(0, 0, 250, 120);
+	ofDrawRectangle(0, 0, 250, 120);
 	ofDisableAlphaBlending();
 
 	ofSetColor(255, 255, 255);
