@@ -24,11 +24,11 @@ public:
 	btRigidBody* body;
 	ofxBulletUserData* userData;
 	// location in the bullet world //
-	ofVec3f	rayWorldPos;
+	glm::vec3	rayWorldPos;
 	// location of the mouse on the screen, z will always be 0 //
-	ofVec3f rayScreenPos;
+	glm::vec3 rayScreenPos;
 	// location of the pick position in the world coords //
-	ofVec3f pickPosWorld;
+	glm::vec3 pickPosWorld;
 	// local point in rigid body coords //
-	ofVec3f localPivotPos;
+	glm::vec3 localPivotPos;
 };

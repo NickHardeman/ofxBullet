@@ -14,13 +14,13 @@ class ofxBulletRope : public ofxBulletSoftBody {
 public:
     ofxBulletRope();
     
-    void create(ofxBulletWorldSoft* a_world, const ofVec3f& a_from, const ofVec3f& a_to, int a_res = 10);
+    void create(ofxBulletWorldSoft* a_world, const glm::vec3& a_from, const glm::vec3& a_to, int a_res = 10);
     
     void draw();
     
     void appendNode();
     
-    ofVec3f getPoint(float pct);
+    glm::vec3 getPoint(float pct);
     
     float getLinkLength() const;
     

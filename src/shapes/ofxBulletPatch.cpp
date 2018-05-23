@@ -18,7 +18,7 @@ ofxBulletPatch::ofxBulletPatch() : ofxBulletSoftBody() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletPatch::create(ofxBulletWorldSoft* a_world, const ofVec3f& a_p0, const ofVec3f& a_p1, const ofVec3f& a_p2, const ofVec3f& a_p3, int a_resx, int a_resy) {
+void ofxBulletPatch::create(ofxBulletWorldSoft* a_world, const glm::vec3& a_p0, const glm::vec3& a_p1, const glm::vec3& a_p2, const glm::vec3& a_p3, int a_resx, int a_resy) {
     if(a_world == NULL) {
         ofLogError("ofxBulletPatch") << "create(): a_world param is NULL";
         return;
@@ -76,25 +76,25 @@ void ofxBulletPatch::updateMesh( ofMesh& aMesh ) {
             tnormals.resize( tverts.size() );
         }
         
-        ofVec3f p1, p2, p3, p4;
-        ofVec3f n1, n2, n3, n4;
+        glm::vec3 p1, p2, p3, p4;
+        glm::vec3 n1, n2, n3, n4;
         
         int ti = 0;
         for( int iy = 0; iy < getResolutionY()-1; iy++ ) {
             for( int ix = 0; ix < getResolutionX()-1; ix++ ) {
                 
                 int ni = iy * getResolutionX() + ix;
-                p1.set( _softBody->m_nodes[ni].m_x.x(), _softBody->m_nodes[ni].m_x.y(), _softBody->m_nodes[ni].m_x.z() );
-                n1.set( _softBody->m_nodes[ni].m_n.x(), _softBody->m_nodes[ni].m_n.y(), _softBody->m_nodes[ni].m_n.z() );
+                p1= glm::vec3( _softBody->m_nodes[ni].m_x.x(), _softBody->m_nodes[ni].m_x.y(), _softBody->m_nodes[ni].m_x.z() );
+                n1 = glm::vec3( _softBody->m_nodes[ni].m_n.x(), _softBody->m_nodes[ni].m_n.y(), _softBody->m_nodes[ni].m_n.z() );
                 ni = (iy+1) * getResolutionX() + ix;
-                p2.set( _softBody->m_nodes[ni].m_x.x(), _softBody->m_nodes[ni].m_x.y(), _softBody->m_nodes[ni].m_x.z() );
-                n2.set( _softBody->m_nodes[ni].m_n.x(), _softBody->m_nodes[ni].m_n.y(), _softBody->m_nodes[ni].m_n.z() );
+                p2 = glm::vec3( _softBody->m_nodes[ni].m_x.x(), _softBody->m_nodes[ni].m_x.y(), _softBody->m_nodes[ni].m_x.z() );
+                n2 = glm::vec3( _softBody->m_nodes[ni].m_n.x(), _softBody->m_nodes[ni].m_n.y(), _softBody->m_nodes[ni].m_n.z() );
                 ni = (iy+1) * getResolutionX() + ix+1;
-                p3.set( _softBody->m_nodes[ni].m_x.x(), _softBody->m_nodes[ni].m_x.y(), _softBody->m_nodes[ni].m_x.z() );
-                n3.set( _softBody->m_nodes[ni].m_n.x(), _softBody->m_nodes[ni].m_n.y(), _softBody->m_nodes[ni].m_n.z() );
+                p3 = glm::vec3( _softBody->m_nodes[ni].m_x.x(), _softBody->m_nodes[ni].m_x.y(), _softBody->m_nodes[ni].m_x.z() );
+                n3 = glm::vec3( _softBody->m_nodes[ni].m_n.x(), _softBody->m_nodes[ni].m_n.y(), _softBody->m_nodes[ni].m_n.z() );
                 ni = (iy) * getResolutionX() + ix+1;
-                p4.set( _softBody->m_nodes[ni].m_x.x(), _softBody->m_nodes[ni].m_x.y(), _softBody->m_nodes[ni].m_x.z() );
-                n4.set( _softBody->m_nodes[ni].m_n.x(), _softBody->m_nodes[ni].m_n.y(), _softBody->m_nodes[ni].m_n.z() );
+                p4 = glm::vec3( _softBody->m_nodes[ni].m_x.x(), _softBody->m_nodes[ni].m_x.y(), _softBody->m_nodes[ni].m_x.z() );
+                n4 = glm::vec3( _softBody->m_nodes[ni].m_n.x(), _softBody->m_nodes[ni].m_n.y(), _softBody->m_nodes[ni].m_n.z() );
                 
                 tverts[ti] = p1;
                 tnormals[ti] = n1;

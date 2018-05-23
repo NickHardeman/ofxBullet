@@ -73,8 +73,8 @@ float ofxBulletSoftBody::getMass() const {
 }
 
 //--------------------------------------------------------------
-ofVec3f	ofxBulletSoftBody::getPosition() const {
-    ofVec3f avgpos;
+glm::vec3	ofxBulletSoftBody::getPosition() const {
+    glm::vec3 avgpos;
     for ( int i = 0; i < getNumNodes(); i++ ) {
         avgpos += getNodePos(i);
     }
@@ -93,13 +93,13 @@ size_t ofxBulletSoftBody::getNumFaces() const {
 }
 
 //--------------------------------------------------------------
-ofVec3f ofxBulletSoftBody::getNodePos(int idx) const {
+glm::vec3 ofxBulletSoftBody::getNodePos(int idx) const {
     if (idx >= getNumNodes()) {
         ofLogWarning("ofxBulletRope") << "getNodePos() : idx " << idx << " greater than num nodes (" << getNumNodes() << ")";
-        return ofVec3f::zero();
+        return glm::vec3(0,0,0);
     }
     
-    return ofVec3f(_softBody->m_nodes.at(idx).m_x.x(),
+    return glm::vec3(_softBody->m_nodes.at(idx).m_x.x(),
                    _softBody->m_nodes.at(idx).m_x.y(),
                    _softBody->m_nodes.at(idx).m_x.z());
 }
@@ -217,7 +217,7 @@ void ofxBulletSoftBody::setFixedAt(size_t n) {
 }
 
 //--------------------------------------------------------------
-void ofxBulletSoftBody::setNodePositionAt(size_t n, const ofVec3f& pos) {
+void ofxBulletSoftBody::setNodePositionAt(size_t n, const glm::vec3& pos) {
     _softBody->m_nodes.at(n).m_x = btVector3(pos.x, pos.y, pos.z);
 }
 

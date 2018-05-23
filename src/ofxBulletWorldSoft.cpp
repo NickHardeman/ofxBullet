@@ -45,7 +45,7 @@ btSoftBodyWorldInfo& ofxBulletWorldSoft::getInfo() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletWorldSoft::setGravity( ofVec3f a_g ) {
+void ofxBulletWorldSoft::setGravity( glm::vec3 a_g ) {
     ofxBulletWorldRigid::setGravity( a_g );
     softBodyWorldInfo.m_gravity = world->getGravity();
 }

@@ -34,15 +34,15 @@ void ofxBulletCapsule::init( btCapsuleShape* a_colShape ) {
 }
 
 //--------------------------------------------------------------
-void ofxBulletCapsule::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, float a_mass, float a_radius, float a_height ) {
+void ofxBulletCapsule::create( btDiscreteDynamicsWorld* a_world, glm::vec3 a_loc, float a_mass, float a_radius, float a_height ) {
 	btTransform tr=ofGetBtTransformFromVec3f( a_loc );
 	create(a_world, tr, a_mass, a_radius, a_height);
 }
 
 //--------------------------------------------------------------
-void ofxBulletCapsule::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass, float a_radius, float a_height ) {
+void ofxBulletCapsule::create( btDiscreteDynamicsWorld* a_world, glm::vec3 a_loc, glm::quat a_rot, float a_mass, float a_radius, float a_height ) {
 	btTransform tr	= ofGetBtTransformFromVec3f( a_loc );
-	tr.setRotation( btQuaternion(btVector3(a_rot.x(), a_rot.y(), a_rot.z()), a_rot.w()) );
+	tr.setRotation( btQuaternion(a_rot.x, a_rot.y, a_rot.z, a_rot.w ));
 	
 	create( a_world, tr, a_mass, a_radius, a_height );
 }
@@ -113,13 +113,13 @@ void ofxBulletCapsule::draw() {
                 btVector3 normal = (v3-v1).cross(v2-v1);
                 normal.normalize();
                 
-                _cachedMesh.addVertex( ofVec3f(v1.x(), v1.y(), v1.z()) );
-                _cachedMesh.addVertex( ofVec3f(v2.x(), v2.y(), v2.z()) );
-                _cachedMesh.addVertex( ofVec3f(v3.x(), v3.y(), v3.z()) );
+                _cachedMesh.addVertex( glm::vec3(v1.x(), v1.y(), v1.z()) );
+                _cachedMesh.addVertex( glm::vec3(v2.x(), v2.y(), v2.z()) );
+                _cachedMesh.addVertex( glm::vec3(v3.x(), v3.y(), v3.z()) );
                 
-                _cachedMesh.addNormal( ofVec3f(normal.x(), normal.y(), normal.z()) );
-                _cachedMesh.addNormal( ofVec3f(normal.x(), normal.y(), normal.z()) );
-                _cachedMesh.addNormal( ofVec3f(normal.x(), normal.y(), normal.z()) );
+                _cachedMesh.addNormal( glm::vec3(normal.x(), normal.y(), normal.z()) );
+                _cachedMesh.addNormal( glm::vec3(normal.x(), normal.y(), normal.z()) );
+                _cachedMesh.addNormal( glm::vec3(normal.x(), normal.y(), normal.z()) );
                 
             }
         }

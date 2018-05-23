@@ -33,15 +33,15 @@ void ofxBulletBox::init( btBoxShape* a_colShape ) {
 }
 
 //--------------------------------------------------------------
-void ofxBulletBox::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, float a_mass, float a_sizeX, float a_sizeY, float a_sizeZ ) {
+void ofxBulletBox::create( btDiscreteDynamicsWorld* a_world, glm::vec3 a_loc, float a_mass, float a_sizeX, float a_sizeY, float a_sizeZ ) {
 	btTransform tr=ofGetBtTransformFromVec3f( a_loc );
 	create( a_world, tr, a_mass, a_sizeX, a_sizeY, a_sizeZ );
 }
 
 //--------------------------------------------------------------
-void ofxBulletBox::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass, float a_sizeX, float a_sizeY, float a_sizeZ ) {
+void ofxBulletBox::create( btDiscreteDynamicsWorld* a_world, glm::vec3 a_loc, glm::quat a_rot, float a_mass, float a_sizeX, float a_sizeY, float a_sizeZ ) {
 	btTransform tr	= ofGetBtTransformFromVec3f( a_loc );
-	tr.setRotation( btQuaternion(btVector3(a_rot.x(), a_rot.y(), a_rot.z()), a_rot.w()) );
+	tr.setRotation( btQuaternion(a_rot.x, a_rot.y, a_rot.z, a_rot.w ) );
 	
 	create( a_world, tr, a_mass, a_sizeX, a_sizeY, a_sizeZ );
 }
@@ -74,17 +74,17 @@ void ofxBulletBox::draw() {
 	}
     
     transformGL();
-	ofVec3f size = getSize();
+	glm::vec3 size = getSize();
     ofDrawBox(0, 0, 0, size.x, size.y, size.z);
 	restoreTransformGL();
 }
  
 //--------------------------------------------------------------
-ofVec3f ofxBulletBox::getSize() const {
+glm::vec3 ofxBulletBox::getSize() const {
 	float _sx = ((btBoxShape*)_rigidBody->getCollisionShape())->getHalfExtentsWithMargin()[0]*2.f;
 	float _sy = ((btBoxShape*)_rigidBody->getCollisionShape())->getHalfExtentsWithMargin()[1]*2.f;
 	float _sz = ((btBoxShape*)_rigidBody->getCollisionShape())->getHalfExtentsWithMargin()[2]*2.f;
-	return ofVec3f( _sx, _sy, _sz);
+	return glm::vec3( _sx, _sy, _sz);
 }
 
 //--------------------------------------------------------------
@@ -103,7 +103,7 @@ float ofxBulletBox::getDepth() const {
 }
 
 //--------------------------------------------------------------
-bool ofxBulletBox::isInside(const ofVec3f& a_pt, float tolerance) {
+bool ofxBulletBox::isInside(const glm::vec3& a_pt, float tolerance) {
 	return ((btBoxShape*)_rigidBody->getCollisionShape())->isInside( btVector3(a_pt.x, a_pt.y, a_pt.z), tolerance );
 }
 

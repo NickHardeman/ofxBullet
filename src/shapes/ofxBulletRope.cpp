@@ -16,7 +16,7 @@ ofxBulletRope::ofxBulletRope() : ofxBulletSoftBody() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletRope::create(ofxBulletWorldSoft* a_world, const ofVec3f& a_from, const ofVec3f& a_to, int a_res) {
+void ofxBulletRope::create(ofxBulletWorldSoft* a_world, const glm::vec3& a_from, const glm::vec3& a_to, int a_res) {
     if(a_world == NULL) {
         ofLogError("ofxBulletRope") << "create(): a_world param is NULL";
         return;
@@ -35,8 +35,8 @@ void ofxBulletRope::create(ofxBulletWorldSoft* a_world, const ofVec3f& a_from, c
         _cachedMesh.addVertex(getNodePos(i));
     }
     
-    _linkLength = a_from.distance(a_to) / a_res;
-    
+    _linkLength = glm::distance( a_from, a_to ) / (float)a_res;
+//    _linkLength = a_from.distance(a_to) / a_res;
     
 	createInternalUserData();
 }
@@ -59,10 +59,10 @@ void ofxBulletRope::appendNode() {
     int nextIdx = getNumNodes();
     
     // Calculate the next position.
-    ofVec3f prevPos = getNodePos(prevIdx);
-    ofVec3f currPos = getNodePos(currIdx);
-    ofVec3f nextDir = currPos - prevPos;
-    ofVec3f nextPos = currPos + nextDir.getNormalized() * _linkLength;
+    glm::vec3 prevPos = getNodePos(prevIdx);
+    glm::vec3 currPos = getNodePos(currIdx);
+    glm::vec3 nextDir = currPos - prevPos;
+    glm::vec3 nextPos = currPos + glm::normalize(nextDir) * _linkLength;
     
     // Add the new node and link.
     getSoftBody()->appendNode(btVector3(nextPos.x, nextPos.y, nextPos.z), 1);
@@ -79,7 +79,7 @@ float ofxBulletRope::getLinkLength() const
 }
 
 //--------------------------------------------------------------
-ofVec3f ofxBulletRope::getPoint(float pct)
+glm::vec3 ofxBulletRope::getPoint(float pct)
 {
     pct = ofClamp(pct, 0, 1);
     int totalNodes = getNumNodes() - 1;
@@ -93,9 +93,13 @@ ofVec3f ofxBulletRope::getPoint(float pct)
     
     // Find the interpolated value between both nodes.
     float nodePct = fVal - nodeIdx;
-    ofVec3f prevNode = getNodePos(nodeIdx);
-    ofVec3f nextNode = getNodePos(nodeIdx + 1);
-    return prevNode.getInterpolated(nextNode, nodePct);
+    glm::vec3 prevNode = getNodePos(nodeIdx);
+    glm::vec3 nextNode = getNodePos(nodeIdx + 1);
+//    return prevNode.getInterpolated(nextNode, nodePct);
+    
+    return glm::vec3( prevNode.x*(1.f-nodePct) + nextNode.x*nodePct,
+                          prevNode.y*(1.f-nodePct) + nextNode.y*nodePct,
+                          prevNode.z*(1.f-nodePct) + nextNode.z*nodePct );
 }
 
 //--------------------------------------------------------------

@@ -22,20 +22,20 @@ ofxBulletTriMeshShape::~ofxBulletTriMeshShape() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, ofVec3f a_loc, float a_mass, ofVec3f aAAbbMin, ofVec3f aAAbbMax ) {
+void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, glm::vec3 a_loc, float a_mass, glm::vec3 aAAbbMin, glm::vec3 aAAbbMax ) {
     btTransform tr=ofGetBtTransformFromVec3f( a_loc );
     create( a_world, aMesh, tr, a_mass );
 }
 
 //--------------------------------------------------------------
-void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, ofVec3f a_loc, ofQuaternion a_rot, float a_mass, ofVec3f aAAbbMin, ofVec3f aAAbbMax ) {
+void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, glm::vec3 a_loc, glm::quat a_rot, float a_mass, glm::vec3 aAAbbMin, glm::vec3 aAAbbMax ) {
     btTransform tr	= ofGetBtTransformFromVec3f( a_loc );
-	tr.setRotation( btQuaternion(btVector3(a_rot.x(), a_rot.y(), a_rot.z()), a_rot.w()) );
+	tr.setRotation( btQuaternion( a_rot.x, a_rot.y, a_rot.z, a_rot.w ));
     create( a_world, aMesh, tr, a_mass );
 }
 
 //--------------------------------------------------------------
-void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, btTransform &a_bt_tr, float a_mass, ofVec3f aAAbbMin, ofVec3f aAAbbMax ) {
+void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, btTransform &a_bt_tr, float a_mass, glm::vec3 aAAbbMin, glm::vec3 aAAbbMax ) {
     if( aMesh.getMode() != OF_PRIMITIVE_TRIANGLES ) {
         ofLogWarning() << " ofxBulletTriMeshShape :: create : mesh must be using triangles, not creating!!" << endl;
         return;
@@ -101,6 +101,7 @@ void ofxBulletTriMeshShape::create( btDiscreteDynamicsWorld* a_world, ofMesh& aM
     
     
     createInternalUserData();
+    updateMesh( a_world, aMesh );
 }
 
 //--------------------------------------------------------------

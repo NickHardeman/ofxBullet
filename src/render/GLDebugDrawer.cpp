@@ -50,7 +50,7 @@ void	GLDebugDrawer::setDebugMode(int debugMode)
 }
 
 void	GLDebugDrawer::draw3dText(const btVector3& location,const char* textString) {
-    ofDrawBitmapString( textString, ofVec3f(location.getX(), location.getY(), location.getZ() ) );
+    ofDrawBitmapString( textString, glm::vec3(location.getX(), location.getY(), location.getZ() ) );
 }
 
 void	GLDebugDrawer::reportErrorWarning(const char* warningString)

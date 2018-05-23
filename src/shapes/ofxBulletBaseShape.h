@@ -47,11 +47,11 @@ public:
 	int				getType();
 	
 	ofMatrix4x4		getTransformationMatrix() const;
-	virtual ofVec3f			getPosition() const;
-	ofVec3f			getRotation() const;
-	ofVec3f			getRotationAxis() const;
+	virtual glm::vec3 getPosition() const;
+	glm::vec3		getRotation() const;
+	glm::vec3		getRotationAxis() const;
 	float			getRotationAngle() const;
-	ofQuaternion	getRotationQuat() const;
+    glm::quat   	getRotationQuat() const;
 	
 	float			getRestitution() const;
 	float			getFriction() const;

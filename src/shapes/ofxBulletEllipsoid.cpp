@@ -16,7 +16,7 @@ ofxBulletEllipsoid::ofxBulletEllipsoid() : ofxBulletSoftBody() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletEllipsoid::create(ofxBulletWorldSoft* a_world, const ofVec3f& a_center, const ofVec3f& a_radius, int a_res) {
+void ofxBulletEllipsoid::create(ofxBulletWorldSoft* a_world, const glm::vec3& a_center, const glm::vec3& a_radius, int a_res) {
     if(a_world == NULL) {
         ofLogError("ofxBulletEllipsoid") << "create(): a_world param is NULL";
         return;
@@ -44,7 +44,7 @@ void ofxBulletEllipsoid::draw() {
 }
 
 //--------------------------------------------------------------
-ofVec3f ofxBulletEllipsoid::getRadius() {
+glm::vec3 ofxBulletEllipsoid::getRadius() {
     return _radius;
 }
 

@@ -30,7 +30,7 @@ public:
 	virtual void setup();
     
 	void update( float aDeltaTimef=1.0f/60.0f, int aNumIterations=6 );
-	void setCameraPosition( ofVec3f a_pos );
+	void setCameraPosition( glm::vec3 a_pos );
 	void setCamera( ofCamera* a_cam );
 	
 	void enableCollisionEvents();
@@ -38,8 +38,8 @@ public:
 	void checkCollisions();
 	
 	ofxBulletRaycastData raycastTest(float a_x, float a_y, short int a_filterMask=btBroadphaseProxy::AllFilter);
-	//ofxBulletRaycastData raycastTest( ofVec3f a_castRay, short int a_filterMask=btBroadphaseProxy::AllFilter);
-	ofxBulletRaycastData raycastTest( ofVec3f a_rayStart, ofVec3f a_rayEnd, short int a_filterMask=btBroadphaseProxy::AllFilter);
+	//ofxBulletRaycastData raycastTest( glm::vec3 a_castRay, short int a_filterMask=btBroadphaseProxy::AllFilter);
+	ofxBulletRaycastData raycastTest( glm::vec3 a_rayStart, glm::vec3 a_rayEnd, short int a_filterMask=btBroadphaseProxy::AllFilter);
 	
 	void enableMousePickingEvents( short int a_filterMask=btBroadphaseProxy::AllFilter );
 	void disableMousePickingEvents();
@@ -53,8 +53,8 @@ public:
 	void drawDebug();
 	
 	bool checkWorld();
-	virtual void setGravity( ofVec3f a_g );
-	ofVec3f getGravity();
+	virtual void setGravity( glm::vec3 a_g );
+	glm::vec3 getGravity();
 	
 	void removeMouseConstraint();
 	void destroy();
@@ -84,7 +84,7 @@ protected:
     
 private:
 	ofCamera*	_camera;
-	ofVec3f		_cameraPos;
+	glm::vec3	_cameraPos;
 	bool		_bMouseDown;
 	short int	_mouseFilterMask; // if you don't want to pick certain objects //
 	btRigidBody* _pickedBody;

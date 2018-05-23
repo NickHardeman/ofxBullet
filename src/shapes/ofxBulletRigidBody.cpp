@@ -141,7 +141,7 @@ void ofxBulletRigidBody::setDamping( float a_linear_damp, float a_angular_damp )
 // FORCES //
 
 //--------------------------------------------------------------
-void ofxBulletRigidBody::applyForce( const ofVec3f& a_frc, const ofVec3f& a_rel_pos ) {
+void ofxBulletRigidBody::applyForce( const glm::vec3& a_frc, const glm::vec3& a_rel_pos ) {
 	_rigidBody->applyForce( btVector3(a_frc.x, a_frc.y, a_frc.z), btVector3(a_rel_pos.x, a_rel_pos.y, a_rel_pos.z) );
 }
 
@@ -151,7 +151,7 @@ void ofxBulletRigidBody::applyForce( const btVector3& a_frc, const btVector3& a_
 }
 
 //--------------------------------------------------------------
-void ofxBulletRigidBody::applyCentralForce( const ofVec3f& a_frc ) {
+void ofxBulletRigidBody::applyCentralForce( const glm::vec3& a_frc ) {
 	applyCentralForce( btVector3(a_frc.x, a_frc.y, a_frc.z) );
 }
 void ofxBulletRigidBody::applyCentralForce( float a_x, float a_y, float a_z ) {
@@ -162,7 +162,7 @@ void ofxBulletRigidBody::applyCentralForce( const btVector3& a_frc ) {
 }
 
 //--------------------------------------------------------------
-void ofxBulletRigidBody::applyTorque( const ofVec3f& a_torque ) {
+void ofxBulletRigidBody::applyTorque( const glm::vec3& a_torque ) {
 	applyTorque( btVector3(a_torque.x, a_torque.y, a_torque.z) );
 }
 void ofxBulletRigidBody::applyTorque( float a_x, float a_y, float a_z ) {

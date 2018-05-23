@@ -30,10 +30,10 @@ public:
     
     float getMass() const;
     // returns an average position of all of the nodes //
-    virtual ofVec3f	getPosition() const;
+    virtual glm::vec3	getPosition() const;
 
     size_t getNumNodes() const;
-    ofVec3f getNodePos(int idx) const;
+    glm::vec3 getNodePos(int idx) const;
     btSoftBody::tNodeArray& getBulletNodes();
 
 	size_t getNumFaces() const;
@@ -60,7 +60,7 @@ public:
     void setSoftContactsHrdness(float v);
     void setAnchorsContactsHrdness(float v);
     
-    void setNodePositionAt(size_t n, const ofVec3f& pos);
+    void setNodePositionAt(size_t n, const glm::vec3& pos);
     void setFixedAt(size_t n);
     void attachRigidBodyAt(size_t n, btRigidBody *rigid);
     

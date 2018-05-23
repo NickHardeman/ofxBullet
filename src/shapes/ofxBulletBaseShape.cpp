@@ -106,21 +106,22 @@ ofMatrix4x4 ofxBulletBaseShape::getTransformationMatrix() const {
 }
 
 //--------------------------------------------------------------
-ofVec3f ofxBulletBaseShape::getPosition() const {
+glm::vec3 ofxBulletBaseShape::getPosition() const {
     return getTransformationMatrix().getTranslation();
 }
 
 // returns yaw, pitch, roll //
 //--------------------------------------------------------------
-ofVec3f ofxBulletBaseShape::getRotation( ) const {
-    return getRotationQuat().getEuler();
+glm::vec3 ofxBulletBaseShape::getRotation( ) const {
+    return glm::eulerAngles( getRotationQuat() );
+//    return getRotationQuat().getEuler();
 }
 
 //--------------------------------------------------------------
-ofVec3f ofxBulletBaseShape::getRotationAxis() const {
+glm::vec3 ofxBulletBaseShape::getRotationAxis() const {
 	btQuaternion rotQuat		= _object->getWorldTransform().getRotation();
 	btVector3 btaxis			= rotQuat.getAxis();
-	return ofVec3f( btaxis.getX(), btaxis.getY(), btaxis.getZ() );
+	return glm::vec3( btaxis.getX(), btaxis.getY(), btaxis.getZ() );
 }
 
 //--------------------------------------------------------------
@@ -130,7 +131,7 @@ float ofxBulletBaseShape::getRotationAngle() const {
 }
 
 //--------------------------------------------------------------
-ofQuaternion ofxBulletBaseShape::getRotationQuat() const {
+glm::quat ofxBulletBaseShape::getRotationQuat() const {
     return getTransformationMatrix().getRotate();
 }
 

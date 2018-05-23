@@ -13,7 +13,7 @@ ofxBulletJoint::ofxBulletJoint() {
 	_bCreated		= false;
 	_bAdded			= false;
 	_bTwoBodies		= false;
-	_targetPos.set(0, 0, 0);
+	_targetPos = glm::vec3(0, 0, 0);
 }
 
 //--------------------------------------------------------------
@@ -28,8 +28,8 @@ void ofxBulletJoint::create( btDiscreteDynamicsWorld* a_world, ofxBulletRigidBod
 	a_shape1->setActivationState( DISABLE_DEACTIVATION );
 	a_shape2->setActivationState( DISABLE_DEACTIVATION );
 	
-	ofVec3f diff = a_shape2->getPosition() - a_shape1->getPosition();
-	diff = diff * a_shape1->getRotationQuat().inverse();
+	glm::vec3 diff = a_shape2->getPosition() - a_shape1->getPosition();
+    diff = diff * glm::inverse( a_shape1->getRotationQuat() );
 
 	btTransform frameInA = btTransform::getIdentity();
 	frameInA.setOrigin( btVector3(btScalar(-diff.x), btScalar(-diff.y), btScalar(-diff.z)) );
@@ -45,7 +45,7 @@ void ofxBulletJoint::create( btDiscreteDynamicsWorld* a_world, ofxBulletRigidBod
 }
 
 //--------------------------------------------------------------
-void ofxBulletJoint::create( btDiscreteDynamicsWorld* a_world, ofxBulletRigidBody* a_shape, ofVec3f a_pos ) {
+void ofxBulletJoint::create( btDiscreteDynamicsWorld* a_world, ofxBulletRigidBody* a_shape, glm::vec3 a_pos ) {
 	_world = a_world;
 	// we should have these always influenced by the joint, so don't let them go to sleep //
 	a_shape->setActivationState( DISABLE_DEACTIVATION );
@@ -58,7 +58,7 @@ void ofxBulletJoint::create( btDiscreteDynamicsWorld* a_world, ofxBulletRigidBod
 	
 	_setDefaults();
 	
-	_targetPos.set(a_pos.x, a_pos.y, a_pos.z);
+	_targetPos = glm::vec3(a_pos.x, a_pos.y, a_pos.z);
 	_bTwoBodies = false;
 	_bCreated	= true;
 }
@@ -82,25 +82,25 @@ void ofxBulletJoint::_setDefaults() {
 
 /******************************************************/
 // call these before add() and after create //
-void ofxBulletJoint::setLinearLowerLimit( ofVec3f a_limit ) {
+void ofxBulletJoint::setLinearLowerLimit( glm::vec3 a_limit ) {
 	setLinearLowerLimit( a_limit.x, a_limit.y, a_limit.z );
 }
 void ofxBulletJoint::setLinearLowerLimit( float a_x, float a_y, float a_z ) {
 	_joint->setLinearLowerLimit( btVector3(a_x, a_y, a_z) );
 }
-void ofxBulletJoint::setLinearUpperLimit( ofVec3f a_limit ) {
+void ofxBulletJoint::setLinearUpperLimit( glm::vec3 a_limit ) {
 	setLinearUpperLimit( a_limit.x, a_limit.y, a_limit.z );
 }
 void ofxBulletJoint::setLinearUpperLimit( float a_x, float a_y, float a_z ) {
 	_joint->setLinearUpperLimit( btVector3(a_x, a_y, a_z) );
 }
-void ofxBulletJoint::setAngularLowerLimit( ofVec3f a_limit ) {
+void ofxBulletJoint::setAngularLowerLimit( glm::vec3 a_limit ) {
 	setAngularLowerLimit( a_limit.x, a_limit.y, a_limit.z );
 }
 void ofxBulletJoint::setAngularLowerLimit( float a_x, float a_y, float a_z ) {
 	_joint->setAngularLowerLimit( btVector3(a_x, a_y, a_z) );
 }
-void ofxBulletJoint::setAngularUpperLimit( ofVec3f a_limit ) {
+void ofxBulletJoint::setAngularUpperLimit( glm::vec3 a_limit ) {
 	setAngularUpperLimit( a_limit.x, a_limit.y, a_limit.z );
 }
 void ofxBulletJoint::setAngularUpperLimit( float a_x, float a_y, float a_z ) {
@@ -123,21 +123,23 @@ void ofxBulletJoint::remove() {
 }
 
 //--------------------------------------------------------------
-ofVec3f ofxBulletJoint::getPivotAWorldPos() {
+glm::vec3 ofxBulletJoint::getPivotAWorldPos() {
 	btQuaternion rotQuat	= _joint->getCalculatedTransformA().getRotation();
 	btVector3 btaxis		= rotQuat.getAxis();
 	btVector3 frameA		= _joint->getFrameOffsetA().getOrigin();
-	ofVec3f dir				= ofVec3f(frameA.getX(), frameA.getY(), frameA.getZ());
-	dir.normalize();
-	dir.rotateRad(rotQuat.getAngle(), ofVec3f(btaxis.getX(), btaxis.getY(), btaxis.getZ() ));
+	glm::vec3 dir			= glm::vec3(frameA.getX(), frameA.getY(), frameA.getZ());
+    dir = glm::normalize(dir);
+    glm::quat tq = glm::angleAxis( rotQuat.getAngle(), glm::vec3( btaxis.getX(), btaxis.getY(), btaxis.getZ()) );
+    dir = tq * dir;
+//    dir.rotateRad(rotQuat.getAngle(), glm::vec3(btaxis.getX(), btaxis.getY(), btaxis.getZ() ));
 	dir *= -frameA.length();
 	return dir + getPivotBWorldPos();
 }
 
 //--------------------------------------------------------------
-ofVec3f ofxBulletJoint::getPivotBWorldPos() {
+glm::vec3 ofxBulletJoint::getPivotBWorldPos() {
 	btVector3 trb = _joint->getCalculatedTransformB().getOrigin();
-	return ofVec3f( trb.getX(), trb.getY(), trb.getZ() );
+    return glm::vec3( trb.getX(), trb.getY(), trb.getZ() );
 }
 
 //--------------------------------------------------------------
@@ -151,30 +153,30 @@ btRigidBody* ofxBulletJoint::getRigidBodyB() const {
 }
 
 //--------------------------------------------------------------
-ofVec3f ofxBulletJoint::getPositionA() const {
+glm::vec3 ofxBulletJoint::getPositionA() const {
 	return ofGetVec3fPosFromRigidBody( getRigidBodyA() );
 }
 
 //--------------------------------------------------------------
-ofVec3f ofxBulletJoint::getPositionB() const {
+glm::vec3 ofxBulletJoint::getPositionB() const {
 	return ofGetVec3fPosFromRigidBody( getRigidBodyB() );
 }
 
 //--------------------------------------------------------------
-void ofxBulletJoint::updatePivotPos( const ofVec3f a_pos, float a_length ) {
+void ofxBulletJoint::updatePivotPos( const glm::vec3 a_pos, float a_length ) {
 	if(!_bCreated) {ofLog(OF_LOG_ERROR, "ofxBulletJoint :: updatePivotPos : must call create() first"); return;}
 	
 	_joint->getFrameOffsetA().setOrigin( btVector3(a_pos.x, a_pos.y, a_pos.z) );
 	
-	_targetPos.set( a_pos.x, a_pos.y, a_pos.z );
+	_targetPos = glm::vec3( a_pos.x, a_pos.y, a_pos.z );
 }
 
 //--------------------------------------------------------------
 void ofxBulletJoint::draw() {
 	if(!_bCreated) {ofLog(OF_LOG_ERROR, "ofxBulletJoint :: draw : must call create() first"); return;}
 	
-	ofVec3f pa;
-	ofVec3f pb;
+	glm::vec3 pa;
+	glm::vec3 pb;
 	
 	pb = getPositionB();
 	if(_bTwoBodies) {
@@ -190,8 +192,8 @@ void ofxBulletJoint::draw() {
 // draws the length of the joint and locations of pivots, but if bodies are sprung more than the length,
 // will not connect all the way //
 void ofxBulletJoint::drawJointConstraints() {
-	ofVec3f pa = getPivotAWorldPos();
-	ofVec3f pb = getPivotBWorldPos();
+	glm::vec3 pa = getPivotAWorldPos();
+	glm::vec3 pb = getPivotBWorldPos();
 	
 	ofDrawLine( pa, pb );
 	

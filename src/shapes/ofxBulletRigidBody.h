@@ -41,14 +41,14 @@ public:
 	void setDamping( float a_linear_damp, float a_angular_damp );
 	
 	// FORCES //
-	void applyForce( const ofVec3f& a_frc, const ofVec3f& a_rel_pos );
+    void applyForce( const glm::vec3& a_frc, const glm::vec3& a_rel_pos );
 	void applyForce( const btVector3& a_frc, const btVector3& a_rel_pos );
 	
-	void applyCentralForce( const ofVec3f& a_frc );
+	void applyCentralForce( const glm::vec3& a_frc );
 	void applyCentralForce( float a_x, float a_y, float a_z );
 	void applyCentralForce( const btVector3& a_frc );
 	
-	void applyTorque( const ofVec3f& a_torque );
+	void applyTorque( const glm::vec3& a_torque );
 	void applyTorque( float a_x, float a_y, float a_z );
 	void applyTorque( const btVector3& a_torque );
 

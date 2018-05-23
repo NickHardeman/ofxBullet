@@ -15,22 +15,22 @@ public:
     ofxBulletConvexShape();
 	~ofxBulletConvexShape();
 	
-	void	init( ofMesh& aMesh, ofVec3f a_localScaling=ofVec3f(1,1,1), bool a_bUseConvexHull=false );
-	void	init( btConvexHullShape* a_colShape, ofVec3f a_centroid );
+	void	init( ofMesh& aMesh, glm::vec3 a_localScaling=glm::vec3(1,1,1), bool a_bUseConvexHull=false );
+	void	init( btConvexHullShape* a_colShape, glm::vec3 a_centroid );
 	
-	void	create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, float a_mass );
-	void	create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass );
+	void	create( btDiscreteDynamicsWorld* a_world, glm::vec3 a_loc, float a_mass );
+	void	create( btDiscreteDynamicsWorld* a_world, glm::vec3 a_loc, glm::quat a_rot, float a_mass );
 	void	create( btDiscreteDynamicsWorld* a_world, btTransform &a_bt_tr, float a_mass );
     
     void    removeShape();
 	
-    ofVec3f getCentroid() const;
+    glm::vec3 getCentroid() const;
     
     void transformGL();
 	
 	// GETTERS //
-	bool	isInside(const ofVec3f& a_pt, float tolerance=0.1f);
+	bool	isInside(const glm::vec3& a_pt, float tolerance=0.1f);
     
 private:
-    ofVec3f _centroid;
+    glm::vec3 _centroid;
 };

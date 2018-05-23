@@ -16,19 +16,19 @@ public:
 	ofxBulletCustomShape();
 	~ofxBulletCustomShape();
 	
-	void init( btCompoundShape* a_colShape, ofVec3f a_centroid );
+	void init( btCompoundShape* a_colShape, glm::vec3 a_centroid );
 	
-	void create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc=ofVec3f(0,0,0), float a_mass=1.f );
-	void create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass=1.f );
+	void create( btDiscreteDynamicsWorld* a_world, glm::vec3 a_loc=glm::vec3(0,0,0), float a_mass=1.f );
+	void create( btDiscreteDynamicsWorld* a_world, glm::vec3 a_loc, glm::quat a_rot, float a_mass=1.f );
 	void create( btDiscreteDynamicsWorld* a_world, btTransform &a_bt_tr, float a_mass=1.f );
     
     void removeShape();
 	
-	bool addShape( btCollisionShape* a_colShape, ofVec3f a_localCentroidPos );
-	bool addMesh(ofMesh a_mesh, ofVec3f a_localScaling, bool a_bUseConvexHull);
+	bool addShape( btCollisionShape* a_colShape, glm::vec3 a_localCentroidPos );
+	bool addMesh(ofMesh a_mesh, glm::vec3 a_localScaling, bool a_bUseConvexHull);
 	void add();
 	
-	ofVec3f getCentroid();
+	glm::vec3 getCentroid();
 	int		getNumChildShapes();
 	
 	void draw();
@@ -36,7 +36,7 @@ public:
 	
 protected:
 	btTransform				_startTrans;
-	ofVec3f					_centroid;
-	vector<ofVec3f>			centroids;
+	glm::vec3				_centroid;
+	vector<glm::vec3>		centroids;
 	vector<btCollisionShape*> shapes;
 };

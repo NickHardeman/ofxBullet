@@ -14,13 +14,13 @@ class ofxBulletEllipsoid : public ofxBulletSoftBody {
 public:
     ofxBulletEllipsoid();
     
-    void create(ofxBulletWorldSoft* a_world, const ofVec3f& center, const ofVec3f& radius, int res = 10);
+    void create(ofxBulletWorldSoft* a_world, const glm::vec3& center, const glm::vec3& radius, int res = 10);
     
     void draw();
     
-    ofVec3f getRadius();
+    glm::vec3 getRadius();
     int getResolution();
 
 protected:
-    ofVec3f _radius;
+    glm::vec3 _radius;
 };

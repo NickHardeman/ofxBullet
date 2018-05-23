@@ -14,13 +14,13 @@ ofxBulletSoftTriMesh::ofxBulletSoftTriMesh() : ofxBulletSoftBody() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletSoftTriMesh::create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, ofVec3f a_loc, float a_mass ) {
+void ofxBulletSoftTriMesh::create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, glm::vec3 a_loc, float a_mass ) {
     btTransform tr=ofGetBtTransformFromVec3f( a_loc );
     create(a_world, aMesh, tr, a_mass );
 }
 
 //--------------------------------------------------------------
-void ofxBulletSoftTriMesh::create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, ofVec3f a_loc, ofQuaternion a_rot, float a_mass ) {
+void ofxBulletSoftTriMesh::create( ofxBulletWorldSoft* a_world, ofMesh& aMesh, glm::vec3 a_loc, glm::quat a_rot, float a_mass ) {
     btTransform tr = ofGetBtTransform( a_loc, a_rot );
     create(a_world, aMesh, tr, a_mass );
 }

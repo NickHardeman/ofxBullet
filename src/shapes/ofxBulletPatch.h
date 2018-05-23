@@ -14,7 +14,7 @@ class ofxBulletPatch : public ofxBulletSoftBody {
 public:
     ofxBulletPatch();
     
-    void create(ofxBulletWorldSoft* a_world, const ofVec3f& a_p0, const ofVec3f& a_p1, const ofVec3f& a_p2, const ofVec3f& a_p3, int a_resx = 10, int a_resy = 10);
+    void create(ofxBulletWorldSoft* a_world, const glm::vec3& a_p0, const glm::vec3& a_p1, const glm::vec3& a_p2, const glm::vec3& a_p3, int a_resx = 10, int a_resy = 10);
     
     void draw();
     

@@ -27,17 +27,17 @@ void ofxBulletStaticPlane::init(btStaticPlaneShape * shape) {
 }
 
 //--------------------------------------------------------------
-void ofxBulletStaticPlane::createFloor(btDiscreteDynamicsWorld * world, ofPoint planePosition) {
-    create(world, planePosition, ofPoint(0, -1, 0));
+void ofxBulletStaticPlane::createFloor(btDiscreteDynamicsWorld * world, glm::vec3 planePosition) {
+    create(world, planePosition, glm::vec3(0, -1, 0));
 }
 
 //--------------------------------------------------------------
-void ofxBulletStaticPlane::createCeiling(btDiscreteDynamicsWorld * world, ofPoint planePosition) {
-    create(world, planePosition, ofPoint(0, 1, 0));
+void ofxBulletStaticPlane::createCeiling(btDiscreteDynamicsWorld * world, glm::vec3 planePosition) {
+    create(world, planePosition, glm::vec3(0, 1, 0));
 }
 
 //--------------------------------------------------------------
-void ofxBulletStaticPlane::create(btDiscreteDynamicsWorld * world, ofPoint planePosition, ofPoint planeNormal, float planeConstant) {
+void ofxBulletStaticPlane::create(btDiscreteDynamicsWorld * world, glm::vec3 planePosition, glm::vec3 planeNormal, float planeConstant) {
     btStaticPlaneShape * staticPlaneShape = NULL;
     if(_bInited == false || _shape == NULL) {
         staticPlaneShape = new btStaticPlaneShape(btVector3(planeNormal.x, planeNormal.y, planeNormal.z), planeConstant);

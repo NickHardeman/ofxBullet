@@ -17,7 +17,7 @@
 class ofxBulletWorldSoft : public ofxBulletWorldRigid {
 public:
     virtual void setup();
-    virtual void setGravity( ofVec3f a_g );
+    virtual void setGravity( glm::vec3 a_g );
 
     btSoftRigidDynamicsWorld* getWorld();
     btSoftBodyWorldInfo& getInfo();

@@ -20,8 +20,8 @@ ofxBulletConvexShape::~ofxBulletConvexShape() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletConvexShape::init( ofMesh& aMesh, ofVec3f a_localScaling, bool a_bUseConvexHull ) {
-    _centroid.zero();
+void ofxBulletConvexShape::init( ofMesh& aMesh, glm::vec3 a_localScaling, bool a_bUseConvexHull ) {
+    _centroid = glm::vec3(0,0,0);
     btVector3 centroid = btVector3(0, 0, 0);
     btVector3 localScaling( a_localScaling.x, a_localScaling.y, a_localScaling.z );
     
@@ -47,7 +47,7 @@ void ofxBulletConvexShape::init( ofMesh& aMesh, ofVec3f a_localScaling, bool a_b
 		btConvexHullShape* convexShape = new btConvexHullShape(&(newVerts[0].getX()), newVerts.size());
 		convexShape->setMargin( 0.01f );
         _shape = convexShape;
-        _centroid = ofVec3f(centroid.getX(), centroid.getY(), centroid.getZ() );
+        _centroid = glm::vec3(centroid.getX(), centroid.getY(), centroid.getZ() );
 	} else {
 		// HULL Building code from example ConvexDecompositionDemo.cpp //
 		btTriangleMesh* trimesh = new btTriangleMesh();
@@ -91,14 +91,14 @@ void ofxBulletConvexShape::init( ofMesh& aMesh, ofVec3f a_localScaling, bool a_b
 		delete hull;
 		
         _shape = convexShape;
-        _centroid = ofVec3f(centroid.getX(), centroid.getY(), centroid.getZ() );
+        _centroid = glm::vec3(centroid.getX(), centroid.getY(), centroid.getZ() );
 	}
     
 	_bInited	= true;
 }
 
 //--------------------------------------------------------------
-void ofxBulletConvexShape::init( btConvexHullShape* a_colShape, ofVec3f a_centroid ) {
+void ofxBulletConvexShape::init( btConvexHullShape* a_colShape, glm::vec3 a_centroid ) {
     _centroid   = a_centroid;
     _shape		= (btCollisionShape*)a_colShape;
 	_bInited	= true;
@@ -107,15 +107,15 @@ void ofxBulletConvexShape::init( btConvexHullShape* a_colShape, ofVec3f a_centro
 }
 
 //--------------------------------------------------------------
-void ofxBulletConvexShape::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, float a_mass) {
+void ofxBulletConvexShape::create( btDiscreteDynamicsWorld* a_world, glm::vec3 a_loc, float a_mass) {
 	btTransform tr=ofGetBtTransformFromVec3f( a_loc );
 	create( a_world, tr, a_mass );
 }
 
 //--------------------------------------------------------------
-void ofxBulletConvexShape::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass ) {
+void ofxBulletConvexShape::create( btDiscreteDynamicsWorld* a_world, glm::vec3 a_loc, glm::quat a_rot, float a_mass ) {
 	btTransform tr	= ofGetBtTransformFromVec3f( a_loc );
-	tr.setRotation( btQuaternion(btVector3(a_rot.x(), a_rot.y(), a_rot.z()), a_rot.w()) );
+	tr.setRotation( btQuaternion( a_rot.x, a_rot.y, a_rot.z, a_rot.w ));
 	create( a_world, tr, a_mass);
 }
 
@@ -140,7 +140,7 @@ void ofxBulletConvexShape::removeShape() {
 }
 
 //--------------------------------------------------------------
-ofVec3f ofxBulletConvexShape::getCentroid() const {
+glm::vec3 ofxBulletConvexShape::getCentroid() const {
     return _centroid;
 }
 
@@ -151,7 +151,7 @@ void ofxBulletConvexShape::transformGL() {
 }
 
 //--------------------------------------------------------------
-bool ofxBulletConvexShape::isInside(const ofVec3f& a_pt, float tolerance) {
+bool ofxBulletConvexShape::isInside(const glm::vec3& a_pt, float tolerance) {
     if(_shape != NULL) {
         return ((btConvexHullShape*)_shape)->isInside( btVector3(a_pt.x, a_pt.y, a_pt.z), tolerance);
     }

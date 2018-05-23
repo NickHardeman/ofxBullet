@@ -20,31 +20,31 @@ public:
 	~ofxBulletJoint();
 	
 	void	create( btDiscreteDynamicsWorld* a_world, ofxBulletRigidBody* a_shape1, ofxBulletRigidBody* a_shape2 );
-	void	create( btDiscreteDynamicsWorld* a_world, ofxBulletRigidBody* a_shape, ofVec3f a_pos );
+	void	create( btDiscreteDynamicsWorld* a_world, ofxBulletRigidBody* a_shape, glm::vec3 a_pos );
 	
 	/******************************/
 	// call before calling add() //
-	void	setLinearLowerLimit( ofVec3f a_limit );
+	void	setLinearLowerLimit( glm::vec3 a_limit );
 	void	setLinearLowerLimit( float a_x, float a_y, float a_z );
-	void	setLinearUpperLimit( ofVec3f a_limit );
+	void	setLinearUpperLimit( glm::vec3 a_limit );
 	void	setLinearUpperLimit( float a_x, float a_y, float a_z );
-	void	setAngularLowerLimit( ofVec3f a_limit );
+	void	setAngularLowerLimit( glm::vec3 a_limit );
 	void	setAngularLowerLimit( float a_x, float a_y, float a_z );
-	void	setAngularUpperLimit( ofVec3f a_limit );
+	void	setAngularUpperLimit( glm::vec3 a_limit );
 	void	setAngularUpperLimit( float a_x, float a_y, float a_z );
 	/******************************/
 	
 	void	add();
 	
-	ofVec3f getPivotAWorldPos();
-	ofVec3f getPivotBWorldPos();
+	glm::vec3 getPivotAWorldPos();
+	glm::vec3 getPivotBWorldPos();
 	
 	btRigidBody* getRigidBodyA() const;
 	btRigidBody* getRigidBodyB() const;
-	ofVec3f getPositionA() const;
-	ofVec3f getPositionB() const;
+	glm::vec3 getPositionA() const;
+	glm::vec3 getPositionB() const;
 	
-	void	updatePivotPos( const ofVec3f a_pos, float a_length );
+	void	updatePivotPos( const glm::vec3 a_pos, float a_length );
 	
 	void	draw();
 	void	drawJointConstraints();
@@ -57,7 +57,7 @@ protected:
 private:
 	btDiscreteDynamicsWorld*	_world;
 	btGeneric6DofConstraint*	_joint;
-	ofVec3f						_targetPos;
+	glm::vec3					_targetPos;
 	// is there two bodies the joint is connecting? if not, what is the target pos //
 	bool						_bTwoBodies;
 	bool						_bCreated;

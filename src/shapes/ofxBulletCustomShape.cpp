@@ -20,7 +20,7 @@ ofxBulletCustomShape::~ofxBulletCustomShape() {
 
 // pass in an already created compound shape //
 //--------------------------------------------------------------
-void ofxBulletCustomShape::init( btCompoundShape* a_colShape, ofVec3f a_centroid ) {
+void ofxBulletCustomShape::init( btCompoundShape* a_colShape, glm::vec3 a_centroid ) {
 	_shape		= (btCollisionShape*)a_colShape;
 	_centroid	= a_centroid;
 	_bInited	= true;
@@ -29,15 +29,15 @@ void ofxBulletCustomShape::init( btCompoundShape* a_colShape, ofVec3f a_centroid
 }
 
 //--------------------------------------------------------------
-void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, float a_mass ) {
+void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, glm::vec3 a_loc, float a_mass ) {
 	btTransform tr = ofGetBtTransformFromVec3f( a_loc );
 	create( a_world, tr, a_mass );
 }
 
 //--------------------------------------------------------------
-void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, ofVec3f a_loc, ofQuaternion a_rot, float a_mass ) {
+void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, glm::vec3 a_loc, glm::quat a_rot, float a_mass ) {
 	btTransform tr	= ofGetBtTransformFromVec3f( a_loc );
-	tr.setRotation( btQuaternion(btVector3(a_rot.x(), a_rot.y(), a_rot.z()), a_rot.w()) );
+	tr.setRotation( btQuaternion( a_rot.x, a_rot.y, a_rot.z, a_rot.w ));
 	create( a_world, tr, a_mass );
 }
 
@@ -47,7 +47,7 @@ void ofxBulletCustomShape::create( btDiscreteDynamicsWorld* a_world, btTransform
 	_mass = a_mass;
 	if(!_bInited) {
 		_shape = new btCompoundShape(true);
-		_centroid.set(0, 0, 0);
+        _centroid = glm::vec3(0, 0, 0);
 	}
 	_startTrans		= a_bt_tr;
 	_bCreated		= true;
@@ -64,7 +64,7 @@ void ofxBulletCustomShape::removeShape() {
 }
 
 //--------------------------------------------------------------
-bool ofxBulletCustomShape::addShape( btCollisionShape* a_colShape, ofVec3f a_localCentroidPos ) {
+bool ofxBulletCustomShape::addShape( btCollisionShape* a_colShape, glm::vec3 a_localCentroidPos ) {
 	if(_bAdded == true) {
 		ofLog( OF_LOG_ERROR, "ofxBulletCustomShape :: addShape : can not call after calling add()" );
 		return false;
@@ -75,7 +75,7 @@ bool ofxBulletCustomShape::addShape( btCollisionShape* a_colShape, ofVec3f a_loc
 }
 
 //--------------------------------------------------------------
-bool ofxBulletCustomShape::addMesh( ofMesh a_mesh, ofVec3f a_localScaling, bool a_bUseConvexHull ) {
+bool ofxBulletCustomShape::addMesh( ofMesh a_mesh, glm::vec3 a_localScaling, bool a_bUseConvexHull ) {
 	if(a_mesh.getMode() != OF_PRIMITIVE_TRIANGLES) {
 		ofLog( OF_LOG_ERROR, "ofxBulletCustomShape :: addMesh : mesh must be set to OF_PRIMITIVE_TRIANGLES!! aborting");
 		return false;
@@ -110,7 +110,7 @@ bool ofxBulletCustomShape::addMesh( ofMesh a_mesh, ofVec3f a_localScaling, bool 
 		btConvexHullShape* convexShape = new btConvexHullShape(&(newVerts[0].getX()), newVerts.size());
 		convexShape->setMargin( 0.01f );
 		shapes.push_back( convexShape );
-		centroids.push_back( ofVec3f(centroid.getX(), centroid.getY(), centroid.getZ()) );
+		centroids.push_back( glm::vec3(centroid.getX(), centroid.getY(), centroid.getZ()) );
 	} else {
 		// HULL Building code from example ConvexDecompositionDemo.cpp //
 		btTriangleMesh* trimesh = new btTriangleMesh();
@@ -162,7 +162,7 @@ bool ofxBulletCustomShape::addMesh( ofMesh a_mesh, ofVec3f a_localScaling, bool 
 		delete hull;
 		
 		shapes.push_back( convexShape );
-		centroids.push_back( ofVec3f(centroid.getX(), centroid.getY(), centroid.getZ()) );
+		centroids.push_back( glm::vec3(centroid.getX(), centroid.getY(), centroid.getZ()) );
 	}
 	return true;
 }
@@ -194,7 +194,7 @@ void ofxBulletCustomShape::add() {
 }
 
 //--------------------------------------------------------------
-ofVec3f ofxBulletCustomShape::getCentroid() {
+glm::vec3 ofxBulletCustomShape::getCentroid() {
 	return _centroid;
 }
 

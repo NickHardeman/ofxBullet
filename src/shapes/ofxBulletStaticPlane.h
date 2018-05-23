@@ -19,9 +19,9 @@ public:
     
     void init(btStaticPlaneShape * shape);
     
-    void createFloor(btDiscreteDynamicsWorld * world, ofPoint planePosition);
-    void createCeiling(btDiscreteDynamicsWorld * world, ofPoint planePosition);
-    void create(btDiscreteDynamicsWorld * world, ofPoint planePosition, ofPoint planeNormal, float planeConstant=0);
+    void createFloor(btDiscreteDynamicsWorld * world, glm::vec3 planePosition);
+    void createCeiling(btDiscreteDynamicsWorld * world, glm::vec3 planePosition);
+    void create(btDiscreteDynamicsWorld * world, glm::vec3 planePosition, glm::vec3 planeNormal, float planeConstant=0);
     
     void removeShape();
 };

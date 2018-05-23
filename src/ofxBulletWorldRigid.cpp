@@ -16,7 +16,7 @@ ofxBulletWorldRigid::ofxBulletWorldRigid() {
 	solver					= NULL;
 	world					= NULL;
 	_camera					= NULL;
-	_cameraPos				= ofVec3f(0, 0, 0);
+	_cameraPos				= glm::vec3(0, 0, 0);
 	_bMouseDown				= false;
 	_pickedBody				= NULL;
 	_pickConstraint			= NULL;
@@ -51,7 +51,7 @@ void ofxBulletWorldRigid::setup() {
     if(world == NULL)           world = createWorld();
     
     // default gravity //
-	setGravity(ofVec3f(0.f, 9.8f, 0.f));
+	setGravity(glm::vec3(0.f, 9.8f, 0.f));
 }
 
 //--------------------------------------------------------------
@@ -88,7 +88,7 @@ void ofxBulletWorldRigid::update( float aDeltaTimef, int aNumIterations ) {
 }
 
 //--------------------------------------------------------------
-void ofxBulletWorldRigid::setCameraPosition( ofVec3f a_pos ) {
+void ofxBulletWorldRigid::setCameraPosition( glm::vec3 a_pos ) {
 	_cameraPos = a_pos;
 }
 
@@ -137,9 +137,9 @@ void ofxBulletWorldRigid::checkCollisions() {
 				const btVector3& ptB = pt.getPositionWorldOnB();
 				const btVector3& normalOnB = pt.m_normalWorldOnB;
 				
-				cdata.worldContactPoints1.push_back( ofVec3f(ptA.x(), ptA.y(), ptA.z()) );
-				cdata.worldContactPoints2.push_back( ofVec3f(ptB.x(), ptB.y(), ptB.z()) );
-				cdata.normalsOnShape2.push_back( ofVec3f(normalOnB.x(), normalOnB.y(), normalOnB.z()) );
+				cdata.worldContactPoints1.push_back( glm::vec3(ptA.x(), ptA.y(), ptA.z()) );
+				cdata.worldContactPoints2.push_back( glm::vec3(ptB.x(), ptB.y(), ptB.z()) );
+				cdata.normalsOnShape2.push_back( glm::vec3(normalOnB.x(), normalOnB.y(), normalOnB.z()) );
 			}
 		}
 		if(numContacts > 0) {
@@ -159,9 +159,10 @@ ofxBulletRaycastData ofxBulletWorldRigid::raycastTest(float a_x, float a_y, shor
 		return ofxBulletRaycastData();
 	}
 	
-	ofVec3f castRay = _camera->screenToWorld( ofVec3f(a_x, a_y, 0) );
+	glm::vec3 castRay = _camera->screenToWorld( glm::vec3(a_x, a_y, 0) );
 	castRay = castRay - _camera->getPosition();
-	castRay.normalize();
+//    castRay.normalize();
+    castRay = glm::normalize(castRay);
 	castRay *= 1000;
     castRay += _camera->getPosition();
 	
@@ -169,7 +170,7 @@ ofxBulletRaycastData ofxBulletWorldRigid::raycastTest(float a_x, float a_y, shor
 }
 
 //--------------------------------------------------------------
-ofxBulletRaycastData ofxBulletWorldRigid::raycastTest( ofVec3f a_rayStart, ofVec3f a_rayEnd, short int a_filterMask) {
+ofxBulletRaycastData ofxBulletWorldRigid::raycastTest( glm::vec3 a_rayStart, glm::vec3 a_rayEnd, short int a_filterMask) {
 	ofxBulletRaycastData data;
 	data.bHasHit = false;
 	
@@ -188,9 +189,9 @@ ofxBulletRaycastData ofxBulletWorldRigid::raycastTest( ofVec3f a_rayStart, ofVec
 			data.body				= body;
 			data.rayWorldPos		= a_rayEnd;
 			btVector3 pickPos		= rayCallback.m_hitPointWorld;
-			data.pickPosWorld		= ofVec3f(pickPos.getX(), pickPos.getY(), pickPos.getZ());
+			data.pickPosWorld		= glm::vec3(pickPos.getX(), pickPos.getY(), pickPos.getZ());
 			btVector3 localPos		= body->getCenterOfMassTransform().inverse() * pickPos;
-			data.localPivotPos		= ofVec3f(localPos.getX(), localPos.getY(), localPos.getZ() );
+			data.localPivotPos		= glm::vec3(localPos.getX(), localPos.getY(), localPos.getZ() );
 		}
 	}
 	return data;
@@ -299,16 +300,16 @@ bool ofxBulletWorldRigid::checkWorld() {
 }
 
 //--------------------------------------------------------------
-void ofxBulletWorldRigid::setGravity( ofVec3f a_g ) {
+void ofxBulletWorldRigid::setGravity( glm::vec3 a_g ) {
 	if(!checkWorld()) return;
 	world->setGravity( btVector3(a_g.x, a_g.y, a_g.z) );
 }
 
 //--------------------------------------------------------------
-ofVec3f ofxBulletWorldRigid::getGravity() {
-	if(!checkWorld()) return ofVec3f(0,0,0);
+glm::vec3 ofxBulletWorldRigid::getGravity() {
+	if(!checkWorld()) return glm::vec3(0,0,0);
 	btVector3 g = world->getGravity();
-	return ofVec3f(g.getX(), g.getY(), g.getZ());
+	return glm::vec3(g.getX(), g.getY(), g.getZ());
 }
 
 //--------------------------------------------------------------
@@ -380,9 +381,10 @@ void ofxBulletWorldRigid::mouseDragged( ofMouseEventArgs &a ) {
 		if (pickCon) {
 			//cout << "ofxBulletWorldRigid :: mouseMoved : moving the mouse! with constraint" << endl;
 			//keep it at the same picking distance
-			ofVec3f mouseRay = _camera->screenToWorld( ofVec3f((float)a.x, (float)a.y, 0) );
+			glm::vec3 mouseRay = _camera->screenToWorld( glm::vec3((float)a.x, (float)a.y, 0) );
 			mouseRay = mouseRay - _camera->getPosition();
-			mouseRay.normalize();
+//            mouseRay.normalize();
+            mouseRay = glm::normalize( mouseRay );
 			mouseRay *= 1000.f;
             mouseRay += _camera->getPosition();
 			btVector3 newRayTo(mouseRay.x, mouseRay.y, mouseRay.z);
