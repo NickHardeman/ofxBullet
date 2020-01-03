@@ -80,6 +80,7 @@ public:
 	// if you want to control the object. Make sure to have a mass of 0.f
 	// and manipulate the rigid body and then call activate() //
 	void enableKinematic();
+    void enableStatic();
 	
 	// CHECKERS //
 	bool checkInit();

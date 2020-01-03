@@ -94,6 +94,8 @@ void ofxBulletConvexShape::init( ofMesh& aMesh, glm::vec3 a_localScaling, bool a
         _centroid = glm::vec3(centroid.getX(), centroid.getY(), centroid.getZ() );
 	}
     
+    _cachedMesh = aMesh;
+    
 	_bInited	= true;
 }
 

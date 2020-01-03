@@ -49,6 +49,12 @@ void ofxBulletRigidBody::add() {
 }
 
 //--------------------------------------------------------------
+void ofxBulletRigidBody::add(short group, short mask) {
+    _bAdded = true;
+    _world->addRigidBody( _rigidBody, group, mask );
+}
+
+//--------------------------------------------------------------
 void ofxBulletRigidBody::remove() {
 	setData(NULL);
 	removeRigidBody();

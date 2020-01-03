@@ -30,7 +30,9 @@ public:
 	
 	// GETTERS //
 	bool	isInside(const glm::vec3& a_pt, float tolerance=0.1f);
+    ofMesh& getMesh() { return _cachedMesh; }
     
 private:
-    glm::vec3 _centroid;
+    glm::vec3 _centroid = glm::vec3(0,0,0);
+    ofMesh _cachedMesh;
 };

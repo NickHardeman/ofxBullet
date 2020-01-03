@@ -15,11 +15,11 @@ public:
     ~ofxBulletTriMeshShape();
     
     void create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, glm::vec3 a_loc, float a_mass,
-                glm::vec3 aAAbbMin=glm::vec3(0,0,0), glm::vec3 aAAbbMax=glm::vec3(0,0,0) );
+                glm::vec3 aAAbbMin=glm::vec3(-100,-100,-100), glm::vec3 aAAbbMax=glm::vec3(100,100,100) );
 	void create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, glm::vec3 a_loc, glm::quat a_rot, float a_mass,
-                glm::vec3 aAAbbMin=glm::vec3(0,0,0), glm::vec3 aAAbbMax=glm::vec3(0,0,0) );
+                glm::vec3 aAAbbMin=glm::vec3(-100,-100,-100), glm::vec3 aAAbbMax=glm::vec3(100,100,100) );
 	void create( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh, btTransform &a_bt_tr, float a_mass,
-                glm::vec3 aAAbbMin=glm::vec3(0,0,0), glm::vec3 aAAbbMax=glm::vec3(0,0,0) );
+                glm::vec3 aAAbbMin=glm::vec3(-100,-100,-100), glm::vec3 aAAbbMax=glm::vec3(100,100,100) );
     
     void updateMesh( btDiscreteDynamicsWorld* a_world, ofMesh& aMesh );
     

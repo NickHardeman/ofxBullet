@@ -250,6 +250,11 @@ void ofxBulletBaseShape::enableKinematic() {
 }
 
 //--------------------------------------------------------------
+void ofxBulletBaseShape::enableStatic() {
+    _object->setCollisionFlags( _object->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT );
+}
+
+//--------------------------------------------------------------
 void ofxBulletBaseShape::transformGL() {
 	ofPushMatrix();
     ofMultMatrix( getTransformationMatrix() );
