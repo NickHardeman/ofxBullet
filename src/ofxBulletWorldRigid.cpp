@@ -26,20 +26,26 @@ ofxBulletWorldRigid::ofxBulletWorldRigid() {
 	disableCollisionEvents();
 	disableGrabbing();
     
-    ofAddListener( ofEvents().mouseMoved, this, &ofxBulletWorldRigid::mouseMoved );
-    ofAddListener( ofEvents().mouseDragged, this, &ofxBulletWorldRigid::mouseDragged );
-    ofAddListener( ofEvents().mousePressed, this, &ofxBulletWorldRigid::mousePressed );
-    ofAddListener( ofEvents().mouseReleased, this, &ofxBulletWorldRigid::mouseReleased );
+//    ofAddListener( ofEvents().mouseMoved, this, &ofxBulletWorldRigid::mouseMoved );
+//    ofAddListener( ofEvents().mouseDragged, this, &ofxBulletWorldRigid::mouseDragged );
+//    ofAddListener( ofEvents().mousePressed, this, &ofxBulletWorldRigid::mousePressed );
+//    ofAddListener( ofEvents().mouseReleased, this, &ofxBulletWorldRigid::mouseReleased );
+	setEvents(ofEvents());
 }
 
 //--------------------------------------------------------------
 ofxBulletWorldRigid::~ofxBulletWorldRigid() {
 	destroy();
+	
+	if( mEvents != nullptr ) {
+		listeners.unsubscribeAll();
+	}
+	mEvents = nullptr;
     
-    ofRemoveListener( ofEvents().mouseMoved, this, &ofxBulletWorldRigid::mouseMoved );
-    ofRemoveListener( ofEvents().mouseDragged, this, &ofxBulletWorldRigid::mouseDragged );
-    ofRemoveListener( ofEvents().mousePressed, this, &ofxBulletWorldRigid::mousePressed );
-    ofRemoveListener( ofEvents().mouseReleased, this, &ofxBulletWorldRigid::mouseReleased );
+//    ofRemoveListener( ofEvents().mouseMoved, this, &ofxBulletWorldRigid::mouseMoved );
+//    ofRemoveListener( ofEvents().mouseDragged, this, &ofxBulletWorldRigid::mouseDragged );
+//    ofRemoveListener( ofEvents().mousePressed, this, &ofxBulletWorldRigid::mousePressed );
+//    ofRemoveListener( ofEvents().mouseReleased, this, &ofxBulletWorldRigid::mouseReleased );
 }
 
 //--------------------------------------------------------------
@@ -367,6 +373,21 @@ void ofxBulletWorldRigid::destroy() {
     if(broadphase != NULL)			delete broadphase; broadphase = NULL;
 }
 
+//--------------------------------------------------------------
+void ofxBulletWorldRigid::setEvents(ofCoreEvents & events) {
+	if( mEvents != nullptr ) {
+		listeners.unsubscribeAll();
+	}
+	
+	mEvents = &events;
+	
+	if(mEvents){
+		listeners.push(mEvents->mouseMoved.newListener(this, &ofxBulletWorldRigid::mouseMoved ));
+		listeners.push(mEvents->mouseDragged.newListener(this, &ofxBulletWorldRigid::mouseDragged ));
+		listeners.push(mEvents->mousePressed.newListener(this, &ofxBulletWorldRigid::mousePressed ));
+		listeners.push(mEvents->mouseReleased.newListener(this, &ofxBulletWorldRigid::mouseReleased ));
+	}
+}
 
 //--------------------------------------------------------------
 void ofxBulletWorldRigid::mouseMoved( ofMouseEventArgs &a ) {

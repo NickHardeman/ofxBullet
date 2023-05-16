@@ -59,6 +59,8 @@ public:
 	void removeMouseConstraint();
 	void destroy();
 	
+	void setEvents(ofCoreEvents & events);
+	
 	void mouseMoved( ofMouseEventArgs &a);
 	void mouseDragged( ofMouseEventArgs &a );
 	void mousePressed( ofMouseEventArgs &a);
@@ -92,4 +94,7 @@ private:
 	///constraint for mouse picking
 	btTypedConstraint*	_pickConstraint;
 	float gOldPickingDist;
+	
+	ofEventListeners listeners;
+	ofCoreEvents* mEvents = nullptr;
 };
