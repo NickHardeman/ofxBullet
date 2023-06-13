@@ -166,8 +166,8 @@ void ofApp::draw() {
 	for(int i = 0; i < logos.size(); i++) {
         logos[i]->transformGL();
 		ofScale(scale.x,scale.y,scale.z);
-		for(size_t i{0}; i < assimpModel.getNumMeshes(); ++i){
-			assimpModel.getMesh(i).drawFaces();
+		for(size_t j{0}; j < assimpModel.getNumMeshes(); ++j){
+			assimpModel.getMesh(j).drawFaces();
 		}
 		logos[i]->restoreTransformGL();
 	}
