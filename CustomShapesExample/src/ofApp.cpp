@@ -71,8 +71,8 @@ void ofApp::setup() {
 		startLoc = ofVec3f( ofRandom(-5, 5), ofRandom(0, -hwidth+5), ofRandom(-5, 5) );
 		
 		if(i == 0) {
-			for(int i = 0; i < assimpModel.getNumMeshes(); i++) {
-				logos[i]->addMesh(assimpModel.getMesh(i), scale, true);
+			for(int j = 0; j < assimpModel.getNumMeshes(); j++) {
+				logos[i]->addMesh(assimpModel.getMesh(j), scale, true);
 			}
 		} else {
 			logos[i]->init( (btCompoundShape*)logos[0]->getCollisionShape(), logos[0]->getCentroid() );
@@ -164,9 +164,11 @@ void ofApp::draw() {
 	ofSetColor(0, 0, 0);
 	logoMat.begin();
 	for(int i = 0; i < logos.size(); i++) {
-        logos[i]->transformGL();
+        	logos[i]->transformGL();
 		ofScale(scale.x,scale.y,scale.z);
-		assimpModel.getMesh(0).drawFaces();
+		for(size_t i{0}; i < assimpModel.getNumMeshes(); ++i){
+			assimpModel.getMesh(i).drawFaces();
+		}
 		logos[i]->restoreTransformGL();
 	}
 	glPopAttrib();
